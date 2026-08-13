@@ -113,6 +113,7 @@ function buildPayload() {
 
   return {
     nome:         get('nome'),
+    nome_aluno:   get('nome_aluno'),
     telefone:     get('telefone'),
     email:        get('email'),
     serie:        get('serie'),
@@ -136,6 +137,7 @@ function onSuccess(payload) {
     event:        'lead_form_submit',
     form_name:    'matriculas_kennedy',
     serie:        payload.serie,
+    nome_aluno:   payload.nome_aluno,
     gclid:        payload.gclid,
     utm_source:   payload.utm_source,
     utm_medium:   payload.utm_medium,
@@ -176,7 +178,13 @@ function validateForm() {
 
   const nome = document.getElementById('nome');
   if (!nome.value.trim() || nome.value.trim().split(' ').length < 2) {
-    setFieldError(nome, 'Informe o nome completo');
+    setFieldError(nome, 'Informe seu nome completo');
+    valid = false;
+  }
+
+  const nomeAluno = document.getElementById('nome_aluno');
+  if (!nomeAluno.value.trim()) {
+    setFieldError(nomeAluno, 'Informe o nome do aluno');
     valid = false;
   }
 

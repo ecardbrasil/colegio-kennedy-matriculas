@@ -89,9 +89,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <input type="hidden" id="field_utm_content" name="utm_content" />
 
         <div class="form-group">
-          <label for="nome">Nome completo *</label>
-          <input type="text" id="nome" name="nome" placeholder="João Silva" required autocomplete="name" />
+          <label for="nome">Seu nome (responsável) *</label>
+          <input type="text" id="nome" name="nome" placeholder="Ex: Maria Silva" required autocomplete="name" />
           <span class="error-msg" id="err-nome"></span>
+        </div>
+
+        <div class="form-group">
+          <label for="nome_aluno">Nome do aluno *</label>
+          <input type="text" id="nome_aluno" name="nome_aluno" placeholder="Ex: João Silva" required />
+          <span class="error-msg" id="err-nome_aluno"></span>
         </div>
 
         <div class="form-group">
@@ -102,38 +108,42 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         <div class="form-group">
           <label for="email">E-mail *</label>
-          <input type="email" id="email" name="email" placeholder="joao@email.com" required autocomplete="email" />
+          <input type="email" id="email" name="email" placeholder="maria@email.com" required autocomplete="email" />
           <span class="error-msg" id="err-email"></span>
         </div>
 
         <div class="form-group">
-          <label for="serie">Série de interesse *</label>
+          <label for="serie">Em qual série seu filho vai estudar? *</label>
           <select id="serie" name="serie" required>
-            <option value="" disabled selected>Selecione a série</option>
-            <optgroup label="Educação Infantil">
-              <option value="Berçário">Berçário</option>
-              <option value="Maternal I">Maternal I</option>
-              <option value="Maternal II">Maternal II</option>
-              <option value="Pré I">Pré I</option>
-              <option value="Pré II">Pré II</option>
+            <option value="" disabled selected>Selecione a etapa</option>
+
+            <optgroup label="🧒 Educação Infantil">
+              <option value="1 ano de idade">1 ano de idade</option>
+              <option value="2 anos de idade">2 anos de idade</option>
+              <option value="3 anos de idade">3 anos de idade</option>
+              <option value="4 anos de idade">4 anos de idade</option>
+              <option value="5 anos de idade">5 anos de idade</option>
             </optgroup>
-            <optgroup label="Ensino Fundamental I">
-              <option value="1º Ano EF">1º Ano</option>
-              <option value="2º Ano EF">2º Ano</option>
-              <option value="3º Ano EF">3º Ano</option>
-              <option value="4º Ano EF">4º Ano</option>
-              <option value="5º Ano EF">5º Ano</option>
+
+            <optgroup label="📗 Ensino Fundamental — Anos Iniciais (1º ao 5º)">
+              <option value="1 ano do Fundamental">1º ano do Fundamental</option>
+              <option value="2 ano do Fundamental">2º ano do Fundamental</option>
+              <option value="3 ano do Fundamental">3º ano do Fundamental</option>
+              <option value="4 ano do Fundamental">4º ano do Fundamental</option>
+              <option value="5 ano do Fundamental">5º ano do Fundamental</option>
             </optgroup>
-            <optgroup label="Ensino Fundamental II">
-              <option value="6º Ano EF">6º Ano</option>
-              <option value="7º Ano EF">7º Ano</option>
-              <option value="8º Ano EF">8º Ano</option>
-              <option value="9º Ano EF">9º Ano</option>
+
+            <optgroup label="📘 Ensino Fundamental — Anos Finais (6º ao 9º)">
+              <option value="6 ano do Fundamental">6º ano do Fundamental</option>
+              <option value="7 ano do Fundamental">7º ano do Fundamental</option>
+              <option value="8 ano do Fundamental">8º ano do Fundamental</option>
+              <option value="9 ano do Fundamental">9º ano do Fundamental</option>
             </optgroup>
-            <optgroup label="Ensino Médio">
-              <option value="1º Ano EM">1º Ano</option>
-              <option value="2º Ano EM">2º Ano</option>
-              <option value="3º Ano EM">3º Ano</option>
+
+            <optgroup label="🎓 Ensino Médio">
+              <option value="1 ano do Ensino Médio">1º ano do Ensino Médio</option>
+              <option value="2 ano do Ensino Médio">2º ano do Ensino Médio</option>
+              <option value="3 ano do Ensino Médio">3º ano do Ensino Médio</option>
             </optgroup>
           </select>
           <span class="error-msg" id="err-serie"></span>
