@@ -78,9 +78,10 @@ vercel --prod
 - [x] `colegiokennedy.top` redireciona (308) para `www.colegiokennedy.top` (produção)
 
 ## 8. Google Ads
-- [ ] Configurar parâmetro de URL final: `{lpurl}?gclid={gclid}`
-- [ ] Ou usar auto-tagging do Google Ads (mais simples — ativa em Configurações da conta)
-- [ ] Importar conversões offline usando o GCLID capturado no webhook
+- [x] Confirmado "Codificação automática: Sim" em Configurações da conta (equivalente a
+      auto-tagging — anexa o `gclid` automaticamente em toda URL de destino dos anúncios)
+- [ ] **FUTURO:** importar conversões offline usando o GCLID capturado no webhook, quando já
+      houver leads reais convertidos em matrícula no Pipefy
 
 ## 9. Teste final
 - [ ] Abrir a página com `?gclid=TESTE123&utm_source=google&utm_medium=cpc&utm_campaign=matriculas`
