@@ -133,16 +133,20 @@ address {
 
 /* Logo */
 .logo-wrap {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: .75rem;
   margin-bottom: 1.5rem;
+  background: var(--color-white);
+  padding: .6rem 1.1rem;
+  border-radius: var(--radius-md);
 }
 
 .logo {
-  width: 180px;
+  width: 150px;
   height: auto;
   object-fit: contain;
+  display: block;
 }
 
 .logo-text {
@@ -164,6 +168,33 @@ address {
   font-weight: 800;
   color: var(--color-white);
   letter-spacing: -.5px;
+}
+
+/* Foto de alunos no hero */
+.hero-photo {
+  margin-top: 1.75rem;
+  max-width: 220px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  border: 3px solid rgba(255, 255, 255, .15);
+}
+
+.hero-photo img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Logo no rodapé */
+.footer-logo-img {
+  width: 130px;
+  height: auto;
+  display: block;
+  background: var(--color-white);
+  padding: .5rem .75rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: .6rem;
 }
 
 /* Copy */
@@ -549,14 +580,6 @@ address {
   gap: 2rem;
 }
 
-.footer-logo {
-  font-size: 1.2rem;
-  font-weight: 800;
-  color: var(--color-white);
-  display: block;
-  margin-bottom: .4rem;
-}
-
 .footer-brand p,
 .footer-info p,
 .footer-legal p {
@@ -608,7 +631,11 @@ address {
   }
 
   .logo {
-    width: 140px;
+    width: 120px;
+  }
+
+  .hero-photo {
+    max-width: 170px;
   }
 
   .form-card {
