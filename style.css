@@ -4,19 +4,19 @@
    ============================================================= */
 
 :root {
-  /* --- Cores primárias (SUBSTITUIR pelas cores do colégio) --- */
-  --color-primary:       #003087;
-  --color-primary-dark:  #001f5b;
-  --color-primary-light: #0052cc;
-  --color-accent:        #f5a623;
-  --color-accent-dark:   #d4891b;
+  /* --- Cores da marca Colégio Kennedy --- */
+  --color-primary:       #0c2c5c;
+  --color-primary-dark:  #071b3d;
+  --color-primary-light: #1c4384;
+  --color-accent:        #ee6c2f;
+  --color-accent-dark:   #d1551c;
 
   /* --- Neutros --- */
   --color-white:   #ffffff;
-  --color-bg:      #f8f9fb;
+  --color-bg:      #faf5ec;
   --color-text:    #1a1a2e;
   --color-muted:   #5a6270;
-  --color-border:  #dde1e7;
+  --color-border:  #e4dccb;
 
   /* --- Status --- */
   --color-success: #16a34a;
@@ -114,7 +114,7 @@ address {
    HERO
    ======================== */
 .hero {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 60%, #1a73e8 100%);
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 55%, var(--color-primary-light) 100%);
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -146,7 +146,21 @@ address {
 }
 
 .logo-text {
-  font-size: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+}
+
+.logo-text .logo-line1 {
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--color-accent);
+  text-transform: uppercase;
+}
+
+.logo-text .logo-line2 {
+  font-size: 1.5rem;
   font-weight: 800;
   color: var(--color-white);
   letter-spacing: -.5px;
