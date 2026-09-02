@@ -12,10 +12,13 @@
 - [x] Substituir `WEBHOOK_URL` em **main.js** → `CONFIG.WEBHOOK_URL`
 - [x] Conectar o Make ao Pipefy
 - [x] Testar o envio com dados reais (lead de teste na Vercel → Make → Pipefy OK)
-- [ ] **PENDENTE:** hoje só estão mapeados no Pipefy os campos básicos (nome, nome_aluno, telefone, email).
-      Falta completar o mapeamento no Make para trazer também: `gclid`, `utm_source`, `utm_medium`,
-      `utm_campaign`, `utm_term`, `utm_content`, `serie`, `page_url`, `timestamp` — pra rastrear a origem
-      do lead (Google Ads) dentro do Pipefy.
+- [x] Criar campos no Pipefy (texto curto) para: GCLID, UTM Source, UTM Medium, UTM Campaign,
+      UTM Term, UTM Content, Série de Interesse, URL da Página, Data/Hora do Lead
+- [x] Mapear no Make (módulo Pipefy) cada campo novo com o correspondente do Webhook
+      (`gclid`, `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, `utm_content`, `serie`,
+      `page_url`, `timestamp`)
+- [x] Testar com `?gclid=TESTE123&utm_source=google&utm_medium=cpc&utm_campaign=matriculas` e
+      confirmar que os campos chegaram preenchidos no card do Pipefy
 
 ## 3. Identidade visual
 - [ ] Substituir as cores em **style.css** → bloco `:root` (variáveis `--color-primary`, `--color-accent`, etc.)
