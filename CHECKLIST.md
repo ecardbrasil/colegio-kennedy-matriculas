@@ -43,10 +43,12 @@
 - [ ] Definir ano das matrículas (ex.: 2026) na headline
 
 ## 5. SEO / Meta
-- [ ] Ajustar `<meta name="description">` com copy real
-- [ ] Adicionar `<link rel="canonical">` com a URL definitiva do domínio
+- [x] Ajustar `<meta name="description">` (já estava com copy real)
+- [x] Adicionar `<link rel="canonical">` com a URL definitiva: `https://www.colegiokennedy.top/`
 - [ ] Criar favicon (`assets/images/favicon.ico` ou `.svg`) e referenciar no `<head>`
 - [ ] Adicionar Open Graph tags para compartilhamento social (opcional)
+- [ ] **Confirmar**: página está com `<meta name="robots" content="noindex, nofollow">` — intencional
+      para landing page só de tráfego pago, mas confirmar que não deve ser indexada organicamente
 
 ## 6. Deploy no Vercel
 ```bash
@@ -69,9 +71,11 @@ vercel --prod
 ```
 
 ## 7. Domínio personalizado (Vercel)
-- [ ] Em vercel.com → projeto → Settings → Domains
-- [ ] Adicionar `matriculas.colegiokennedy.com.br` (ou domínio escolhido)
-- [ ] Atualizar DNS no registrador (CNAME → `cname.vercel-dns.com`)
+- [x] Em vercel.com → projeto → Settings → Domains → adicionado `colegiokennedy.top` e `www.colegiokennedy.top`
+- [x] Atualizado DNS na Hostgator (registro A do domínio raiz apontando pro IP da Vercel;
+      `www` já era CNAME pro domínio raiz, seguiu automaticamente)
+- [x] Confirmado "Valid Configuration" nos 3 domínios (raiz, www e o .vercel.app de fallback)
+- [x] `colegiokennedy.top` redireciona (308) para `www.colegiokennedy.top` (produção)
 
 ## 8. Google Ads
 - [ ] Configurar parâmetro de URL final: `{lpurl}?gclid={gclid}`
