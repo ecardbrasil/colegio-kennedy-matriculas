@@ -1,10 +1,12 @@
 # ✅ Checklist — Antes de Publicar
 
 ## 1. Google Tag Manager
-- [ ] Criar conta em tagmanager.google.com
-- [ ] Substituir `GTM-XXXXXXX` por seu ID real em **index.html** (2 ocorrências — script e noscript)
-- [ ] Configurar tag de conversão do Google Ads dentro do GTM
-- [ ] Ativar o trigger no evento `lead_form_submit`
+- [x] Criar conta em tagmanager.google.com (contêiner GTM-PKM2DPSS)
+- [x] Substituir `GTM-XXXXXXX` por `GTM-PKM2DPSS` em **index.html** (2 ocorrências — script e noscript)
+- [ ] Criar ação de conversão no Google Ads (Envio de formulário) e anotar ID (`AW-...`) e rótulo
+- [ ] Configurar tag "Google Ads - Conversão" no GTM com o acionador de evento personalizado `lead_form_submit`
+- [ ] Testar no modo Preview do GTM (tag deve disparar em "Tags Fired" ao enviar o formulário)
+- [ ] Publicar o contêiner no GTM (botão "Enviar")
 
 ## 2. Webhook do Make (Integromat)
 - [x] Criar cenário no Make com módulo "Webhook"
