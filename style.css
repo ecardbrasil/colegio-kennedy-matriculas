@@ -517,6 +517,18 @@ address {
   color: var(--color-muted);
 }
 
+.depoimento-video {
+  display: inline-block;
+  margin-top: .6rem;
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--color-accent-dark);
+}
+
+.depoimento-video:hover {
+  color: var(--color-accent);
+}
+
 /* ========================
    CTA SECUNDÁRIO
    ======================== */
