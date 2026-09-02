@@ -8,6 +8,7 @@
 const CONFIG = {
   // ⚠️  SUBSTITUIR pela URL real do webhook do Make
   WEBHOOK_URL: 'https://hook.us2.make.com/y8xbso3x3tz77mnn79whh9k7tk7vqhzb',
+  WHATSAPP_NUMBER: '5551981246336',
 };
 
 // ─── INICIALIZAÇÃO ────────────────────────────────────────────
@@ -143,6 +144,20 @@ function onSuccess(payload) {
     utm_medium:   payload.utm_medium,
     utm_campaign: payload.utm_campaign,
   });
+
+  redirectToWhatsApp(payload);
+}
+
+function redirectToWhatsApp(payload) {
+  const mensagem =
+    `Olá, Diego, me chamo ${payload.nome}, vim através do site do colégio ` +
+    `e gostaria de saber mais informações para ${payload.serie}.`;
+
+  const url = `https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(mensagem)}`;
+
+  setTimeout(() => {
+    window.location.href = url;
+  }, 1500);
 }
 
 function onError() {
