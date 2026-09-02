@@ -7,11 +7,15 @@
 - [ ] Ativar o trigger no evento `lead_form_submit`
 
 ## 2. Webhook do Make (Integromat)
-- [ ] Criar cenário no Make com módulo "Webhook"
-- [ ] Copiar a URL gerada
-- [ ] Substituir `WEBHOOK_URL` em **main.js** → `CONFIG.WEBHOOK_URL`
-- [ ] Conectar o Make ao CRM/planilha/e-mail desejado
-- [ ] Testar o envio com dados reais
+- [x] Criar cenário no Make com módulo "Webhook"
+- [x] Copiar a URL gerada
+- [x] Substituir `WEBHOOK_URL` em **main.js** → `CONFIG.WEBHOOK_URL`
+- [x] Conectar o Make ao Pipefy
+- [x] Testar o envio com dados reais (lead de teste na Vercel → Make → Pipefy OK)
+- [ ] **PENDENTE:** hoje só estão mapeados no Pipefy os campos básicos (nome, nome_aluno, telefone, email).
+      Falta completar o mapeamento no Make para trazer também: `gclid`, `utm_source`, `utm_medium`,
+      `utm_campaign`, `utm_term`, `utm_content`, `serie`, `page_url`, `timestamp` — pra rastrear a origem
+      do lead (Google Ads) dentro do Pipefy.
 
 ## 3. Identidade visual
 - [ ] Substituir as cores em **style.css** → bloco `:root` (variáveis `--color-primary`, `--color-accent`, etc.)
