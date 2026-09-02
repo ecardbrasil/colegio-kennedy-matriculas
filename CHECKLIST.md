@@ -3,10 +3,16 @@
 ## 1. Google Tag Manager
 - [x] Criar conta em tagmanager.google.com (contêiner GTM-PKM2DPSS)
 - [x] Substituir `GTM-XXXXXXX` por `GTM-PKM2DPSS` em **index.html** (2 ocorrências — script e noscript)
-- [ ] Criar ação de conversão no Google Ads (Envio de formulário) e anotar ID (`AW-...`) e rótulo
-- [ ] Configurar tag "Google Ads - Conversão" no GTM com o acionador de evento personalizado `lead_form_submit`
-- [ ] Testar no modo Preview do GTM (tag deve disparar em "Tags Fired" ao enviar o formulário)
-- [ ] Publicar o contêiner no GTM (botão "Enviar")
+- [x] Criar ação de conversão "Enviar formulário de lead" no Google Ads
+      (ID `AW-17633043754`, rótulo `4QvMCM_n1OwcEKrKi9hB`)
+- [x] Configurar tag "Google Ads - Conversão Lead Matrículas" no GTM com acionador de evento
+      personalizado `lead_form_submit`
+- [x] Configurar tag "Vinculador de conversões do Google Ads" (acionador All Pages)
+- [x] Testar no modo Preview do GTM/Tag Assistant — tag disparou ("Concluída") no evento `lead_form_submit`
+- [x] Publicar o contêiner no GTM (Versão 2 — publicada em 02/09/2026 por vinicius@colegiokennedy.com)
+- [x] Fazer merge do branch de desenvolvimento (`claude/landing-page-status-vznjg8`) para o branch de
+      produção (`claude/kennedy-landing-page-je9uds`) que a Vercel publica — sem isso o GTM nunca
+      chegaria ao site ao vivo
 
 ## 2. Webhook do Make (Integromat)
 - [x] Criar cenário no Make com módulo "Webhook"
