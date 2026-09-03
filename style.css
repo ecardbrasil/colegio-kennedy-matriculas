@@ -707,6 +707,48 @@ address {
 }
 
 /* ========================
+   ETAPAS DE ENSINO
+   ======================== */
+.etapas {
+  background: var(--color-white);
+}
+
+.etapas-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.etapa-item {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  transition: transform .2s, box-shadow .2s;
+}
+
+.etapa-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, .13);
+}
+
+.etapa-item img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.etapa-item figcaption {
+  padding: .85rem .75rem;
+  text-align: center;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: .95rem;
+  color: var(--color-primary);
+  background: var(--color-white);
+}
+
+/* ========================
    PROVA SOCIAL
    ======================== */
 .prova-social {
@@ -986,6 +1028,11 @@ address {
 
   .cards-grid {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .etapas-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
   }
 
   .cta-inner {

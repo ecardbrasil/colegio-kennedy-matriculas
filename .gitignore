@@ -1,0 +1,5 @@
+# Claude Code / ferramentas de agente (config local, não faz parte do site)
+.agents/
+.claude/
+CLAUDE.md
+skills-lock.json
