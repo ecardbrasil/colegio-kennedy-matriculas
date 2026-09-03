@@ -62,15 +62,66 @@ manualmente no Make/Pipefy antes que os dados dos filhos 2, 3 e 4 apareçam corr
 - [ ] Preencher endereço completo, telefone, e-mail e CNPJ no footer
 - [x] Definir ano das matrículas (2027) na headline
 - [ ] Trocar avatares placeholder (iniciais) da prova social ("4,9 · +300 avaliações no Google")
-      no form-card por fotos reais de avaliadores, quando disponíveis
+      no form-card por fotos reais de avaliadores — **usuário vai enviar essas fotos**
+- [ ] Usuário vai enviar as fotos reais dos depoimentos (Daniela/Aurora, Tielle/Antônio) para
+      eventualmente ilustrar a seção de prova social com imagem, não só texto/vídeo
 
 ## 5. SEO / Meta
-- [x] Ajustar `<meta name="description">` (já estava com copy real)
+- [x] Ajustar `<meta name="description">` (já estava com copy real; atualizado novamente para
+      incluir "58 anos" e ficar coerente com a nova headline)
 - [x] Adicionar `<link rel="canonical">` com a URL definitiva: `https://www.colegiokennedy.top/`
-- [ ] Criar favicon (`assets/images/favicon.ico` ou `.svg`) e referenciar no `<head>`
-- [ ] Adicionar Open Graph tags para compartilhamento social (opcional)
+- [x] Criar favicon e referenciar no `<head>` — usado `favicon colegio kennedy.webp` fornecido
+      pelo usuário, copiado para `assets/images/favicon.webp`, com `<link rel="icon">` e
+      `<link rel="apple-touch-icon">`
+- [x] Adicionar Open Graph tags para compartilhamento social — `og:title`/`og:description`
+      atualizados junto com a meta description
 - [ ] **Confirmar**: página está com `<meta name="robots" content="noindex, nofollow">` — intencional
       para landing page só de tráfego pago, mas confirmar que não deve ser indexada organicamente
+
+## 10. Rodada 2 de CRO/Copy (03/09/2026) — concluída
+Ver detalhes completos em HISTORICO.md, seção "Rodada 2 de CRO/Copy — grupos paralelos".
+- [x] Botão do CTA secundário alinhado com o texto do botão principal ("Quero garantir a vaga!")
+- [x] Aviso de escassez de vagas sem número específico (política do colégio não permite número)
+- [x] Selo discreto de tempo de resposta ("Tempo médio de resposta monitorado: 32 segundos"),
+      sem nome de auditor terceirizado fictício
+- [x] E-mail tornado opcional no formulário
+- [x] Label "Em qual série vai estudar?" trocado por "Em qual turma ou etapa vai estudar?"
+      (cobre melhor Berçário/Educação Infantil)
+- [x] CTA secundário reforça objeção de preço ("Conheça nossas condições e bolsas disponíveis")
+      e reforça prova social (4,9★ · +300 avaliações)
+- [x] Vídeo de depoimento embedado na seção de prova social via lite-embed (thumbnail + play,
+      sem custo de iframe no carregamento inicial)
+- [x] Títulos dos 5 cards de diferenciais reescritos com foco em benefício, não recurso
+- [x] Texto de privacidade do formulário vira link "Política de Privacidade" que abre modal
+      in-page (não navega para fora) — texto do modal é placeholder até existir política real
+- [x] CNPJ (`93.012.235/0001-84`, sem a palavra "CNPJ") e Instagram (`@colegiokennedypoa`, texto
+      não clicável, não navega para fora) adicionados ao footer
+- [x] CTA fixo (sticky) no rodapé da viewport, visível só em mobile
+- [x] Badge "58 anos de excelência em educação" destacado visualmente entre os selos do hero
+
+### Pendências registradas nesta rodada (não implementadas — aguardando input ou decisão futura)
+- [ ] **Redução de fricção do formulário — item de checklist, depende de automação no Make**:
+      simplificar o primeiro contato para nome+telefone apenas, perguntando dados do aluno
+      (nome/série) depois via WhatsApp em vez de no formulário inicial. Pertinente para reduzir
+      abandono, mas depende de configurar essa automação/fluxo dentro do Make antes — não é só
+      mudança de front-end, precisa desenhar o fluxo pós-WhatsApp primeiro.
+- [ ] **FAQ** — seção respondendo objeções comuns (documentos necessários, como funciona a bolsa,
+      transporte escolar, processo após o contato via WhatsApp). Ainda não implementada.
+- [ ] **Formulário multi-step / botão WhatsApp direto sem formulário** — duas ideias de redução de
+      fricção a alinhar juntas com a decisão de tirar e-mail/série do formulário inicial (ver item
+      acima) antes de implementar qualquer uma — evitar decidir isoladamente.
+- [ ] **Texto real da Política de Privacidade** — o modal implementado nesta rodada tem só um
+      texto placeholder ("em breve disponibilizaremos..."). Precisa de conteúdo jurídico real.
+- [ ] **Notificações "fake" de leads recentes** (ex.: "João de Porto Alegre acabou de solicitar
+      informações") para aumentar senso de urgência de preenchimento — ideia do usuário, ainda não
+      desenhada nem implementada.
+- [ ] **Mais fotos do colégio** — complementar a página com mais imagens reais do ambiente/espaços
+      do colégio, além das duas fotos atuais (logo e alunos-kennedy.webp). Usuário vai fornecer.
+- [ ] **Certificações/selos de autoridade** — pesquisar quais certificações o colégio possui (ex.
+      qualidade de ensino, segurança, parcerias) para adicionar como selo de autoridade na página.
+- [ ] **Elementos estratégicos adicionais de escassez/autoridade** — mapear outros pontos da
+      página onde se pode reforçar subjetivamente escassez e autoridade, além do que já foi
+      implementado nesta rodada (aviso de vagas + selo de resposta + badge de 58 anos).
 
 ## 6. Deploy no Vercel
 ```bash

@@ -208,6 +208,81 @@ realmente apareceu no Pipefy.
   fornecer (ver item 4 do CHECKLIST.md).
 - Nenhuma mudança em `main.js` — cache-busting (`?v=`) não precisou de bump.
 
+### 8. Rodada 2 de CRO/Copy — grupos paralelos — ✅ implementado (03/09/2026)
+Segunda leva de melhorias de CRO/copy, desta vez com o usuário pedindo execução paralela: 5 grupos
+de tarefas independentes, cada um implementado por um agente gerente (Sonnet 5, podendo delegar
+sub-passos simples a agentes Haiku) trabalhando em uma **git worktree isolada própria** (evita
+conflito de merge entre grupos editando os mesmos arquivos ao mesmo tempo, já que o projeto não
+tem build step — é HTML/CSS/JS monolítico). Fluxo usado: commit do estado pendente da rodada 1 →
+criação de 5 worktrees (`../ck-grupo-a` a `../ck-grupo-e`) a partir desse commit, cada uma numa
+branch nova (`claude/grupo-a-confianca` … `claude/grupo-e-footer`) → 5 agentes em paralelo → merge
+sequencial (A→B→C→D→E) na branch principal, feito manualmente por mim (orquestrador), resolvendo
+os conflitos que surgiram → worktrees e branches auxiliares removidas após o merge.
+
+**Grupo A — selo de confiança discreto** (`index.html`, `style.css`): adicionado `.response-badge`
+entre o botão de envio e o texto de privacidade, com texto "Tempo médio de resposta monitorado: 32
+segundos". Decisão importante: o usuário pediu inicialmente um selo estilo "auditoria de empresa
+terceirizada", mas confirmamos que não existe essa auditoria real — o texto ficou genérico, sem
+nome de auditor fictício (evita alegação verificável falsa), e discreto (`--color-muted`, sem
+pill/fundo chamativo), como pedido explicitamente.
+
+**Grupo B — redução de fricção do formulário** (`index.html`, `main.js`): e-mail tornado opcional
+(`required` removido, label "E-mail (opcional)", `validateForm()` só valida formato se preenchido);
+label "Em qual série vai estudar?" trocado por "Em qual turma ou etapa vai estudar?" em dois
+lugares que precisam ficar idênticos — bloco estático do Aluno 1 em `index.html` e o template
+`criarBlocoAlunoHTML()` em `main.js` (blocos 2-4, dinâmicos).
+
+**Grupo C — copy de CTA, objeções e diferenciais** (`index.html`, `style.css`): botão do CTA
+secundário alinhado com o botão principal ("Quero garantir a vaga!"); parágrafo do CTA secundário
+menciona bolsas/condições sem revelar valores; reforço de prova social citando "300 famílias · 4,9★
+no Google" no CTA secundário; vídeo de depoimento (`8DBYEh701Cs`) embedado na seção de prova social
+via **lite-embed/facade** (thumbnail `hqdefault.jpg` + botão play SVG; iframe real só é criado no
+clique, via `onclick="this.outerHTML=...`) — decisão deliberada para não pagar o custo de
+performance/LCP de um `<iframe>` do YouTube carregado antecipadamente; títulos dos 5 cards de
+diferenciais reescritos com foco em benefício (ex. "Ambientes Inovadores" → "Aprender Fazendo, Não
+Só Decorando").
+
+**Grupo D — escassez, CTA sticky e hierarquia visual** (`index.html`, `style.css`): aviso de
+escassez **sem número específico de vagas** (`.hero-escassez`, com um indicador de pulso puramente
+CSS via `@keyframes` — restrição explícita do usuário, contra política do colégio revelar número de
+vagas restantes); CTA fixo (`sticky-cta`) no rodapé da viewport, visível só em mobile
+(`@media max-width:768px`), reaproveitando `scrollToForm()` já existente (nenhum JS novo); badge
+"58 anos de excelência em educação" destacado visualmente entre os 4 selos do hero (classe
+`hero-badges-destaque`, cor de destaque + peso maior), reforçando a mesma mensagem da headline.
+
+**Grupo E — footer, modal, meta e favicon** (`index.html`, `style.css`, `main.js`,
+`assets/images/favicon.webp`): favicon real (fornecido pelo usuário, arquivo
+`favicon colegio kennedy.webp`) substituindo o SVG inline gerado, com `apple-touch-icon` também;
+`<title>`/meta description/Open Graph atualizados para incluir "58 anos" (coerência com a nova
+headline); texto de privacidade do formulário virou um botão "Política de Privacidade" que abre um
+**modal in-page** (`#modalPolitica`, `setupModal()` novo em `main.js`) — o lead não navega para
+fora da landing page; conteúdo do modal é só um placeholder (política real de privacidade ainda não
+existe/foi aprovada); CNPJ (`93.012.235/0001-84`, **sem a palavra "CNPJ"**, por pedido explícito do
+usuário) e Instagram (`@colegiokennedypoa`, como `<span>` não clicável — não deve tirar o lead da
+página) adicionados ao footer.
+
+**Conflitos de merge resolvidos manualmente** (só no merge do Grupo E, os demais foram
+fast-forward/auto-merge limpos): o parágrafo `.form-privacy` foi tocado tanto pelo Grupo A (que
+inseriu o `.response-badge` logo acima) quanto pelo Grupo E (que reescreveu o próprio texto do
+parágrafo para incluir o link do modal) — resolvido mantendo os dois: o badge do Grupo A ficou, e o
+texto do Grupo E (com o link) foi usado. Aproveitei a resolução do conflito para também corrigir uma
+inconsistência que ficaria se eu só pegasse o texto do Grupo E: o link "Política de Privacidade" já
+existente no rodapé do footer (`<a href="/privacidade">`) ainda navegava para uma URL externa
+inexistente — troquei por um segundo botão (`#btnPoliticaFooter`) que abre o mesmo modal, e ajustei
+`setupModal()` em `main.js` para escutar os dois botões (`#btnPolitica` do formulário e
+`#btnPoliticaFooter` do rodapé). O conflito em `style.css` era puramente aditivo (dois blocos novos
+sem sobreposição) — resolvido removendo os marcadores e mantendo ambos.
+
+**Cache-busting**: `main.js` foi alterado pelos Grupos B e E — `main.js?v=2` → `main.js?v=3` em
+`index.html` (commit separado, após o merge de todos os grupos), conforme convenção do
+[CLAUDE.md](CLAUDE.md).
+
+**Pendências desta rodada** — ver seção "10. Rodada 2 de CRO/Copy" do `CHECKLIST.md` para a lista
+completa (FAQ, texto real da política de privacidade, notificações fake de leads recentes, mais
+fotos do colégio, busca de certificações/selos de autoridade, fotos reais para os avatares de
+prova social e para os depoimentos, redução adicional de fricção do form dependente de automação
+no Make, e alinhamento futuro entre form multi-step vs. botão WhatsApp direto).
+
 ## Como retomar
 
 1. Ler o `CHECKLIST.md` pra ver o estado atual item a item
