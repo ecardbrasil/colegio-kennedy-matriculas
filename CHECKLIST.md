@@ -28,6 +28,24 @@
 - [x] Testar com `?gclid=TESTE123&utm_source=google&utm_medium=cpc&utm_campaign=matriculas` e
       confirmar que os campos chegaram preenchidos no card do Pipefy
 
+## 2.1 Suporte a múltiplos filhos (Pipefy + Make) — PENDENTE, fazer antes do deploy valer
+O formulário agora envia até 4 alunos por card (1 card por família). É preciso configurar
+manualmente no Make/Pipefy antes que os dados dos filhos 2, 3 e 4 apareçam corretamente:
+- [ ] No Pipefy (Pipe "CK 2027", fase "1. Novo Contato"), criar os campos:
+      `Nome do Aluno 2` / `Série de Interesse 2`, `Nome do Aluno 3` / `Série de Interesse 3`,
+      `Nome do Aluno 4` / `Série de Interesse 4` (texto curto, mesmo padrão dos campos existentes)
+- [ ] Criar `Quantidade de Alunos` como campo **numérico** (não texto curto — precisa somar em
+      relatório)
+- [ ] Criar `Resumo dos Alunos` como texto longo/parágrafo
+- [ ] No Make, mapear no módulo Pipefy os novos campos do webhook: `nome_aluno_2`, `serie_2`,
+      `nome_aluno_3`, `serie_3`, `nome_aluno_4`, `serie_4`, `quantidade_alunos`, `resumo_alunos`
+- [ ] Salvar o cenário e **reabrir pra confirmar que o mapeamento persistiu** (já aconteceu de
+      sumir antes — ver HISTORICO.md)
+- [ ] Testar com um lead de teste com 2+ filhos e conferir no card do Pipefy: nomes, séries,
+      `Quantidade de Alunos` e o resumo legível
+- [ ] Configurar um relatório no Pipefy que **some** o campo `Quantidade de Alunos` — esse número
+      é "total de matrículas", diferente da contagem de cards ("total de leads/famílias")
+
 ## 3. Identidade visual
 - [ ] Substituir as cores em **style.css** → bloco `:root` (variáveis `--color-primary`, `--color-accent`, etc.)
 - [ ] Adicionar logo em `assets/images/logo.webp` (WebP, máx. 200×80px)

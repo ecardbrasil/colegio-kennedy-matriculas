@@ -111,12 +111,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
 
         <div class="form-group">
-          <label for="nome_aluno">Nome do aluno *</label>
-          <input type="text" id="nome_aluno" name="nome_aluno" placeholder="Ex: João Silva" required />
-          <span class="error-msg" id="err-nome_aluno"></span>
-        </div>
-
-        <div class="form-group">
           <label for="telefone">WhatsApp *</label>
           <div class="phone-input">
             <span class="phone-prefix">+55</span>
@@ -131,46 +125,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <span class="error-msg" id="err-email"></span>
         </div>
 
-        <div class="form-group">
-          <label for="serie">Em qual série seu filho vai estudar? *</label>
-          <select id="serie" name="serie" required>
-            <option value="" disabled selected>Selecione a etapa</option>
-
-            <optgroup label="👶 Berçário">
-              <option value="Berçário">Berçário</option>
-            </optgroup>
-
-            <optgroup label="🧒 Educação Infantil">
-              <option value="1 ano de idade">1 ano de idade</option>
-              <option value="2 anos de idade">2 anos de idade</option>
-              <option value="3 anos de idade">3 anos de idade</option>
-              <option value="4 anos de idade">4 anos de idade</option>
-              <option value="5 anos de idade">5 anos de idade</option>
-            </optgroup>
-
-            <optgroup label="📗 Ensino Fundamental — Anos Iniciais (1º ao 5º)">
-              <option value="1 ano do Fundamental">1º ano do Fundamental</option>
-              <option value="2 ano do Fundamental">2º ano do Fundamental</option>
-              <option value="3 ano do Fundamental">3º ano do Fundamental</option>
-              <option value="4 ano do Fundamental">4º ano do Fundamental</option>
-              <option value="5 ano do Fundamental">5º ano do Fundamental</option>
-            </optgroup>
-
-            <optgroup label="📘 Ensino Fundamental — Anos Finais (6º ao 9º)">
-              <option value="6 ano do Fundamental">6º ano do Fundamental</option>
-              <option value="7 ano do Fundamental">7º ano do Fundamental</option>
-              <option value="8 ano do Fundamental">8º ano do Fundamental</option>
-              <option value="9 ano do Fundamental">9º ano do Fundamental</option>
-            </optgroup>
-
-            <optgroup label="🎓 Ensino Médio">
-              <option value="1 ano do Ensino Médio">1º ano do Ensino Médio</option>
-              <option value="2 ano do Ensino Médio">2º ano do Ensino Médio</option>
-              <option value="3 ano do Ensino Médio">3º ano do Ensino Médio</option>
-            </optgroup>
-          </select>
-          <span class="error-msg" id="err-serie"></span>
+        <div class="alunos-wrapper" id="alunosWrapper">
+          <div class="aluno-block" data-aluno-index="1">
+            <div class="aluno-block-header">
+              <span class="aluno-block-title">Aluno 1</span>
+            </div>
+            <div class="form-group">
+              <label for="nome_aluno_1">Nome do aluno *</label>
+              <input type="text" id="nome_aluno_1" name="nome_aluno_1" placeholder="Ex: João Silva" required />
+              <span class="error-msg" id="err-nome_aluno_1"></span>
+            </div>
+            <div class="form-group">
+              <label for="serie_1">Em qual série vai estudar? *</label>
+              <select id="serie_1" name="serie_1" required></select>
+              <span class="error-msg" id="err-serie_1"></span>
+            </div>
+          </div>
         </div>
+
+        <button type="button" class="btn-add-aluno" id="btnAddAluno">+ Adicionar outro filho</button>
 
         <button type="submit" class="btn-submit" id="btnSubmit">
           <span class="btn-text">Quero garantir a vaga!</span>
@@ -180,11 +153,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <p class="form-privacy">🔒 Seus dados estão seguros. Não enviamos spam.</p>
       </form>
 
-      <!-- Estado de sucesso -->
+      <!-- Estado de sucesso / redirecionamento para o WhatsApp -->
       <div class="form-success" id="formSuccess" hidden>
+        <div class="success-spinner" aria-hidden="true"></div>
         <div class="success-icon">🎉</div>
         <h3>Recebemos sua solicitação!</h3>
         <p>Nossa equipe entrará em contato em breve pelo WhatsApp ou e-mail informado.</p>
+        <p class="success-redirect">Redirecionando você para o WhatsApp...</p>
       </div>
 
       <!-- Estado de erro -->
