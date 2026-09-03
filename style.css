@@ -944,3 +944,59 @@ address {
 [hidden] {
   display: none !important;
 }
+
+/* ========================
+   CTA SECUNDÁRIO: REFORÇO DE PROVA SOCIAL
+   ======================== */
+.cta-social-proof {
+  margin-top: .5rem;
+  opacity: .9;
+}
+
+/* ========================
+   VÍDEO EMBEDADO (LITE EMBED / FACADE)
+   ======================== */
+.video-embed {
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.video-embed-thumb {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: #000;
+  background-size: cover;
+  background-position: center;
+  border: 0;
+  border-radius: 12px;
+  cursor: pointer;
+  overflow: hidden;
+  padding: 0;
+}
+
+.video-embed-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .15s ease;
+}
+
+.video-embed-thumb:hover .video-embed-play,
+.video-embed-thumb:focus-visible .video-embed-play {
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+.video-embed-iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: 12px;
+  display: block;
+}
