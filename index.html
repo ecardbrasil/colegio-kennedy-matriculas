@@ -42,6 +42,11 @@
 </head>
 <body>
 
+<!-- CTA fixo (somente mobile) -->
+<div class="sticky-cta">
+  <a href="#formulario" class="btn-sticky-cta" onclick="scrollToForm(event)">Quero garantir a vaga!</a>
+</div>
+
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PKM2DPSS"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -76,11 +81,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           Matrículas abertas para 2027 — do Berçário ao Ensino Médio, em Porto Alegre.
           Vagas limitadas — não perca essa oportunidade!
         </p>
+
+        <!-- Aviso de escassez (sem número específico de vagas) -->
+        <p class="hero-escassez">
+          <span class="hero-escassez-pulso" aria-hidden="true"></span>
+          A procura por vagas 2027 já começou — garanta a sua
+        </p>
       </div>
 
       <!-- Selos de confiança -->
       <ul class="hero-badges">
-        <li><svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> 58 anos de excelência em educação</li>
+        <li class="hero-badges-destaque"><svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> 58 anos de excelência em educação</li>
         <li><svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Ambientes de aprendizagem inovadores</li>
         <li><svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Turno Integral das 7h às 19h</li>
         <li><svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Corpo docente especializado</li>
