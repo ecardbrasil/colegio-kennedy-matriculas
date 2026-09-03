@@ -283,6 +283,124 @@ fotos do colégio, busca de certificações/selos de autoridade, fotos reais par
 prova social e para os depoimentos, redução adicional de fricção do form dependente de automação
 no Make, e alinhamento futuro entre form multi-step vs. botão WhatsApp direto).
 
+### 9. Rodada 3, ajustes de UI/UX e formulário em 2 etapas, ✅ implementado (03/09/2026)
+Terceira leva de melhorias, pedida pelo usuário como uma lista de 13 itens (visual, copy, formulário,
+mobile, prova social), com execução paralela por 3 agentes gerentes (Sonnet 5/Opus 5) trabalhando
+na MESMA working tree (não em worktrees isoladas como na Rodada 2), cada um com um escopo de
+seções/classes CSS exclusivo e não sobreposto em `index.html`/`style.css`/`main.js`, para evitar
+conflito de edição simultânea no mesmo arquivo. Dois dos três agentes caíram por sobrecarga
+temporária da API (erro 529) nas duas primeiras tentativas e foram relançados com o mesmo escopo
+(no modelo padrão, após a segunda queda no Opus) até concluir; nenhuma mudança parcial de uma
+tentativa que falhou ficou no working tree (main.js só é tocado no fim de cada tarefa bem-sucedida).
+
+**Agente 1, logo, hero e travessões** (`index.html`, `style.css`, `CLAUDE.md`): removido o fundo
+branco atrás da logomarca no cabeçalho e no rodapé (`background`/`padding`/`border-radius` em
+`.logo-wrap` e `.footer-logo-img`) — a logo (`assets/images/logo.png`) já tinha transparência real
+(PNG RGBA), o fundo branco era só CSS; ícone SVG removido de `.form-title` (ficou só o texto
+"Solicite informações grátis"); foto `alunos-kennedy.webp` movida de dentro do form-card
+(`.form-photo-badge`, removida) para a seção de Diferenciais, num novo wrapper `.diferenciais-intro`
+ao lado do título; `.hero-sub` reescrito em duas linhas com `<br />`, invertendo a ordem para
+"Do Berçário ao Ensino Médio em Porto Alegre" primeiro e "Matrículas abertas para 2027..." depois;
+travessões (— e –) removidos de praticamente todo o texto visível da página (meta tags, title,
+alt texts, headline, endereço no footer). Nova convenção adicionada ao `CLAUDE.md`: nenhum texto
+visível da página pode usar travessão.
+
+**Agente 2, barra de vagas e cards** (`index.html`, `style.css`, `main.js`): `.hero-escassez`
+redesenhado de texto com bolinha pulsante para uma barra de progresso visual
+(`.hero-escassez-barra`/`.hero-escassez-barra-fill`), preenchendo de 0% a 75% com transição suave ao
+entrar em viewport (`animateBarraEscassez()`, mesmo padrão de `IntersectionObserver` que
+`animateCounters()` já usava) e um shimmer sutil contínuo depois de preenchida — o número 75% nunca
+aparece como texto, só visualmente; títulos dos 5 cards de Diferenciais convertidos de Title Case
+para sentence case e `font-size` aumentado; figcaptions dos cards de Etapas (Educação Infantil,
+Ensino Fundamental, Ensino Médio) quebradas em duas linhas com `<br />` para alinhar visualmente com
+"Berçário"; 4º card adicionado a `.numeros-grid` ("+300 avaliações positivas de famílias") pra
+completar um grid 2×2 limpo em mobile (antes 3 cards deixavam um "sobrando" sozinho).
+
+**Agente 3, formulário em 2 etapas, política de privacidade e CTA** (`index.html`, `style.css`,
+`main.js`, `politica-privacidade.html` novo): formulário dividido visualmente em `#formStep1`
+(nome, telefone, e-mail opcional) e `#formStep2` (aluno(s) + submit), ambos dentro do MESMO
+`<form id="leadForm">` — decisão importante: `buildPayload()` continua gerando exatamente os mesmos
+campos (`nome_aluno_1..4`/`serie_1..4`, legados, gclid/UTMs) e o POST pro Make continua sendo um
+único submit final, então a integração com o Pipefy (pipe "CK 2027") não foi alterada, só a
+apresentação. Validação de `validateForm()` foi dividida em `validateStep1()`/`validateStep2()`
+(reaproveitando `isValidPhone`/`isValidEmail` já existentes) sem duplicar lógica;
+`handleSubmit()` revalida a etapa 1 no envio final e volta pra ela se falhar, já que fica `hidden`
+durante o preenchimento da etapa 2. Botão "Voltar" adicionado na etapa 2. Página real
+`politica-privacidade.html` criada com conteúdo LGPD completo (controlador, dados coletados,
+finalidade, base legal, compartilhamento, retenção, direitos do titular, cookies/GTM/gclid/UTM);
+o modal `#modalPolitica` (que só tinha texto placeholder) foi removido, e o link "Política de
+Privacidade" (form e footer) agora aponta direto pra essa página nova. Título "Por que escolher o
+Colégio Kennedy?" corrigido no mobile com um `<br class="title-break">` (só visível `<768px`) pra
+quebrar como "Por que escolher o" / "Colégio Kennedy" juntos, em vez de deixar "Kennedy" sozinho.
+CTA "Quero garantir a vaga!" trocado por **"Garantir vaga para 2027"** de forma consistente em todos
+os botões (sticky mobile, avançar etapa 1, submit final da etapa 2, CTA secundário) — decisão de
+copy tomada pelo agente por delegação explícita do usuário.
+
+**Cache-busting**: `main.js` foi alterado pelos Agentes 2 e 3, `main.js?v=3` → `v=4` → `v=5` em
+`index.html` (cada agente verificou a versão atual antes de bumpar, evitando colisão).
+
+**Limitação encontrada**: o usuário pediu para acessar o Google Chrome local dele (Google Maps e
+Facebook) pra extrair avaliações reais (nome, foto, texto, estrelas) do colégio e usar como prova
+social. Não existe ferramenta de automação de navegador/computador disponível nesta sessão/ambiente
+— essa etapa não foi feita. Fica pendente o usuário copiar manualmente essas informações (e salvar
+as fotos em `assets/images/`) para serem incorporadas à seção de depoimentos numa próxima rodada,
+junto com o redesenho pedido do card de depoimentos (versão mais minimalista, com mais avaliações).
+
+**Pendências desta rodada** — ver seção "11. Rodada 3" do `CHECKLIST.md`.
+
+### 10. Rodada 4, ajustes de UI/UX e formulário — ✅ implementado (03/09/2026)
+Lista de 11 itens pedidos diretamente pelo usuário, implementados em `index.html`, `style.css` e
+`main.js` (cache-busting `v=5` → `v=6`).
+
+**Formulário**: texto "Etapa 1 de 2"/"Etapa 2 de 2" removido (ficava redundante com os dots de
+progresso); `#formProgress` agora começa `hidden` e só é exibido em `goToStep(2)` (`main.js`), então
+os dots só aparecem na etapa 2, nunca na 1. Título "Solicite informações grátis" removido do
+`.form-title` (o próprio `<p>` foi removido do HTML). Label do campo de telefone trocado de
+"WhatsApp" para "WhatsApp/Telefone". Botões de avançar/enviar do formulário e o botão do CTA
+secundário (antes do footer) trocaram de "Garantir vaga para 2027" para **"Tirar dúvidas no
+WhatsApp"**, com os botões do formulário maiores (`.btn-submit-lg`, padding e `font-size` maiores).
+O botão sticky mobile não foi alterado (não fazia parte do pedido).
+
+**Barra de procura por vagas**: `.hero-escassez-barra` centralizada com `margin: 0 auto` (antes
+alinhava à esquerda dentro da coluna flex); preenchimento continua indo de 0 a 70% (valor de
+`data-fill` ajustado de 75 para 70) e a animação já era disparada só uma vez, na primeira vez que o
+elemento entra na viewport (`animateBarraEscassez()` com `IntersectionObserver` + `unobserve` após o
+primeiro trigger, padrão que já existia desde a Rodada 3) — nenhuma mudança de comportamento
+necessária ali, só a correção de centralização. Adicionado texto pequeno "Última atualização em:
+[data de hoje]" abaixo da barra (`setDataAtualizacao()`, novo em `main.js`, formata
+`new Date().toLocaleDateString('pt-BR')` no `#dataAtualizacao`).
+
+**Seção "Por que escolher o Colégio Kennedy?"**: a foto `alunos-kennedy.webp` (que estava pequena,
+num card de 180px ao lado do texto) virou o **fundo em tela cheia** da seção inteira
+(`.diferenciais-bg`, `position: absolute; inset: 0`, atrás do conteúdo via `z-index: -1` +
+`isolation: isolate` no container), com um overlay em gradiente escuro (`.diferenciais-bg-overlay`,
+tons do azul da marca) para manter o título e subtítulo (agora em branco) legíveis sobre a foto. Os
+5 cards de diferenciais (fundo branco) continuam com bom contraste por cima do fundo escuro. CSS
+morto de `.diferenciais-foto`/`.diferenciais-intro-texto` removido (não existem mais no HTML).
+
+**Etapas de ensino**: título quebrado em duas linhas "Do Berçário" / "ao Ensino Médio" com `<br />`.
+Cada card de etapa (Berçário, Educação Infantil, Ensino Fundamental, Ensino Médio) ganhou uma
+descrição curta abaixo do título (`.etapa-item-desc`), usando os textos fornecidos pelo colégio no
+arquivo `informações gerais colegio kennedy` (arquivo de texto puro, apesar de estar sem extensão
+"parecendo" imagem): "Acolhimento, vínculo e estimulação sensorial." / "Brincar, explorar e
+descobrir o mundo." / "Alfabetização sólida e curiosidade científica." / "Preparação para vestibular
+e para a vida.". Cada `<figure>` virou um `<a href="#formulario" onclick="scrollToForm(event)">`
+envolvendo a figura inteira, reaproveitando a função `scrollToForm()` já existente, para que clicar
+em qualquer card leve direto ao formulário.
+
+**Depoimentos em vídeo**: existiam 2 depoimentos em texto (Daniela/Aurora e Tielle/Antônio, cada um
+já linkando pro respectivo Short do YouTube), mas só o vídeo da Daniela (`8DBYEh701Cs`) tinha um
+player lite-embed abaixo. Adicionado um segundo lite-embed para o vídeo da Tielle (`w6yD5ibj5vg`),
+lado a lado com o da Daniela em `.video-embed-grid` (grid responsivo, 1 coluna em telas estreitas).
+
+**Verificação**: testado localmente servindo a pasta com `python -m http.server` e navegando via
+Chrome headless (Chrome já estava instalado na máquina; não há Playwright/Puppeteer neste ambiente,
+então a automação foi feita via Chrome DevTools Protocol bruto por um script Node temporário) —
+confirmado visualmente: fundo em tela cheia da seção de diferenciais com bom contraste, cards de
+etapas com descrição e links funcionando, barra centralizada com o texto de atualização, os dois
+vídeos de depoimento lado a lado, e a etapa 2 do formulário mostrando os dots (etapa 1 sem texto
+"Etapa X de 2" e sem dots).
+
 ## Como retomar
 
 1. Ler o `CHECKLIST.md` pra ver o estado atual item a item

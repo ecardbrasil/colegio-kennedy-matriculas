@@ -100,28 +100,75 @@ Ver detalhes completos em HISTORICO.md, seção "Rodada 2 de CRO/Copy — grupos
 - [x] Badge "58 anos de excelência em educação" destacado visualmente entre os selos do hero
 
 ### Pendências registradas nesta rodada (não implementadas — aguardando input ou decisão futura)
-- [ ] **Redução de fricção do formulário — item de checklist, depende de automação no Make**:
-      simplificar o primeiro contato para nome+telefone apenas, perguntando dados do aluno
-      (nome/série) depois via WhatsApp em vez de no formulário inicial. Pertinente para reduzir
-      abandono, mas depende de configurar essa automação/fluxo dentro do Make antes — não é só
-      mudança de front-end, precisa desenhar o fluxo pós-WhatsApp primeiro.
 - [ ] **FAQ** — seção respondendo objeções comuns (documentos necessários, como funciona a bolsa,
       transporte escolar, processo após o contato via WhatsApp). Ainda não implementada.
-- [ ] **Formulário multi-step / botão WhatsApp direto sem formulário** — duas ideias de redução de
-      fricção a alinhar juntas com a decisão de tirar e-mail/série do formulário inicial (ver item
-      acima) antes de implementar qualquer uma — evitar decidir isoladamente.
-- [ ] **Texto real da Política de Privacidade** — o modal implementado nesta rodada tem só um
-      texto placeholder ("em breve disponibilizaremos..."). Precisa de conteúdo jurídico real.
 - [ ] **Notificações "fake" de leads recentes** (ex.: "João de Porto Alegre acabou de solicitar
       informações") para aumentar senso de urgência de preenchimento — ideia do usuário, ainda não
       desenhada nem implementada.
 - [ ] **Mais fotos do colégio** — complementar a página com mais imagens reais do ambiente/espaços
-      do colégio, além das duas fotos atuais (logo e alunos-kennedy.webp). Usuário vai fornecer.
+      do colégio, além das fotos atuais. Usuário vai fornecer.
 - [ ] **Certificações/selos de autoridade** — pesquisar quais certificações o colégio possui (ex.
       qualidade de ensino, segurança, parcerias) para adicionar como selo de autoridade na página.
-- [ ] **Elementos estratégicos adicionais de escassez/autoridade** — mapear outros pontos da
-      página onde se pode reforçar subjetivamente escassez e autoridade, além do que já foi
-      implementado nesta rodada (aviso de vagas + selo de resposta + badge de 58 anos).
+
+## 11. Rodada 3 de CRO/Copy/UX (03/09/2026) — concluída
+Ver detalhes completos em HISTORICO.md, seção "Rodada 3, ajustes de UI/UX e formulário em 2 etapas".
+- [x] Fundo branco removido de trás da logomarca no cabeçalho e no rodapé (a logo já tinha
+      transparência real no PNG; o retângulo branco era CSS em `.logo-wrap`/`.footer-logo-img`)
+- [x] Ícone SVG removido do título "Solicite informações grátis" no form
+- [x] Foto de alunos (`alunos-kennedy.webp`) movida do card do formulário para a seção de
+      Diferenciais, ao lado do título "Por que escolher o Colégio Kennedy?"
+- [x] Hero reescrito: ordem invertida para "Do Berçário ao Ensino Médio em Porto Alegre" primeiro,
+      depois "Matrículas abertas para 2027", em duas linhas
+- [x] Todos os travessões (— e –) removidos de todo texto visível da página; nova convenção
+      adicionada ao CLAUDE.md proibindo travessões em qualquer texto futuro
+- [x] Aviso de escassez trocado de texto com bolinha pulsante para barra de progresso visual
+      animada (preenchimento 75%, sem mostrar o número, com shimmer sutil indicando atividade)
+- [x] Títulos dos 5 cards de diferenciais convertidos de Title Case para sentence case e aumentados
+- [x] Figcaptions dos cards de etapas (Educação Infantil, Ensino Fundamental, Ensino Médio) quebradas
+      em duas linhas para alinhar com "Berçário"
+- [x] 4º card adicionado à grid de números ("+300 avaliações positivas de famílias") para completar
+      o grid 2x2 em mobile
+- [x] Formulário dividido em 2 etapas visuais (dados do responsável → dados do(s) aluno(s)), sem
+      alterar `buildPayload()` nem o fluxo de submit único para o Make/Pipefy
+- [x] Página real de Política de Privacidade criada (`politica-privacidade.html`, conteúdo LGPD
+      completo), substituindo o modal placeholder
+- [x] Título "Por que escolher o Colégio Kennedy?" corrigido no mobile para quebrar como "Por que
+      escolher o" / "Colégio Kennedy" (antes quebrava "Kennedy" sozinho)
+- [x] CTA "Quero garantir a vaga!" trocado por "Garantir vaga para 2027" em todos os botões
+      (sticky mobile, avançar etapa 1, submit final, CTA secundário)
+
+### Pendências desta rodada
+- [ ] **Avaliações reais do Google/Facebook** — usuário pediu para extrair nome, foto, texto e
+      nota de avaliações do Google Maps e Facebook do colégio para adicionar à seção de
+      depoimentos. Não foi possível: não há ferramenta de automação de navegador/computador
+      disponível nesta sessão. Usuário precisa copiar manualmente (texto + nome + estrelas, e
+      salvar as fotos em `assets/images/`) e enviar para serem incorporadas.
+- [ ] **Redesenho da seção de depoimentos** — usuário pediu para tornar o card de aspas mais
+      minimalista e adicionar mais depoimentos reais (removendo qualquer avaliação do Google que
+      não seja de família real) assim que as avaliações acima forem coletadas. Ainda não feito,
+      depende do item anterior.
+
+## 12. Rodada 4 de UI/UX e formulário (03/09/2026) — concluída
+Ver detalhes completos em HISTORICO.md, seção "Rodada 4".
+- [x] Texto "Etapa 1 de 2" / "Etapa 2 de 2" removido do formulário; os dots de progresso agora só
+      aparecem na etapa 2 (ficam ocultos na etapa 1)
+- [x] Barra de "vagas em alta procura" centralizada; preenchimento (0→70%) só anima na primeira
+      vez que o usuário vê a barra (`IntersectionObserver`, já existia, mantido)
+- [x] Texto pequeno "Última atualização em: [data de hoje]" adicionado abaixo da barra
+      (`setDataAtualizacao()` em main.js, formata a data atual em pt-BR)
+- [x] Texto "Solicite informações grátis" removido do formulário
+- [x] Label do campo trocado de "WhatsApp" para "WhatsApp/Telefone"
+- [x] Texto dos botões de envio do formulário e do CTA secundário (próximo ao footer) trocado de
+      "Garantir vaga para 2027" para "Tirar dúvidas no WhatsApp"; botões do formulário aumentados
+      (`.btn-submit-lg`)
+- [x] Seção "Por que escolher o Colégio Kennedy?" redesenhada: foto (`alunos-kennedy.webp`) agora é
+      o fundo em tela cheia da seção, com overlay em gradiente escuro para manter o texto legível
+- [x] Título da seção de etapas quebrado em duas linhas: "Do Berçário" / "ao Ensino Médio"
+- [x] Descrição de cada etapa (Berçário, Educação Infantil, Ensino Fundamental, Ensino Médio)
+      adicionada abaixo do título de cada card, usando os textos fornecidos pelo colégio
+- [x] Cards de etapas agora são links (`<a href="#formulario">`) que levam direto ao formulário
+- [x] Segundo vídeo de depoimento (Tielle/Antônio, `w6yD5ibj5vg`) adicionado como lite-embed ao
+      lado do vídeo da Daniela — antes só o vídeo da Daniela tinha player embedado
 
 ## 6. Deploy no Vercel
 ```bash

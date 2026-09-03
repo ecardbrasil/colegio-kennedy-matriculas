@@ -8,11 +8,11 @@
   <link rel="canonical" href="https://www.colegiokennedy.top/" />
   <link rel="icon" href="assets/images/favicon.webp" type="image/webp" />
   <link rel="apple-touch-icon" href="assets/images/favicon.webp" />
-  <meta property="og:title" content="58 Anos de Excelência – Matrículas 2027 Abertas – Colégio Kennedy" />
+  <meta property="og:title" content="58 Anos de Excelência. Matrículas 2027 Abertas. Colégio Kennedy" />
   <meta property="og:description" content="58 anos de excelência em educação, do Berçário ao Ensino Médio em Porto Alegre. Solicite informações e garanta a vaga do seu filho." />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="pt_BR" />
-  <title>Matrículas 2027 – 58 Anos de Excelência – Colégio Kennedy</title>
+  <title>Matrículas 2027, 58 Anos de Excelência, Colégio Kennedy</title>
 
   <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -45,7 +45,7 @@
 
 <!-- CTA fixo (somente mobile) -->
 <div class="sticky-cta">
-  <a href="#formulario" class="btn-sticky-cta" onclick="scrollToForm(event)">Quero garantir a vaga!</a>
+  <a href="#formulario" class="btn-sticky-cta" onclick="scrollToForm(event)">Garantir vaga para 2027</a>
 </div>
 
 <!-- Google Tag Manager (noscript) -->
@@ -66,7 +66,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="logo-wrap">
           <img
             src="assets/images/logo.png"
-            alt="Colégio Kennedy — do Berçário ao Ensino Médio"
+            alt="Colégio Kennedy, do Berçário ao Ensino Médio"
             width="150"
             height="106"
             class="logo"
@@ -79,15 +79,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </h1>
 
         <p class="hero-sub">
-          Matrículas abertas para 2027 — do Berçário ao Ensino Médio, em Porto Alegre.
-          Vagas limitadas — não perca essa oportunidade!
+          Do Berçário ao Ensino Médio em Porto Alegre.<br />
+          Matrículas abertas para 2027. Vagas limitadas, garanta a sua agora!
         </p>
 
         <!-- Aviso de escassez (sem número específico de vagas) -->
-        <p class="hero-escassez">
-          <span class="hero-escassez-pulso" aria-hidden="true"></span>
-          A procura por vagas 2027 já começou — garanta a sua
-        </p>
+        <div class="hero-escassez" aria-label="Vagas para 2027 em alta procura">
+          <p class="hero-escassez-label">Vagas para 2027 em alta procura</p>
+          <div class="hero-escassez-barra" role="img" aria-label="Barra indicando alta procura por vagas">
+            <div class="hero-escassez-barra-fill" data-fill="70"></div>
+          </div>
+          <p class="hero-escassez-update">Última atualização em: <span id="dataAtualizacao"></span></p>
+        </div>
       </div>
 
       <!-- Selos de confiança -->
@@ -101,16 +104,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <!-- Lado direito: formulário -->
     <div class="form-card" id="formulario">
-      <div class="form-photo-badge">
-        <img
-          src="assets/images/alunos-kennedy.webp"
-          alt="Alunos do Colégio Kennedy sorrindo, uniformizados"
-          width="100"
-          height="125"
-          loading="lazy"
-        />
-      </div>
-      <!-- Avatares são placeholders (iniciais) — trocar por fotos reais de avaliadores quando disponíveis -->
+      <!-- Avatares são placeholders (iniciais). Trocar por fotos reais de avaliadores quando disponíveis -->
       <div class="social-proof-strip">
         <div class="avatar-stack" aria-hidden="true">
           <span class="avatar" style="background:#ee6c2f">D</span>
@@ -124,7 +118,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
       </div>
 
-      <p class="form-title"><svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12h6M9 16h6M9 8h1"/><path d="M8 3h8a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/></svg> Solicite informações grátis</p>
+      <!-- Indicador de progresso (2 etapas visuais dentro do mesmo formulário/submit): visível só na etapa 2 -->
+      <div class="form-progress" id="formProgress" hidden aria-hidden="true">
+        <span class="form-progress-dot is-active" data-step="1"></span>
+        <span class="form-progress-dot" data-step="2"></span>
+      </div>
+
       <form id="leadForm" novalidate>
         <!-- GCLID e UTMs ocultos -->
         <input type="hidden" id="field_gclid" name="gclid" />
@@ -134,55 +133,67 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <input type="hidden" id="field_utm_term" name="utm_term" />
         <input type="hidden" id="field_utm_content" name="utm_content" />
 
-        <div class="form-group">
-          <label for="nome">Seu nome (responsável) *</label>
-          <input type="text" id="nome" name="nome" placeholder="Ex: Maria Silva" required autocomplete="name" />
-          <span class="error-msg" id="err-nome"></span>
-        </div>
-
-        <div class="form-group">
-          <label for="telefone">WhatsApp *</label>
-          <div class="phone-input">
-            <span class="phone-prefix">+55</span>
-            <input type="tel" id="telefone" name="telefone" placeholder="(51) 99999-9999" required autocomplete="tel" inputmode="numeric" />
+        <!-- Etapa 1 de 2: dados do responsável -->
+        <div class="form-step" id="formStep1" data-step="1">
+          <div class="form-group">
+            <label for="nome">Seu nome (responsável) *</label>
+            <input type="text" id="nome" name="nome" placeholder="Ex: Maria Silva" required autocomplete="name" />
+            <span class="error-msg" id="err-nome"></span>
           </div>
-          <span class="error-msg" id="err-telefone"></span>
+
+          <div class="form-group">
+            <label for="telefone">WhatsApp/Telefone *</label>
+            <div class="phone-input">
+              <span class="phone-prefix">+55</span>
+              <input type="tel" id="telefone" name="telefone" placeholder="(51) 99999-9999" required autocomplete="tel" inputmode="numeric" />
+            </div>
+            <span class="error-msg" id="err-telefone"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="email">E-mail (opcional)</label>
+            <input type="email" id="email" name="email" placeholder="maria@email.com" autocomplete="email" />
+            <span class="error-msg" id="err-email"></span>
+          </div>
+
+          <button type="button" class="btn-submit btn-submit-lg" id="btnNextStep">
+            <span class="btn-text">Tirar dúvidas no WhatsApp</span>
+          </button>
+
+          <p class="response-badge"><svg class="response-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Tempo médio de resposta monitorado: 32 segundos</p>
         </div>
 
-        <div class="form-group">
-          <label for="email">E-mail (opcional)</label>
-          <input type="email" id="email" name="email" placeholder="maria@email.com" autocomplete="email" />
-          <span class="error-msg" id="err-email"></span>
-        </div>
-
-        <div class="alunos-wrapper" id="alunosWrapper">
-          <div class="aluno-block" data-aluno-index="1">
-            <div class="aluno-block-header">
-              <span class="aluno-block-title">Aluno 1</span>
-            </div>
-            <div class="form-group">
-              <label for="nome_aluno_1">Nome do aluno *</label>
-              <input type="text" id="nome_aluno_1" name="nome_aluno_1" placeholder="Ex: João Silva" required />
-              <span class="error-msg" id="err-nome_aluno_1"></span>
-            </div>
-            <div class="form-group">
-              <label for="serie_1">Em qual turma ou etapa vai estudar? *</label>
-              <select id="serie_1" name="serie_1" required></select>
-              <span class="error-msg" id="err-serie_1"></span>
+        <!-- Etapa 2 de 2: dados do(s) aluno(s) e envio -->
+        <div class="form-step" id="formStep2" data-step="2" hidden>
+          <div class="alunos-wrapper" id="alunosWrapper">
+            <div class="aluno-block" data-aluno-index="1">
+              <div class="aluno-block-header">
+                <span class="aluno-block-title">Aluno 1</span>
+              </div>
+              <div class="form-group">
+                <label for="nome_aluno_1">Nome do aluno *</label>
+                <input type="text" id="nome_aluno_1" name="nome_aluno_1" placeholder="Ex: João Silva" required />
+                <span class="error-msg" id="err-nome_aluno_1"></span>
+              </div>
+              <div class="form-group">
+                <label for="serie_1">Em qual turma ou etapa vai estudar? *</label>
+                <select id="serie_1" name="serie_1" required></select>
+                <span class="error-msg" id="err-serie_1"></span>
+              </div>
             </div>
           </div>
+
+          <button type="button" class="btn-add-aluno" id="btnAddAluno">+ Adicionar outro filho</button>
+
+          <button type="submit" class="btn-submit btn-submit-lg" id="btnSubmit">
+            <span class="btn-text">Tirar dúvidas no WhatsApp</span>
+            <span class="btn-loading" hidden>Enviando…</span>
+          </button>
+
+          <button type="button" class="btn-back-step" id="btnBackStep">Voltar</button>
+
+          <p class="form-privacy"><svg class="privacy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Ao enviar, você concorda com nossa <a class="link-politica" href="politica-privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a>.</p>
         </div>
-
-        <button type="button" class="btn-add-aluno" id="btnAddAluno">+ Adicionar outro filho</button>
-
-        <button type="submit" class="btn-submit" id="btnSubmit">
-          <span class="btn-text">Quero garantir a vaga!</span>
-          <span class="btn-loading" hidden>Enviando…</span>
-        </button>
-
-        <p class="response-badge"><svg class="response-badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Tempo médio de resposta monitorado: 32 segundos</p>
-
-        <p class="form-privacy"><svg class="privacy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Ao enviar, você concorda com nossa <button type="button" class="link-politica" id="btnPolitica">Política de Privacidade</button>.</p>
       </form>
 
       <!-- Estado de sucesso / redirecionamento para o WhatsApp -->
@@ -211,39 +222,51 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
      DIFERENCIAIS
      ============================================================ -->
 <section class="section diferenciais" aria-label="Nossos diferenciais">
+  <div class="diferenciais-bg">
+    <img
+      src="assets/images/alunos-kennedy.webp"
+      alt="Alunos do Colégio Kennedy sorrindo, uniformizados"
+      width="1600"
+      height="900"
+      loading="lazy"
+    />
+    <div class="diferenciais-bg-overlay"></div>
+  </div>
   <div class="container">
-    <h2 class="section-title">Por que escolher o <span class="brand">Colégio Kennedy</span>?</h2>
-    <p class="section-sub">58 anos de excelência em educação, do Berçário ao Ensino Médio, em Porto Alegre</p>
+    <div class="diferenciais-intro">
+      <h2 class="section-title">Por que escolher o<br class="title-break" /> <span class="brand">Colégio Kennedy</span>?</h2>
+      <p class="section-sub">58 anos de excelência em educação, do Berçário ao Ensino Médio, em Porto Alegre</p>
+    </div>
 
     <div class="cards-grid">
 
       <article class="card" aria-label="Ambientes inovadores">
         <div class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6M9 11h.01M15 11h.01M9 7h.01M15 7h.01"/></svg></div>
-        <h3>Aprender Fazendo, Não Só Decorando</h3>
-        <p>Na Sala do Pensar, Sala Google, Sala Maker e nos laboratórios de Ciências e Línguas, seu filho experimenta, erra e descobre — e o conhecimento fica.</p>
+        <h3>Aprender fazendo, não só decorando</h3>
+        <p>Na Sala do Pensar, Sala Google, Sala Maker e nos laboratórios de Ciências e Línguas, seu filho experimenta, erra e descobre, e o conhecimento fica.</p>
       </article>
 
       <article class="card" aria-label="Corpo docente">
         <div class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.1 2.7 2 6 2s6-.9 6-2v-5"/></svg></div>
-        <h3>Ensino Que Nunca Para de Evoluir</h3>
+        <h3>Ensino que nunca para de evoluir</h3>
         <p>Equipe pedagógica com formação superior e constante atualização, para o seu filho aprender sempre com o que há de mais atual.</p>
       </article>
 
       <article class="card" aria-label="Turno Integral">
         <div class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></div>
-        <h3>Sua Rotina Mais Leve, o Dia do Seu Filho Mais Completo</h3>
-        <p>Horário flexível das 7h às 19h, com atividades recreativas, esportivas e apoio às tarefas escolares — tranquilidade para você, desenvolvimento para ele.</p>
+        <h3>Sua rotina mais leve, o dia do seu filho mais completo</h3>
+        <p>Horário flexível das 7h às 19h, com atividades recreativas, esportivas e apoio às tarefas escolares. Tranquilidade para você, desenvolvimento para ele.</p>
       </article>
 
       <article class="card" aria-label="Segurança">
         <div class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/></svg></div>
-        <h3>Seu Filho Floresce Quando Se Sente Seguro</h3>
+        <h3>Seu filho floresce quando se sente seguro</h3>
         <p>Segurança e acolhimento em todas as etapas, com rotina organizada e integração social e afetiva.</p>
       </article>
 
       <article class="card" aria-label="Formação integral">
         <div class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
-        <h3>Preparo Para a Vida, Não Só Para a Prova</h3>
+        <h3>Preparo para a vida, não só para a prova</h3>
         <p>Desenvolvimento cognitivo, socioemocional e ético, preparando o aluno para o vestibular e, sobretudo, para os desafios do mundo real.</p>
       </article>
 
@@ -257,54 +280,74 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
      ============================================================ -->
 <section class="section etapas" aria-label="Etapas de ensino">
   <div class="container">
-    <h2 class="section-title">Do <span class="brand">Berçário</span> ao Ensino Médio</h2>
+    <h2 class="section-title">Do <span class="brand">Berçário</span><br />ao Ensino Médio</h2>
     <p class="section-sub">Uma jornada completa de aprendizado, em cada fase da vida do seu filho</p>
 
     <div class="etapas-grid">
 
-      <figure class="etapa-item">
-        <img
-          src="assets/images/etapas/bercario.webp"
-          alt="Bebês do Berçário do Colégio Kennedy brincando"
-          width="768"
-          height="768"
-          loading="lazy"
-        />
-        <figcaption>Berçário</figcaption>
-      </figure>
+      <a class="etapa-item" href="#formulario" onclick="scrollToForm(event)" aria-label="Berçário, ir para o formulário">
+        <figure>
+          <img
+            src="assets/images/etapas/bercario.webp"
+            alt="Bebês do Berçário do Colégio Kennedy brincando"
+            width="768"
+            height="768"
+            loading="lazy"
+          />
+          <figcaption>
+            <span class="etapa-item-titulo">Berçário</span>
+            <span class="etapa-item-desc">Acolhimento, vínculo e estimulação sensorial.</span>
+          </figcaption>
+        </figure>
+      </a>
 
-      <figure class="etapa-item">
-        <img
-          src="assets/images/etapas/educacao-infantil.webp"
-          alt="Criança da Educação Infantil do Colégio Kennedy sorrindo em sala de aula"
-          width="768"
-          height="768"
-          loading="lazy"
-        />
-        <figcaption>Educação Infantil</figcaption>
-      </figure>
+      <a class="etapa-item" href="#formulario" onclick="scrollToForm(event)" aria-label="Educação Infantil, ir para o formulário">
+        <figure>
+          <img
+            src="assets/images/etapas/educacao-infantil.webp"
+            alt="Criança da Educação Infantil do Colégio Kennedy sorrindo em sala de aula"
+            width="768"
+            height="768"
+            loading="lazy"
+          />
+          <figcaption>
+            <span class="etapa-item-titulo">Educação<br />Infantil</span>
+            <span class="etapa-item-desc">Brincar, explorar e descobrir o mundo.</span>
+          </figcaption>
+        </figure>
+      </a>
 
-      <figure class="etapa-item">
-        <img
-          src="assets/images/etapas/ensino-fundamental.webp"
-          alt="Alunas do Ensino Fundamental do Colégio Kennedy fazendo atividade em grupo"
-          width="768"
-          height="768"
-          loading="lazy"
-        />
-        <figcaption>Ensino Fundamental</figcaption>
-      </figure>
+      <a class="etapa-item" href="#formulario" onclick="scrollToForm(event)" aria-label="Ensino Fundamental, ir para o formulário">
+        <figure>
+          <img
+            src="assets/images/etapas/ensino-fundamental.webp"
+            alt="Alunas do Ensino Fundamental do Colégio Kennedy fazendo atividade em grupo"
+            width="768"
+            height="768"
+            loading="lazy"
+          />
+          <figcaption>
+            <span class="etapa-item-titulo">Ensino<br />Fundamental</span>
+            <span class="etapa-item-desc">Alfabetização sólida e curiosidade científica.</span>
+          </figcaption>
+        </figure>
+      </a>
 
-      <figure class="etapa-item">
-        <img
-          src="assets/images/etapas/ensino-medio.webp"
-          alt="Aluno do Ensino Médio do Colégio Kennedy apresentando trabalho para a turma"
-          width="768"
-          height="768"
-          loading="lazy"
-        />
-        <figcaption>Ensino Médio</figcaption>
-      </figure>
+      <a class="etapa-item" href="#formulario" onclick="scrollToForm(event)" aria-label="Ensino Médio, ir para o formulário">
+        <figure>
+          <img
+            src="assets/images/etapas/ensino-medio.webp"
+            alt="Aluno do Ensino Médio do Colégio Kennedy apresentando trabalho para a turma"
+            width="768"
+            height="768"
+            loading="lazy"
+          />
+          <figcaption>
+            <span class="etapa-item-titulo">Ensino<br />Médio</span>
+            <span class="etapa-item-desc">Preparação para vestibular e para a vida.</span>
+          </figcaption>
+        </figure>
+      </a>
 
     </div>
   </div>
@@ -330,6 +373,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="numero-item">
         <span class="numero-valor" data-target="12" data-suffix="h">0</span>
         <span class="numero-label">Turno Integral: das 7h às 19h</span>
+      </div>
+      <div class="numero-item">
+        <span class="numero-valor" data-target="300" data-suffix="+">0</span>
+        <span class="numero-label">Avaliações positivas de famílias</span>
       </div>
     </div>
 
@@ -359,19 +406,35 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     </div>
 
-    <!-- Vídeo embedado (lite embed / facade, sem custo de iframe no carregamento inicial) -->
-    <div class="video-embed" style="margin-top:2.5rem;">
-      <button
-        type="button"
-        class="video-embed-thumb"
-        aria-label="Reproduzir depoimento em vídeo de Daniela, mãe da Aurora"
-        onclick="this.outerHTML='&lt;iframe class=&quot;video-embed-iframe&quot; src=&quot;https://www.youtube.com/embed/8DBYEh701Cs?autoplay=1&quot; title=&quot;Depoimento em vídeo - Colégio Kennedy&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen&gt;&lt;/iframe&gt;'"
-        style="background-image:url('https://i.ytimg.com/vi/8DBYEh701Cs/hqdefault.jpg')"
-      >
-        <span class="video-embed-play" aria-hidden="true">
-          <svg viewBox="0 0 68 48" width="68" height="48"><path d="M66.5 7.7c-.8-2.9-2.9-5-5.7-5.8C55.9 0.5 34 0.5 34 0.5s-21.9 0-26.8 1.4c-2.8.8-4.9 2.9-5.7 5.8C.5 12.6.5 24 .5 24s0 11.4 1 16.3c.8 2.9 2.9 5 5.7 5.8C12.1 47.5 34 47.5 34 47.5s21.9 0 26.8-1.4c2.8-.8 4.9-2.9 5.7-5.8 1-4.9 1-16.3 1-16.3s0-11.4-1-16.3z" fill="#212121" fill-opacity="0.8"/><path d="M27 34l18-10-18-10v20z" fill="#fff"/></svg>
-        </span>
-      </button>
+    <!-- Vídeos embedados (lite embed / facade, sem custo de iframe no carregamento inicial) -->
+    <div class="video-embed-grid" style="margin-top:2.5rem;">
+      <div class="video-embed">
+        <button
+          type="button"
+          class="video-embed-thumb"
+          aria-label="Reproduzir depoimento em vídeo de Daniela, mãe da Aurora"
+          onclick="this.outerHTML='&lt;iframe class=&quot;video-embed-iframe&quot; src=&quot;https://www.youtube.com/embed/8DBYEh701Cs?autoplay=1&quot; title=&quot;Depoimento em vídeo - Colégio Kennedy&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen&gt;&lt;/iframe&gt;'"
+          style="background-image:url('https://i.ytimg.com/vi/8DBYEh701Cs/hqdefault.jpg')"
+        >
+          <span class="video-embed-play" aria-hidden="true">
+            <svg viewBox="0 0 68 48" width="68" height="48"><path d="M66.5 7.7c-.8-2.9-2.9-5-5.7-5.8C55.9 0.5 34 0.5 34 0.5s-21.9 0-26.8 1.4c-2.8.8-4.9 2.9-5.7 5.8C.5 12.6.5 24 .5 24s0 11.4 1 16.3c.8 2.9 2.9 5 5.7 5.8C12.1 47.5 34 47.5 34 47.5s21.9 0 26.8-1.4c2.8-.8 4.9-2.9 5.7-5.8 1-4.9 1-16.3 1-16.3s0-11.4-1-16.3z" fill="#212121" fill-opacity="0.8"/><path d="M27 34l18-10-18-10v20z" fill="#fff"/></svg>
+          </span>
+        </button>
+      </div>
+
+      <div class="video-embed">
+        <button
+          type="button"
+          class="video-embed-thumb"
+          aria-label="Reproduzir depoimento em vídeo de Tielle, mãe do Antônio"
+          onclick="this.outerHTML='&lt;iframe class=&quot;video-embed-iframe&quot; src=&quot;https://www.youtube.com/embed/w6yD5ibj5vg?autoplay=1&quot; title=&quot;Depoimento em vídeo - Colégio Kennedy&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture&quot; allowfullscreen&gt;&lt;/iframe&gt;'"
+          style="background-image:url('https://i.ytimg.com/vi/w6yD5ibj5vg/hqdefault.jpg')"
+        >
+          <span class="video-embed-play" aria-hidden="true">
+            <svg viewBox="0 0 68 48" width="68" height="48"><path d="M66.5 7.7c-.8-2.9-2.9-5-5.7-5.8C55.9 0.5 34 0.5 34 0.5s-21.9 0-26.8 1.4c-2.8.8-4.9 2.9-5.7 5.8C.5 12.6.5 24 .5 24s0 11.4 1 16.3c.8 2.9 2.9 5 5.7 5.8C12.1 47.5 34 47.5 34 47.5s21.9 0 26.8-1.4c2.8-.8 4.9-2.9 5.7-5.8 1-4.9 1-16.3 1-16.3s0-11.4-1-16.3z" fill="#212121" fill-opacity="0.8"/><path d="M27 34l18-10-18-10v20z" fill="#fff"/></svg>
+          </span>
+        </button>
+      </div>
     </div>
   </div>
 </section>
@@ -388,7 +451,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <p class="cta-social-proof">Junte-se a mais de 300 famílias que avaliam o Kennedy com <strong>4,9★</strong> no Google.</p>
     </div>
     <a href="#formulario" class="btn-cta-sec" onclick="scrollToForm(event)">
-      Quero garantir a vaga!
+      Tirar dúvidas no WhatsApp
     </a>
   </div>
 </section>
@@ -411,7 +474,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="footer-info">
       <address>
-        <p><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> Av. Alcides São Severiano, 99 – Sarandi, Porto Alegre/RS – 91130-500</p>
+        <p><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> Av. Alcides São Severiano, 99, Sarandi, Porto Alegre/RS, 91130-500</p>
         <p><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z"/></svg> <a href="tel:+555133641142">(51) 3364-1142</a></p>
         <p><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg> <a href="mailto:falecom@colegiokennedy.com">falecom@colegiokennedy.com</a></p>
         <p><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg> <span>@colegiokennedypoa</span></p>
@@ -420,19 +483,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="footer-legal">
       <p>&copy; <span id="anoAtual"></span> Colégio Kennedy. Todos os direitos reservados.</p>
-      <p><button type="button" class="link-politica" id="btnPoliticaFooter">Política de Privacidade</button></p>
+      <p><a class="link-politica" href="politica-privacidade.html" target="_blank" rel="noopener">Política de Privacidade</a></p>
     </div>
   </div>
 </footer>
 
-<div class="modal-overlay" id="modalPolitica" hidden>
-  <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modalPoliticaTitulo">
-    <button type="button" class="modal-close" id="btnFecharPolitica" aria-label="Fechar">×</button>
-    <h3 id="modalPoliticaTitulo">Política de Privacidade</h3>
-    <p>Em breve disponibilizaremos aqui nossa Política de Privacidade completa. Para dúvidas sobre o uso dos seus dados, entre em contato pelo WhatsApp ou e-mail informados no rodapé desta página.</p>
-  </div>
-</div>
-
-<script src="main.js?v=3" defer></script>
+<script src="main.js?v=6" defer></script>
 </body>
 </html>

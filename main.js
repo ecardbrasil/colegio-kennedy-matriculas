@@ -1,5 +1,5 @@
 /* =============================================================
-   COLÉGIO KENNEDY — main.js
+   COLÉGIO KENNEDY, main.js
    ============================================================= */
 
 'use strict';
@@ -30,7 +30,7 @@ const SERIE_OPTIONS_HTML = `
     <option value="5 anos de idade">5 anos de idade</option>
   </optgroup>
 
-  <optgroup label="📗 Ensino Fundamental — Anos Iniciais (1º ao 5º)">
+  <optgroup label="📗 Ensino Fundamental, Anos Iniciais (1º ao 5º)">
     <option value="1 ano do Fundamental">1º ano do Fundamental</option>
     <option value="2 ano do Fundamental">2º ano do Fundamental</option>
     <option value="3 ano do Fundamental">3º ano do Fundamental</option>
@@ -38,7 +38,7 @@ const SERIE_OPTIONS_HTML = `
     <option value="5 ano do Fundamental">5º ano do Fundamental</option>
   </optgroup>
 
-  <optgroup label="📘 Ensino Fundamental — Anos Finais (6º ao 9º)">
+  <optgroup label="📘 Ensino Fundamental, Anos Finais (6º ao 9º)">
     <option value="6 ano do Fundamental">6º ano do Fundamental</option>
     <option value="7 ano do Fundamental">7º ano do Fundamental</option>
     <option value="8 ano do Fundamental">8º ano do Fundamental</option>
@@ -58,10 +58,19 @@ document.addEventListener('DOMContentLoaded', () => {
   setupPhoneMask();
   setupAlunos();
   setupForm();
-  setupModal();
+  setupFormSteps();
   animateCounters();
+  animateBarraEscassez();
   document.getElementById('anoAtual').textContent = new Date().getFullYear();
+  setDataAtualizacao();
 });
+
+// ─── DATA DE ÚLTIMA ATUALIZAÇÃO (barra de procura por vagas) ──
+function setDataAtualizacao() {
+  const el = document.getElementById('dataAtualizacao');
+  if (!el) return;
+  el.textContent = new Date().toLocaleDateString('pt-BR');
+}
 
 // ─── CAPTURA DE GCLID E UTMs ──────────────────────────────────
 function captureUrlParams() {
@@ -217,10 +226,59 @@ function setupForm() {
   });
 }
 
+// ─── ETAPAS VISUAIS DO FORMULÁRIO (2 telas dentro do mesmo <form>) ─────
+// Puramente de apresentação/UX: o <form id="leadForm"> continua sendo um único
+// formulário com um único submit no final. Não altera buildPayload()/handleSubmit().
+function setupFormSteps() {
+  const btnNext = document.getElementById('btnNextStep');
+  const btnBack = document.getElementById('btnBackStep');
+  if (!btnNext) return;
+
+  btnNext.addEventListener('click', () => {
+    if (!validateStep1()) return;
+    goToStep(2);
+  });
+
+  btnBack?.addEventListener('click', () => {
+    goToStep(1);
+  });
+}
+
+function goToStep(step) {
+  const step1 = document.getElementById('formStep1');
+  const step2 = document.getElementById('formStep2');
+  const dots  = document.querySelectorAll('.form-progress-dot');
+
+  if (!step1 || !step2) return;
+
+  step1.hidden = step !== 1;
+  step2.hidden = step !== 2;
+
+  const progress = document.getElementById('formProgress');
+  if (progress) progress.hidden = step !== 2;
+
+  dots.forEach((dot) => {
+    dot.classList.toggle('is-active', Number(dot.dataset.step) === step);
+  });
+
+  // Leva o topo do form-card para a viewport ao trocar de etapa (útil em mobile,
+  // onde o form já está na primeira dobra mas pode ter rolado durante o preenchimento)
+  document.getElementById('formulario')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 async function handleSubmit(e) {
   e.preventDefault();
 
-  if (!validateForm()) return;
+  // Revalida a etapa 1 no submit final (defesa extra: usuário pode ter voltado e
+  // apagado um campo). Se falhar, volta para a etapa 1 para o erro ficar visível,
+  // já que ela fica escondida (hidden) enquanto o usuário preenche a etapa 2.
+  const step1Valid = validateStep1();
+  if (!step1Valid) {
+    goToStep(1);
+    return;
+  }
+
+  if (!validateStep2()) return;
 
   setSubmitting(true);
 
@@ -261,7 +319,7 @@ function buildPayload() {
     telefone:         get('telefone'),
     email:            get('email'),
     quantidade_alunos: alunos.length,
-    resumo_alunos:    alunos.map((a) => `${a.nome} — ${a.serie}`).join('; '),
+    resumo_alunos:    alunos.map((a) => `${a.nome}, ${a.serie}`).join('; '),
     gclid:            get('field_gclid'),
     utm_source:       get('field_utm_source'),
     utm_medium:       get('field_utm_medium'),
@@ -352,7 +410,10 @@ function setSubmitting(loading) {
 }
 
 // ─── VALIDAÇÃO ────────────────────────────────────────────────
-function validateForm() {
+// Valida os campos da etapa 1 (responsável). Reaproveitada tanto pelo botão
+// "Avançar" (antes de mostrar a etapa 2) quanto pelo handleSubmit() no envio final
+// (defesa extra, caso o usuário volte para a etapa 1 e apague algum campo).
+function validateStep1() {
   let valid = true;
 
   const nome = document.getElementById('nome');
@@ -374,6 +435,13 @@ function validateForm() {
     setFieldError(email, 'E-mail inválido');
     valid = false;
   }
+
+  return valid;
+}
+
+// Valida os campos da etapa 2 (aluno(s))
+function validateStep2() {
+  let valid = true;
 
   document.querySelectorAll('#alunosWrapper .aluno-block').forEach((bloco) => {
     const nomeAluno = bloco.querySelector('input[id^="nome_aluno_"]');
@@ -471,20 +539,24 @@ function easeOutQuart(t) {
   return 1 - Math.pow(1 - t, 4);
 }
 
-// ─── MODAL: POLÍTICA DE PRIVACIDADE ───────────────────────────
-function setupModal() {
-  const modal = document.getElementById('modalPolitica');
-  const btnOpen = document.getElementById('btnPolitica');
-  const btnOpenFooter = document.getElementById('btnPoliticaFooter');
-  const btnClose = document.getElementById('btnFecharPolitica');
-  if (!modal || (!btnOpen && !btnOpenFooter)) return;
+// ─── ANIMAÇÃO DA BARRA DE PROCURA POR VAGAS ───────────────────
+function animateBarraEscassez() {
+  const fill = document.querySelector('.hero-escassez-barra-fill[data-fill]');
+  if (!fill) return;
 
-  const abrir = () => { modal.hidden = false; };
-  const fechar = () => { modal.hidden = true; };
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        observer.unobserve(entry.target);
+        const alvo = entry.target.dataset.fill || '0';
+        requestAnimationFrame(() => {
+          entry.target.style.width = alvo + '%';
+        });
+      });
+    },
+    { threshold: 0.4 }
+  );
 
-  btnOpen?.addEventListener('click', abrir);
-  btnOpenFooter?.addEventListener('click', abrir);
-  btnClose?.addEventListener('click', fechar);
-  modal.addEventListener('click', (e) => { if (e.target === modal) fechar(); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.hidden) fechar(); });
+  observer.observe(fill);
 }

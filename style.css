@@ -1,5 +1,5 @@
 /* =============================================================
-   COLÉGIO KENNEDY — Landing Page
+   COLÉGIO KENNEDY, Landing Page
    Paleta: ajuste as variáveis abaixo para as cores do colégio
    ============================================================= */
 
@@ -97,6 +97,18 @@ address {
   margin-bottom: .75rem;
 }
 
+/* Quebra de linha só em mobile, para o h2 "Por que escolher o / Colégio Kennedy?" não quebrar
+   no meio de "Colégio" (ver seção diferenciais). Invisível em telas maiores. */
+.title-break {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .title-break {
+    display: inline;
+  }
+}
+
 .section-sub {
   text-align: center;
   color: var(--color-muted);
@@ -145,9 +157,6 @@ address {
   align-items: center;
   gap: .75rem;
   margin-bottom: 1.5rem;
-  background: var(--color-white);
-  padding: .6rem 1.1rem;
-  border-radius: var(--radius-md);
 }
 
 .logo {
@@ -183,9 +192,6 @@ address {
   width: 130px;
   height: auto;
   display: block;
-  background: var(--color-white);
-  padding: .5rem .75rem;
-  border-radius: var(--radius-sm);
   margin-bottom: .6rem;
 }
 
@@ -208,42 +214,60 @@ address {
 
 /* Aviso de escassez -- sem número específico de vagas (política do colégio) */
 .hero-escassez {
-  display: flex;
-  align-items: center;
-  gap: .55rem;
-  color: rgba(255, 255, 255, .95);
-  font-size: .95rem;
-  font-weight: 600;
   margin-bottom: 1.5rem;
 }
 
-.hero-escassez-pulso {
-  position: relative;
-  display: inline-block;
-  width: .55rem;
-  height: .55rem;
-  border-radius: 50%;
-  background: var(--color-accent);
-  flex-shrink: 0;
+.hero-escassez-label {
+  color: rgba(255, 255, 255, .95);
+  font-size: .95rem;
+  font-weight: 600;
+  margin-bottom: .55rem;
+  text-align: center;
 }
 
-.hero-escassez-pulso::before {
+.hero-escassez-barra {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  height: .55rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .18);
+  overflow: hidden;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-escassez-update {
+  margin-top: .5rem;
+  text-align: center;
+  font-size: .75rem;
+  color: rgba(255, 255, 255, .65);
+}
+
+.hero-escassez-barra-fill {
+  position: relative;
+  width: 0;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--color-accent-dark) 0%, var(--color-accent) 100%);
+  transition: width 1.6s cubic-bezier(.22, .9, .3, 1);
+}
+
+.hero-escassez-barra-fill::after {
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: 50%;
-  background: var(--color-accent);
-  animation: escassez-pulso 1.8s ease-out infinite;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, .55) 50%, transparent 100%);
+  transform: translateX(-100%);
+  animation: escassez-shimmer 2.6s ease-in-out 1.8s infinite;
 }
 
-@keyframes escassez-pulso {
-  0% {
-    transform: scale(1);
-    opacity: .7;
+@keyframes escassez-shimmer {
+  0%, 15% {
+    transform: translateX(-100%);
   }
-  100% {
-    transform: scale(2.6);
-    opacity: 0;
+  50%, 100% {
+    transform: translateX(100%);
   }
 }
 
@@ -276,28 +300,6 @@ address {
   padding: 2rem;
   box-shadow: var(--shadow-form);
   position: relative;
-}
-
-/* Selo com foto de alunos, ancorado no card do formulário */
-.form-photo-badge {
-  position: absolute;
-  top: -22px;
-  left: -22px;
-  width: 92px;
-  aspect-ratio: 4 / 5;
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  border: 4px solid var(--color-white);
-  box-shadow: var(--shadow-card);
-  transform: rotate(-5deg);
-  z-index: 2;
-}
-
-.form-photo-badge img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
 }
 
 /* Prova social (nota do Google) acima do título do form */
@@ -363,6 +365,64 @@ address {
   width: 1.2em;
   height: 1.2em;
   flex-shrink: 0;
+}
+
+/* Indicador de progresso: 2 etapas visuais dentro do mesmo formulário */
+.form-progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  margin-bottom: 1.25rem;
+}
+
+.form-progress-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-border);
+  transition: background .25s ease, transform .25s ease;
+}
+
+.form-progress-dot.is-active {
+  background: var(--color-accent);
+  transform: scale(1.25);
+}
+
+/* Etapas do formulário: fade + leve deslocamento ao entrar */
+.form-step {
+  animation: form-step-in .3s ease;
+}
+
+@keyframes form-step-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.btn-back-step {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: none;
+  border: none;
+  color: var(--color-muted);
+  font-size: .85rem;
+  font-weight: 600;
+  font-family: var(--font-base);
+  cursor: pointer;
+  margin-top: .75rem;
+  padding: .35rem;
+}
+
+.btn-back-step:hover {
+  color: var(--color-primary);
+  text-decoration: underline;
 }
 
 .badge-icon {
@@ -560,6 +620,11 @@ address {
   transform: none;
 }
 
+.btn-submit-lg {
+  padding: 1.15rem 1.5rem;
+  font-size: 1.2rem;
+}
+
 .form-privacy {
   text-align: center;
   font-size: .78rem;
@@ -657,7 +722,41 @@ address {
    DIFERENCIAIS
    ======================== */
 .diferenciais {
-  background: var(--color-bg);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.diferenciais-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.diferenciais-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.diferenciais-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(7, 27, 61, .88) 0%, rgba(12, 44, 92, .82) 45%, rgba(7, 27, 61, .92) 100%);
+}
+
+.diferenciais-intro {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.diferenciais-intro .section-title {
+  color: var(--color-white);
+}
+
+.diferenciais-intro .section-sub {
+  color: rgba(255, 255, 255, .85);
 }
 
 .cards-grid {
@@ -694,16 +793,17 @@ address {
 
 .card h3 {
   font-family: var(--font-display);
-  font-size: 1.05rem;
+  font-size: 1.25rem;
   font-weight: 600;
   color: var(--color-primary);
-  margin-bottom: .5rem;
+  line-height: 1.3;
+  margin-bottom: .65rem;
 }
 
 .card p {
-  font-size: .9rem;
+  font-size: .98rem;
   color: var(--color-muted);
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 /* ========================
@@ -721,15 +821,18 @@ address {
 }
 
 .etapa-item {
+  display: block;
   border-radius: var(--radius-md);
   overflow: hidden;
   box-shadow: var(--shadow-card);
   transition: transform .2s, box-shadow .2s;
+  cursor: pointer;
 }
 
 .etapa-item:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, .13);
+  text-decoration: none;
 }
 
 .etapa-item img {
@@ -739,13 +842,26 @@ address {
 }
 
 .etapa-item figcaption {
-  padding: .85rem .75rem;
+  padding: 1.1rem .75rem 1.25rem;
   text-align: center;
+  background: var(--color-white);
+}
+
+.etapa-item-titulo {
+  display: block;
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: .95rem;
+  font-size: 1.05rem;
+  line-height: 1.35;
   color: var(--color-primary);
-  background: var(--color-white);
+}
+
+.etapa-item-desc {
+  display: block;
+  margin-top: .4rem;
+  font-size: .85rem;
+  line-height: 1.45;
+  color: var(--color-muted);
 }
 
 /* ========================
@@ -1010,6 +1126,7 @@ address {
 
   .logo-wrap {
     justify-content: center;
+    width: 100%;
   }
 
   .logo {
@@ -1020,12 +1137,6 @@ address {
     padding: 1.5rem;
   }
 
-  .form-photo-badge {
-    position: static;
-    width: 64px;
-    margin: 0 auto .75rem;
-  }
-
   .cards-grid {
     grid-template-columns: 1fr 1fr;
   }
@@ -1033,6 +1144,10 @@ address {
   .etapas-grid {
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
+  }
+
+  .numeros-grid {
+    grid-template-columns: 1fr 1fr;
   }
 
   .cta-inner {
@@ -1108,8 +1223,18 @@ address {
 /* ========================
    VÍDEO EMBEDADO (LITE EMBED / FACADE)
    ======================== */
+.video-embed-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .video-embed {
   max-width: 640px;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -1154,70 +1279,9 @@ address {
 }
 
 /* ========================
-   MODAL: POLÍTICA DE PRIVACIDADE
+   LINK: POLÍTICA DE PRIVACIDADE
    ======================== */
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, .6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-  z-index: 9999;
-}
-
-.modal-content {
-  position: relative;
-  background: #fff;
-  width: 100%;
-  max-width: 480px;
-  max-height: 85vh;
-  overflow-y: auto;
-  padding: 2rem;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-form);
-}
-
-.modal-content h3 {
-  color: #0c2c5c;
-  margin-bottom: .75rem;
-  padding-right: 1.5rem;
-}
-
-.modal-content p {
-  line-height: 1.6;
-  color: #1a1a2e;
-}
-
 .link-politica {
-  background: none;
-  border: none;
-  text-decoration: underline;
-  cursor: pointer;
   color: inherit;
-  font: inherit;
-  padding: 0;
-}
-
-.modal-close {
-  position: absolute;
-  top: .75rem;
-  right: .75rem;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  line-height: 1;
-  cursor: pointer;
-  color: #1a1a2e;
-  border-radius: 50%;
-}
-
-.modal-close:hover {
-  background: rgba(0, 0, 0, .06);
+  text-decoration: underline;
 }
