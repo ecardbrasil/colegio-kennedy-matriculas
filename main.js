@@ -319,6 +319,7 @@ function buildPayload() {
     telefone:         get('telefone'),
     email:            get('email'),
     quantidade_alunos: alunos.length,
+    quantidade_de_alunos: alunos.length,
     resumo_alunos:    alunos.map((a) => `${a.nome}, ${a.serie}`).join('; '),
     gclid:            get('field_gclid'),
     utm_source:       get('field_utm_source'),
