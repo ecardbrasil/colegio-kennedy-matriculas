@@ -52,13 +52,17 @@ manualmente no Make/Pipefy antes que os dados dos filhos 2, 3 e 4 apareçam corr
 - [ ] Ajustar o nome "Colégio Kennedy" nos textos, se necessário
 
 ## 4. Conteúdo
-- [ ] Atualizar headline do hero com copy aprovado
+- [x] Atualizar headline do hero com copy aprovado ("58 Anos Formando Alunos Prontos Para o Futuro")
 - [ ] Ajustar lista de séries conforme oferta real do colégio
 - [ ] Revisar os 5 cards de diferenciais com informações reais
-- [ ] Atualizar os números (alunos, anos, aprovação, professores) — `data-target` em **index.html**
-- [ ] Substituir os 3 depoimentos por depoimentos reais (com autorização por escrito)
+- [x] Atualizar os números (alunos, anos, aprovação, professores) — `data-target` em **index.html**
+      (58 anos, 10+ espaços, turno 7h-19h já são dados reais aprovados)
+- [x] Substituir os 3 depoimentos por depoimentos reais (com autorização por escrito) — Daniela/Aurora
+      e Tielle/Antônio, com vídeo, já são reais e aprovados
 - [ ] Preencher endereço completo, telefone, e-mail e CNPJ no footer
-- [ ] Definir ano das matrículas (ex.: 2026) na headline
+- [x] Definir ano das matrículas (2027) na headline
+- [ ] Trocar avatares placeholder (iniciais) da prova social ("4,9 · +300 avaliações no Google")
+      no form-card por fotos reais de avaliadores, quando disponíveis
 
 ## 5. SEO / Meta
 - [x] Ajustar `<meta name="description">` (já estava com copy real)

@@ -24,6 +24,7 @@
 
   /* --- Tipografia --- */
   --font-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
 
   /* --- Espaçamentos --- */
   --radius-sm:  8px;
@@ -88,8 +89,9 @@ address {
 }
 
 .section-title {
+  font-family: var(--font-display);
   font-size: clamp(1.6rem, 3.5vw, 2.2rem);
-  font-weight: 800;
+  font-weight: 600;
   text-align: center;
   color: var(--color-primary);
   margin-bottom: .75rem;
@@ -189,8 +191,9 @@ address {
 
 /* Copy */
 .hero-headline {
+  font-family: var(--font-display);
   font-size: clamp(1.8rem, 4vw, 2.8rem);
-  font-weight: 800;
+  font-weight: 600;
   color: var(--color-white);
   line-height: 1.2;
   margin-bottom: 1rem;
@@ -211,6 +214,8 @@ address {
 }
 
 .hero-badges li {
+  display: flex;
+  align-items: center;
   color: rgba(255, 255, 255, .9);
   font-size: 1rem;
   font-weight: 500;
@@ -249,12 +254,101 @@ address {
   display: block;
 }
 
-.form-title {
-  font-size: 1.2rem;
+/* Prova social (nota do Google) acima do título do form */
+.social-proof-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .6rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.avatar-stack {
+  display: flex;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--color-white);
+  color: var(--color-white);
+  font-size: .8rem;
   font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: -10px;
+}
+
+.avatar:first-child {
+  margin-left: 0;
+}
+
+.social-proof-text {
+  font-size: .85rem;
+  color: var(--color-muted);
+}
+
+.social-proof-text .stars {
+  color: var(--color-accent);
+  letter-spacing: -1px;
+}
+
+.social-proof-text strong {
+  color: var(--color-text);
+}
+
+.form-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
   color: var(--color-primary);
   margin-bottom: 1.25rem;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+}
+
+.title-icon {
+  width: 1.2em;
+  height: 1.2em;
+  flex-shrink: 0;
+}
+
+.badge-icon {
+  width: 1.1em;
+  height: 1.1em;
+  flex-shrink: 0;
+  color: var(--color-accent);
+  vertical-align: -.2em;
+  margin-right: .3em;
+}
+
+.privacy-icon {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  vertical-align: -.15em;
+  margin-right: .25em;
+}
+
+.footer-icon {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  vertical-align: -.15em;
+  margin-right: .35em;
+  opacity: .75;
+}
+
+.success-icon svg,
+.error-icon svg {
+  width: 1em;
+  height: 1em;
 }
 
 .form-group {
@@ -460,13 +554,17 @@ address {
 }
 
 .form-success h3 {
+  font-family: var(--font-display);
   font-size: 1.4rem;
+  font-weight: 600;
   color: var(--color-success);
   margin-bottom: .5rem;
 }
 
 .form-error-state h3 {
+  font-family: var(--font-display);
   font-size: 1.4rem;
+  font-weight: 600;
   color: var(--color-error);
   margin-bottom: .5rem;
 }
@@ -527,9 +625,16 @@ address {
   margin-bottom: 1rem;
 }
 
+.card-icon svg {
+  width: 2.25rem;
+  height: 2.25rem;
+  color: var(--color-accent);
+}
+
 .card h3 {
-  font-size: 1rem;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
   color: var(--color-primary);
   margin-bottom: .5rem;
 }
@@ -565,8 +670,9 @@ address {
 
 .numero-valor {
   display: block;
+  font-family: var(--font-display);
   font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 800;
+  font-weight: 600;
   line-height: 1;
   margin-bottom: .35rem;
 }
@@ -654,8 +760,9 @@ address {
 }
 
 .cta-copy h2 {
+  font-family: var(--font-display);
   font-size: clamp(1.4rem, 3vw, 2rem);
-  font-weight: 800;
+  font-weight: 600;
   color: var(--color-white);
   margin-bottom: .5rem;
 }

@@ -186,6 +186,28 @@ realmente apareceu no Pipefy.
 - `CHECKLIST.md` — checklist oficial de "antes de publicar", atualizado a cada item concluído
 - `HISTORICO.md` — este arquivo
 
+### 7. CRO/Copy do hero e prova social — ✅ implementado (03/09/2026)
+- Análise usando as skills `cro` e `copywriting` mostrou que a headline original ("Matrículas
+  Abertas 2027 – Garanta a Vaga do Seu Filho!") liderava com processo administrativo em vez de
+  benefício/prova social, e que a nota do Google (prova social forte) não aparecia perto do
+  formulário, onde mais reduz fricção de decisão.
+- Headline do hero trocada para "58 Anos Formando Alunos Prontos Para o Futuro" / subheadline
+  "Matrículas abertas para 2027 — do Berçário ao Ensino Médio, em Porto Alegre." ([index.html](index.html),
+  bloco `.hero-headline`/`.hero-sub`). `<title>` e tags Open Graph mantidos como estavam
+  (continuam citando "Matrículas Abertas 2027" para SEO/compartilhamento).
+- Adicionado bloco de prova social (`.social-proof-strip`) acima do título do formulário: nota
+  "4,9 ★★★★★ · +300 avaliações no Google" com um stack de avatares circulares sobrepostos.
+  **Os avatares são placeholders** (círculos coloridos com iniciais, via HTML/CSS inline — não há
+  fotos reais de avaliadores em `assets/images/` ainda). Confirmado com o usuário que os números
+  58 anos/10+ espaços/4,9★+300 avaliações são dados reais e aprovados pelo colégio (o CHECKLIST.md
+  estava desatualizado nesse ponto — os depoimentos/badges do HTML já eram reais).
+- Estilos novos em `style.css`: `.social-proof-strip`, `.avatar-stack`, `.avatar`,
+  `.social-proof-text` (reaproveitam as cores de `:root` já existentes, nenhuma cor nova
+  introduzida).
+- **Pendente**: trocar os avatares placeholder por fotos reais de avaliadores quando o usuário
+  fornecer (ver item 4 do CHECKLIST.md).
+- Nenhuma mudança em `main.js` — cache-busting (`?v=`) não precisou de bump.
+
 ## Como retomar
 
 1. Ler o `CHECKLIST.md` pra ver o estado atual item a item

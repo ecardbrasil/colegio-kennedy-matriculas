@@ -21,6 +21,10 @@
   })(window,document,'script','dataLayer','GTM-PKM2DPSS');</script>
   <!-- End Google Tag Manager -->
 
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet" />
+
   <link rel="stylesheet" href="style.css" />
 
   <!-- Critical CSS inline para LCP -->
@@ -30,7 +34,7 @@
     .hero{background:linear-gradient(135deg,#071b3d 0%,#0c2c5c 55%,#1c4384 100%);min-height:100vh;display:flex;align-items:center;padding:1rem}
     .hero-inner{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
     @media(max-width:768px){.hero-inner{grid-template-columns:1fr;gap:1.5rem}}
-    .hero-headline{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;color:#fff;line-height:1.2;margin-bottom:1rem}
+    .hero-headline{font-family:'Fraunces',Georgia,serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:600;color:#fff;line-height:1.2;margin-bottom:1rem}
     .hero-sub{font-size:1.1rem;color:rgba(255,255,255,.85);margin-bottom:1.5rem;line-height:1.6}
     .form-card{background:#fff;border-radius:16px;padding:2rem;box-shadow:0 20px 60px rgba(0,0,0,.25)}
     .form-title{font-size:1.25rem;font-weight:700;color:#0c2c5c;margin-bottom:1.25rem;text-align:center}
@@ -64,22 +68,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
 
         <h1 class="hero-headline">
-          Matrículas Abertas 2027 –<br />
-          <span class="accent">Garanta a Vaga do Seu Filho!</span>
+          58 Anos Formando Alunos<br />
+          <span class="accent">Prontos Para o Futuro</span>
         </h1>
 
         <p class="hero-sub">
-          Do Berçário ao Ensino Médio, formamos alunos preparados para os desafios do futuro em Porto Alegre.
+          Matrículas abertas para 2027 — do Berçário ao Ensino Médio, em Porto Alegre.
           Vagas limitadas — não perca essa oportunidade!
         </p>
       </div>
 
       <!-- Selos de confiança -->
       <ul class="hero-badges">
-        <li>✅ 58 anos de excelência em educação</li>
-        <li>✅ Ambientes de aprendizagem inovadores</li>
-        <li>✅ Turno Integral das 7h às 19h</li>
-        <li>✅ Corpo docente especializado</li>
+        <li><svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> 58 anos de excelência em educação</li>
+        <li><svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Ambientes de aprendizagem inovadores</li>
+        <li><svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Turno Integral das 7h às 19h</li>
+        <li><svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Corpo docente especializado</li>
       </ul>
     </div>
 
@@ -94,7 +98,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           loading="lazy"
         />
       </div>
-      <p class="form-title">📋 Solicite informações grátis</p>
+      <!-- Avatares são placeholders (iniciais) — trocar por fotos reais de avaliadores quando disponíveis -->
+      <div class="social-proof-strip">
+        <div class="avatar-stack" aria-hidden="true">
+          <span class="avatar" style="background:#ee6c2f">D</span>
+          <span class="avatar" style="background:#0c2c5c">T</span>
+          <span class="avatar" style="background:#1c4384">M</span>
+          <span class="avatar" style="background:#d1551c">A</span>
+        </div>
+        <div class="social-proof-text">
+          <span class="stars" aria-hidden="true">★★★★★</span>
+          <strong>4,9</strong> · +300 avaliações no Google
+        </div>
+      </div>
+
+      <p class="form-title"><svg class="title-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12h6M9 16h6M9 8h1"/><path d="M8 3h8a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/></svg> Solicite informações grátis</p>
       <form id="leadForm" novalidate>
         <!-- GCLID e UTMs ocultos -->
         <input type="hidden" id="field_gclid" name="gclid" />
@@ -150,13 +168,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <span class="btn-loading" hidden>Enviando…</span>
         </button>
 
-        <p class="form-privacy">🔒 Seus dados estão seguros. Não enviamos spam.</p>
+        <p class="form-privacy"><svg class="privacy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Seus dados estão seguros. Não enviamos spam.</p>
       </form>
 
       <!-- Estado de sucesso / redirecionamento para o WhatsApp -->
       <div class="form-success" id="formSuccess" hidden>
         <div class="success-spinner" aria-hidden="true"></div>
-        <div class="success-icon">🎉</div>
+        <div class="success-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></div>
         <h3>Recebemos sua solicitação!</h3>
         <p>Nossa equipe entrará em contato em breve pelo WhatsApp ou e-mail informado.</p>
         <p class="success-redirect">Redirecionando você para o WhatsApp...</p>
@@ -164,7 +182,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       <!-- Estado de erro -->
       <div class="form-error-state" id="formErrorState" hidden>
-        <div class="error-icon">⚠️</div>
+        <div class="error-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4M12 17h.01"/></svg></div>
         <h3>Ocorreu um problema</h3>
         <p>Não foi possível enviar. Tente novamente ou ligue para nós.</p>
         <button class="btn-retry" id="btnRetry">Tentar novamente</button>
@@ -186,31 +204,31 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="cards-grid">
 
       <article class="card" aria-label="Ambientes inovadores">
-        <div class="card-icon" aria-hidden="true">🏫</div>
+        <div class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6M9 11h.01M15 11h.01M9 7h.01M15 7h.01"/></svg></div>
         <h3>Ambientes Inovadores</h3>
         <p>Sala do Pensar, Sala Google, Sala Maker, laboratórios de Ciências e Línguas, ginásio e biblioteca.</p>
       </article>
 
       <article class="card" aria-label="Corpo docente">
-        <div class="card-icon" aria-hidden="true">🎓</div>
+        <div class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c0 1.1 2.7 2 6 2s6-.9 6-2v-5"/></svg></div>
         <h3>Professores Especializados</h3>
         <p>Equipe pedagógica com formação superior e constante atualização, garantindo ensino de excelência.</p>
       </article>
 
       <article class="card" aria-label="Turno Integral">
-        <div class="card-icon" aria-hidden="true">🕒</div>
+        <div class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></div>
         <h3>Turno Integral</h3>
         <p>Horário flexível das 7h às 19h, com atividades recreativas, esportivas e apoio às tarefas escolares.</p>
       </article>
 
       <article class="card" aria-label="Segurança">
-        <div class="card-icon" aria-hidden="true">🛡️</div>
+        <div class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/></svg></div>
         <h3>Ambiente Seguro e Acolhedor</h3>
         <p>Segurança e acolhimento em todas as etapas, com rotina organizada e integração social e afetiva.</p>
       </article>
 
       <article class="card" aria-label="Formação integral">
-        <div class="card-icon" aria-hidden="true">🌱</div>
+        <div class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
         <h3>Formação Integral</h3>
         <p>Desenvolvimento cognitivo, socioemocional e ético, preparando o aluno para o vestibular e para a vida.</p>
       </article>
@@ -304,9 +322,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="footer-info">
       <address>
-        <p>📍 Av. Alcides São Severiano, 99 – Sarandi, Porto Alegre/RS – 91130-500</p>
-        <p>📞 <a href="tel:+555133641142">(51) 3364-1142</a></p>
-        <p>📧 <a href="mailto:falecom@colegiokennedy.com">falecom@colegiokennedy.com</a></p>
+        <p><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg> Av. Alcides São Severiano, 99 – Sarandi, Porto Alegre/RS – 91130-500</p>
+        <p><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z"/></svg> <a href="tel:+555133641142">(51) 3364-1142</a></p>
+        <p><svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg> <a href="mailto:falecom@colegiokennedy.com">falecom@colegiokennedy.com</a></p>
       </address>
     </div>
     <div class="footer-legal">
