@@ -213,8 +213,8 @@ function validateForm() {
 
   const tel = document.getElementById('telefone');
   const telRaw = tel.value.replace(/\D/g, '');
-  if (telRaw.length < 10 || telRaw.length > 11) {
-    setFieldError(tel, 'Telefone inválido');
+  if (!isValidPhone(telRaw)) {
+    setFieldError(tel, 'Telefone inválido, verifique o DDD e o número');
     valid = false;
   }
 
@@ -231,6 +231,20 @@ function validateForm() {
   }
 
   return valid;
+}
+
+function isValidPhone(telRaw) {
+  if (telRaw.length < 10 || telRaw.length > 11) return false;
+
+  // Celular (11 dígitos): 3º dígito é sempre 9, e o 4º nunca é 0, 1 ou 2.
+  if (telRaw.length === 11) {
+    const primeiroDigito = telRaw[2];
+    const segundoDigito  = telRaw[3];
+    if (primeiroDigito !== '9') return false;
+    if (['0', '1', '2'].includes(segundoDigito)) return false;
+  }
+
+  return true;
 }
 
 function isValidEmail(v) {
