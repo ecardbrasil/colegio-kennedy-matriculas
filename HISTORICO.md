@@ -52,6 +52,34 @@ com o formulário enviando dados via webhook pro Make (Integromat), que cria o c
 - **Atenção**: já aconteceu do mapeamento no Make "sumir"/não salvar antes — sempre clicar em
   Salvar no cenário do Make antes de sair da tela, e conferir depois reabrindo
 
+### 2.1 Suporte a múltiplos filhos no formulário — código pronto, config manual pendente
+- Motivo: famílias com 2+ filhos matriculando ao mesmo tempo só conseguiam informar 1 aluno. A
+  decisão (validada com o Vinicius) foi manter **1 card por família no Pipefy** (não 1 card por
+  aluno), e manter a conversão do Google Ads/GTM disparando **1x por envio** independente da
+  quantidade de filhos — só o payload interno mudou, não a lógica de conversão.
+- `index.html`: bloco `nome_aluno`/`serie` virou uma seção repetível `#alunosWrapper`, com botão
+  "+ Adicionar outro filho" (`#btnAddAluno`), limite de 4 blocos (`MAX_ALUNOS` em `main.js`).
+- `main.js`: novas funções `setupAlunos()`, `criarBlocoAlunoHTML()`, `atualizarBlocosAlunos()`
+  (cria/remove/renumera blocos), `getAlunos()` (lê os blocos do DOM). `validateForm()` agora valida
+  cada bloco de aluno; `buildPayload()` monta `nome_aluno_1..4`/`serie_1..4` (mapeamento 1:1 com o
+  Pipefy, campos vazios quando não usados) + `quantidade_alunos` (número) + `resumo_alunos` (texto
+  legível tipo "João — 5º ano; Maria — 2 anos"). Mantém `nome_aluno`/`serie` (campos Pipefy já
+  existentes) preenchidos com os dados do aluno 1, pra não quebrar nada que já dependa deles.
+  `redirectToWhatsApp()` e a mensagem do WhatsApp citam todos os filhos quando há mais de 1.
+- **Por que campos numerados fixos (1..4) e não um array JSON**: Pipefy não tem campo nativo de
+  "grupo repetível" no plano usado, e o Make mapeia campo a campo (não itera array sem módulo
+  Iterator extra). Campos numerados fixos mantêm o mapeamento no Make igual ao que já existe hoje
+  (1:1, sem Iterator/Router) — menor risco dado que o mapeamento do Make já "sumiu" silenciosamente
+  antes (ver seção "Problema encontrado e resolvido" abaixo).
+- **PENDENTE (ver item 2.1 do CHECKLIST.md)**: criar os campos novos no Pipefy (`Nome do Aluno
+  2/3/4`, `Série de Interesse 2/3/4`, `Quantidade de Alunos` como **numérico**, `Resumo dos Alunos`
+  como texto longo) e mapear no Make. **Sem isso, os dados do 2º filho em diante são enviados no
+  payload do webhook mas não aparecem no card do Pipefy** — o formulário no site já funciona, falta
+  só o lado Make/Pipefy.
+- Métrica de "matrículas" vs "leads": a ideia é que o Pipefy tenha um relatório somando o campo
+  `Quantidade de Alunos` (= total de matrículas), separado da contagem de cards (= total de
+  leads/famílias). Isso é config nativa de relatório no Pipefy, não precisa de código.
+
 ### 3. Domínio personalizado — ✅ completo
 - Domínio: `colegiokennedy.top` (hospedado/DNS na **Hostgator**)
 - Adicionado na Vercel: `colegiokennedy.top` e `www.colegiokennedy.top`, ambos "Valid Configuration"
