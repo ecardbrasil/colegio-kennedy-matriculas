@@ -153,7 +153,7 @@ function criarBlocoAlunoHTML(index) {
         <span class="error-msg" id="err-nome_aluno_${index}"></span>
       </div>
       <div class="form-group">
-        <label for="serie_${index}">Em qual série vai estudar? *</label>
+        <label for="serie_${index}">Em qual turma ou etapa vai estudar? *</label>
         <select id="serie_${index}" name="serie_${index}" required>${SERIE_OPTIONS_HTML}</select>
         <span class="error-msg" id="err-serie_${index}"></span>
       </div>
@@ -368,7 +368,8 @@ function validateForm() {
   }
 
   const email = document.getElementById('email');
-  if (!isValidEmail(email.value.trim())) {
+  const emailValue = email.value.trim();
+  if (emailValue && !isValidEmail(emailValue)) {
     setFieldError(email, 'E-mail inválido');
     valid = false;
   }
