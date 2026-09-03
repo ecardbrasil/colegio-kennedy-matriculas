@@ -966,6 +966,10 @@ address {
     margin-bottom: 0;
   }
 
+  .logo-wrap {
+    justify-content: center;
+  }
+
   .logo {
     width: 120px;
   }
