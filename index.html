@@ -118,7 +118,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         <div class="form-group">
           <label for="telefone">WhatsApp *</label>
-          <input type="tel" id="telefone" name="telefone" placeholder="(11) 99999-9999" required autocomplete="tel" inputmode="numeric" />
+          <div class="phone-input">
+            <span class="phone-prefix">+55</span>
+            <input type="tel" id="telefone" name="telefone" placeholder="(51) 99999-9999" required autocomplete="tel" inputmode="numeric" />
+          </div>
           <span class="error-msg" id="err-telefone"></span>
         </div>
 

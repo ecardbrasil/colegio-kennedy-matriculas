@@ -291,6 +291,25 @@ address {
   cursor: pointer;
 }
 
+.phone-input {
+  position: relative;
+}
+
+.phone-prefix {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text);
+  opacity: .6;
+  font-size: 1rem;
+  pointer-events: none;
+}
+
+.phone-input input {
+  padding-left: 3rem !important;
+}
+
 .form-group input:focus,
 .form-group select:focus {
   outline: none;

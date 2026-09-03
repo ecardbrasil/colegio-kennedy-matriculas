@@ -8,6 +8,7 @@
 const CONFIG = {
   // ⚠️  SUBSTITUIR pela URL real do webhook do Make
   WEBHOOK_URL: 'https://hook.us2.make.com/y8xbso3x3tz77mnn79whh9k7tk7vqhzb',
+  WHATSAPP_NUMBER: '5551981246336',
 };
 
 // ─── INICIALIZAÇÃO ────────────────────────────────────────────
@@ -46,7 +47,15 @@ function setupPhoneMask() {
   if (!tel) return;
 
   tel.addEventListener('input', () => {
-    let v = tel.value.replace(/\D/g, '').slice(0, 11);
+    let v = tel.value.replace(/\D/g, '');
+
+    // Remove o "55" (código do país) colado/digitado por engano antes do DDD,
+    // ex: usuário copia do WhatsApp "+55 51 98444-8344" -> "55519844483 44"
+    if (v.length > 11 && v.startsWith('55')) {
+      v = v.slice(2);
+    }
+
+    v = v.slice(0, 11);
     if (v.length <= 10) {
       // (00) 0000-0000
       v = v.replace(/^(\d{2})(\d{4})(\d{0,4})/, (_, a, b, c) =>
@@ -143,6 +152,20 @@ function onSuccess(payload) {
     utm_medium:   payload.utm_medium,
     utm_campaign: payload.utm_campaign,
   });
+
+  redirectToWhatsApp(payload);
+}
+
+function redirectToWhatsApp(payload) {
+  const mensagem =
+    `Olá, Diego, me chamo ${payload.nome}, vim através do site do colégio ` +
+    `e gostaria de saber mais informações para ${payload.serie}.`;
+
+  const url = `https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(mensagem)}`;
+
+  setTimeout(() => {
+    window.location.href = url;
+  }, 1500);
 }
 
 function onError() {
@@ -190,8 +213,8 @@ function validateForm() {
 
   const tel = document.getElementById('telefone');
   const telRaw = tel.value.replace(/\D/g, '');
-  if (telRaw.length < 10 || telRaw.length > 11) {
-    setFieldError(tel, 'Telefone inválido');
+  if (!isValidPhone(telRaw)) {
+    setFieldError(tel, 'Telefone inválido, verifique o DDD e o número');
     valid = false;
   }
 
@@ -208,6 +231,20 @@ function validateForm() {
   }
 
   return valid;
+}
+
+function isValidPhone(telRaw) {
+  if (telRaw.length < 10 || telRaw.length > 11) return false;
+
+  // Celular (11 dígitos): 3º dígito é sempre 9, e o 4º nunca é 0, 1 ou 2.
+  if (telRaw.length === 11) {
+    const primeiroDigito = telRaw[2];
+    const segundoDigito  = telRaw[3];
+    if (primeiroDigito !== '9') return false;
+    if (['0', '1', '2'].includes(segundoDigito)) return false;
+  }
+
+  return true;
 }
 
 function isValidEmail(v) {
