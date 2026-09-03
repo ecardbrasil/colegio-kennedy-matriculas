@@ -206,6 +206,47 @@ address {
   line-height: 1.7;
 }
 
+/* Aviso de escassez -- sem número específico de vagas (política do colégio) */
+.hero-escassez {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  color: rgba(255, 255, 255, .95);
+  font-size: .95rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.hero-escassez-pulso {
+  position: relative;
+  display: inline-block;
+  width: .55rem;
+  height: .55rem;
+  border-radius: 50%;
+  background: var(--color-accent);
+  flex-shrink: 0;
+}
+
+.hero-escassez-pulso::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--color-accent);
+  animation: escassez-pulso 1.8s ease-out infinite;
+}
+
+@keyframes escassez-pulso {
+  0% {
+    transform: scale(1);
+    opacity: .7;
+  }
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
 .hero-badges {
   list-style: none;
   display: flex;
@@ -219,6 +260,11 @@ address {
   color: rgba(255, 255, 255, .9);
   font-size: 1rem;
   font-weight: 500;
+}
+
+.hero-badges li.hero-badges-destaque {
+  color: var(--color-accent);
+  font-weight: 700;
 }
 
 /* ========================
@@ -844,6 +890,30 @@ address {
 }
 
 /* ========================
+   CTA FIXO (MOBILE)
+   ======================== */
+.sticky-cta {
+  display: none;
+}
+
+.btn-sticky-cta {
+  display: block;
+  width: 100%;
+  padding: .9rem 1rem;
+  background: var(--color-accent);
+  color: var(--color-white);
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.btn-sticky-cta:hover,
+.btn-sticky-cta:active {
+  background: var(--color-accent-dark);
+}
+
+/* ========================
    RESPONSIVIDADE
    ======================== */
 @media (max-width: 768px) {
@@ -906,6 +976,22 @@ address {
 
   .cta-copy p {
     max-width: 100%;
+  }
+
+  body {
+    padding-bottom: 70px;
+  }
+
+  .sticky-cta {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: var(--color-accent);
+    padding: .75rem 1rem;
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, .18);
   }
 }
 
