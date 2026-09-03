@@ -58,6 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupPhoneMask();
   setupAlunos();
   setupForm();
+  setupModal();
   animateCounters();
   document.getElementById('anoAtual').textContent = new Date().getFullYear();
 });
@@ -468,4 +469,22 @@ function runCounter(el) {
 
 function easeOutQuart(t) {
   return 1 - Math.pow(1 - t, 4);
+}
+
+// ─── MODAL: POLÍTICA DE PRIVACIDADE ───────────────────────────
+function setupModal() {
+  const modal = document.getElementById('modalPolitica');
+  const btnOpen = document.getElementById('btnPolitica');
+  const btnOpenFooter = document.getElementById('btnPoliticaFooter');
+  const btnClose = document.getElementById('btnFecharPolitica');
+  if (!modal || (!btnOpen && !btnOpenFooter)) return;
+
+  const abrir = () => { modal.hidden = false; };
+  const fechar = () => { modal.hidden = true; };
+
+  btnOpen?.addEventListener('click', abrir);
+  btnOpenFooter?.addEventListener('click', abrir);
+  btnClose?.addEventListener('click', fechar);
+  modal.addEventListener('click', (e) => { if (e.target === modal) fechar(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.hidden) fechar(); });
 }
