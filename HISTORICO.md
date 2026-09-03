@@ -401,6 +401,14 @@ etapas com descrição e links funcionando, barra centralizada com o texto de at
 vídeos de depoimento lado a lado, e a etapa 2 do formulário mostrando os dots (etapa 1 sem texto
 "Etapa X de 2" e sem dots).
 
+## Rodada 5: texto do CTA fixo mobile (03/09/2026)
+
+Texto do botão fixo mobile (`.btn-sticky-cta`, o CTA que fica grudado na tela em telas pequenas)
+trocado de "Garantir vaga para 2027" para **"Resgatar meu Acesso Direto"**, seguindo um
+enquadramento de voucher/acesso com desconto, a pedido explícito do usuário. O link do botão
+(`href="#formulario"` + `onclick="scrollToForm(event)"`, âncora até o formulário) não foi alterado,
+só o texto visível. Deploy feito de forma autônoma na Vercel logo em seguida, a pedido do usuário.
+
 ## Como retomar
 
 1. Ler o `CHECKLIST.md` pra ver o estado atual item a item

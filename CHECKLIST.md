@@ -170,6 +170,11 @@ Ver detalhes completos em HISTORICO.md, seção "Rodada 4".
 - [x] Segundo vídeo de depoimento (Tielle/Antônio, `w6yD5ibj5vg`) adicionado como lite-embed ao
       lado do vídeo da Daniela — antes só o vídeo da Daniela tinha player embedado
 
+## 13. Rodada 5: texto do CTA fixo mobile (03/09/2026) — concluída
+- [x] Texto do botão fixo mobile (`.btn-sticky-cta`) trocado de "Garantir vaga para 2027" para
+      "Resgatar meu Acesso Direto", com enquadramento de voucher/acesso exclusivo; âncora
+      (`href="#formulario"`, `onclick="scrollToForm(event)"`) mantida sem alteração
+
 ## 6. Deploy no Vercel
 ```bash
 # 1. Instale o CLI (uma vez só)
