@@ -47,7 +47,15 @@ function setupPhoneMask() {
   if (!tel) return;
 
   tel.addEventListener('input', () => {
-    let v = tel.value.replace(/\D/g, '').slice(0, 11);
+    let v = tel.value.replace(/\D/g, '');
+
+    // Remove o "55" (código do país) colado/digitado por engano antes do DDD,
+    // ex: usuário copia do WhatsApp "+55 51 98444-8344" -> "55519844483 44"
+    if (v.length > 11 && v.startsWith('55')) {
+      v = v.slice(2);
+    }
+
+    v = v.slice(0, 11);
     if (v.length <= 10) {
       // (00) 0000-0000
       v = v.replace(/^(\d{2})(\d{4})(\d{0,4})/, (_, a, b, c) =>
