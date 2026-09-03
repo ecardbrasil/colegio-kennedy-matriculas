@@ -8,7 +8,7 @@
 const CONFIG = {
   // ⚠️  SUBSTITUIR pela URL real do webhook do Make
   WEBHOOK_URL: 'https://hook.us2.make.com/y8xbso3x3tz77mnn79whh9k7tk7vqhzb',
-  WHATSAPP_NUMBER: '5551981246336',
+  WHATSAPP_NUMBER: '555133641142',
 };
 
 // ─── INICIALIZAÇÃO ────────────────────────────────────────────
