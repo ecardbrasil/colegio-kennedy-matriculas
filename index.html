@@ -59,6 +59,22 @@
   })(window,document,'script','dataLayer','GTM-PKM2DPSS');</script>
   <!-- End Google Tag Manager -->
 
+  <!-- Meta Pixel (Facebook/Instagram Ads) -->
+  <!-- ⚠️ SUBSTITUIR '000000000000000' pelo ID real do Pixel/Dataset (ver META_ADS_TRACKING.md) -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '000000000000000');
+  fbq('track', 'PageView');
+  </script>
+  <!-- End Meta Pixel -->
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet" />
@@ -89,6 +105,12 @@
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PKM2DPSS"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+
+<!-- Meta Pixel (noscript) -->
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=000000000000000&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel (noscript) -->
 
 <!-- ============================================================
      HERO + FORMULÁRIO
@@ -167,6 +189,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <input type="hidden" id="field_utm_campaign" name="utm_campaign" />
         <input type="hidden" id="field_utm_term" name="utm_term" />
         <input type="hidden" id="field_utm_content" name="utm_content" />
+        <input type="hidden" id="field_fbclid" name="fbclid" />
 
         <!-- Etapa 1 de 2: dados do responsável -->
         <div class="form-step" id="formStep1" data-step="1">
@@ -701,6 +724,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </footer>
 
-<script src="main.js?v=6" defer></script>
+<script src="main.js?v=7" defer></script>
 </body>
 </html>

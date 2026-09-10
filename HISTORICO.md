@@ -409,6 +409,28 @@ enquadramento de voucher/acesso com desconto, a pedido explícito do usuário. O
 (`href="#formulario"` + `onclick="scrollToForm(event)"`, âncora até o formulário) não foi alterado,
 só o texto visível. Deploy feito de forma autônoma na Vercel logo em seguida, a pedido do usuário.
 
+### 11. Infraestrutura de tracking para Meta Ads (10/09/2026)
+
+Ver **`META_ADS_TRACKING.md`** para o documento completo (diagnóstico, passo a passo, padrão de
+UTM, checklist de validação e LGPD). Resumo do que mudou no código deste repositório:
+
+- `index.html`: snippet base do Meta Pixel (`fbq`) no `<head>` + fallback `<noscript>`, campo
+  oculto `fbclid` no formulário, cache-busting `main.js?v=6` → `v=7`.
+- `main.js`: `fbclid` agora é capturado igual a `gclid`/UTMs (`captureUrlParams()`); novos
+  helpers `getCookie()`/`getFbc()`/`generateEventId()` para montar `fbp`/`fbc`/`event_id`;
+  `buildPayload()` inclui `fbclid`, `fbp`, `fbc`, `event_id`; `onSuccess()` dispara
+  `fbq('trackCustom', 'lead_form_submitted', {source, campaign, segment}, {eventID})`.
+- `politica-privacidade.html`: seção 7 atualizada para cobrir Meta Pixel/CAPI/fbclid, e novo
+  parágrafo sobre base legal para públicos customizados/lookalike (uso futuro, ainda não ativado).
+- Testado localmente (servidor estático + Playwright headless): Pixel dispara `init`/`PageView`,
+  o formulário completo dispara `lead_form_submitted` com `source`/`campaign`/`segment`/`eventID`
+  corretos, sem erros de JS.
+
+**Pendente, decisão do Vini** (não é código, é config em Meta Business Manager/Make): qual Pixel
+usar (achei 8 pixels antigos na Business Manager, nenhum ligado à conta de anúncios que vai rodar
+essa campanha, e um pixel de 2021 ainda ativo e mal configurado em `colegiokennedy.com`), token de
+acesso da Conversions API, e acesso ao código do `colegiokennedy.com` (fora deste repositório).
+
 ## Como retomar
 
 1. Ler o `CHECKLIST.md` pra ver o estado atual item a item

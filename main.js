@@ -11,6 +11,10 @@ const CONFIG = {
   WHATSAPP_NUMBER: '555133641142',
 };
 
+// Nome do evento de conversão principal, disparado no Meta Pixel e enviado ao
+// Make/Pipefy para a Conversions API replicar o mesmo evento no servidor (ver META_ADS_TRACKING.md)
+const META_LEAD_EVENT = 'lead_form_submitted';
+
 // Máximo de filhos por envio (mapeado 1:1 com os campos nome_aluno_1..N / serie_1..N no Pipefy)
 const MAX_ALUNOS = 4;
 
@@ -72,11 +76,11 @@ function setDataAtualizacao() {
   el.textContent = new Date().toLocaleDateString('pt-BR');
 }
 
-// ─── CAPTURA DE GCLID E UTMs ──────────────────────────────────
+// ─── CAPTURA DE GCLID, FBCLID E UTMs ───────────────────────────
 function captureUrlParams() {
   const params = new URLSearchParams(window.location.search);
 
-  const keys = ['gclid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
+  const keys = ['gclid', 'fbclid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'];
 
   keys.forEach((key) => {
     const value = params.get(key) || '';
@@ -91,6 +95,30 @@ function captureUrlParams() {
     const field = document.getElementById(`field_${key}`);
     if (field) field.value = stored;
   });
+}
+
+// ─── COOKIES DO META PIXEL (_fbp / _fbc), PARA MATCH COM A CONVERSIONS API ──
+// _fbp é criado pelo próprio Pixel ao carregar; _fbc só existe se o visitante já
+// chegou alguma vez com ?fbclid= (o Pixel cria a partir dele). Quando o fbclid está
+// na URL mas o cookie _fbc ainda não foi criado (primeira visita, JS corre em paralelo),
+// montamos o valor manualmente no formato exigido pela Meta: fb.1.<timestamp>.<fbclid>
+function getCookie(name) {
+  const match = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`));
+  return match ? decodeURIComponent(match[1]) : '';
+}
+
+function getFbc(fbclid) {
+  const existing = getCookie('_fbc');
+  if (existing) return existing;
+  if (!fbclid) return '';
+  return `fb.1.${Date.now()}.${fbclid}`;
+}
+
+// Identificador único do evento de lead, usado para o Pixel (browser) e a Conversions
+// API (servidor, via Make) deduplicarem o MESMO evento no Gerenciador de Eventos do Meta
+function generateEventId() {
+  if (window.crypto?.randomUUID) return window.crypto.randomUUID();
+  return `lead_${Date.now()}_${Math.random().toString(36).slice(2)}`;
 }
 
 // ─── MÁSCARA DE TELEFONE ──────────────────────────────────────
@@ -313,6 +341,7 @@ function getAlunos() {
 function buildPayload() {
   const get = (id) => document.getElementById(id)?.value?.trim() ?? '';
   const alunos = getAlunos();
+  const fbclid = get('field_fbclid');
 
   const payload = {
     nome:             get('nome'),
@@ -321,6 +350,10 @@ function buildPayload() {
     quantidade_alunos: alunos.length,
     resumo_alunos:    alunos.map((a) => `${a.nome}, ${a.serie}`).join('; '),
     gclid:            get('field_gclid'),
+    fbclid:           fbclid,
+    fbp:              getCookie('_fbp'),
+    fbc:              getFbc(fbclid),
+    event_id:         generateEventId(),
     utm_source:       get('field_utm_source'),
     utm_medium:       get('field_utm_medium'),
     utm_campaign:     get('field_utm_campaign'),
@@ -346,7 +379,7 @@ function buildPayload() {
 function onSuccess(payload) {
   showView('success');
 
-  // Dispara evento de conversão no dataLayer (Google Tag Manager)
+  // Dispara evento de conversão no dataLayer (Google Tag Manager / Google Ads)
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({
     event:             'lead_form_submit',
@@ -359,6 +392,19 @@ function onSuccess(payload) {
     utm_medium:        payload.utm_medium,
     utm_campaign:      payload.utm_campaign,
   });
+
+  // Dispara evento de conversão no Meta Pixel (navegador). O mesmo event_id é
+  // enviado no payload do webhook para a Conversions API (servidor) disparar o
+  // MESMO evento com esse event_id, e o Meta deduplicar os dois automaticamente.
+  if (typeof fbq === 'function') {
+    fbq('trackCustom', META_LEAD_EVENT, {
+      source:   payload.utm_source || 'direct',
+      campaign: payload.utm_campaign || '',
+      segment:  payload.serie || '',
+    }, {
+      eventID: payload.event_id,
+    });
+  }
 
   redirectToWhatsApp(payload);
 }
