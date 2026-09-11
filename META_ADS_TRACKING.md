@@ -13,7 +13,7 @@
 | Conversions API (CAPI) | ⚠️ Payload já pronto no front-end (fbclid/fbp/fbc/event_id). Falta criar o módulo no Make e ligar ao Pixel certo |
 | UTM padronizado | ✅ Definido abaixo, já suportado pelo formulário |
 | PII na URL | ✅ Confirmado: nenhum dado pessoal trafega por querystring |
-| Pixel para usar na campanha | ✅ **Decidido**: criar um Pixel novo, dedicado ao Business "Colégio Kennedy", reutilizável em todas as campanhas futuras. **Falta a criação em si**, que precisa ser feita por você na interface do Business Manager (ver seção 1.2) — não existe API disponível aqui para criar um Pixel do zero. |
+| Pixel para usar na campanha | ✅ **Criado e no ar**: "Pixel CK" (ID `1626683682316965`), Business "Colégio Kennedy", já instalado no `colegiokennedy.top` (ver seção 1.2/1.3). |
 
 ---
 
@@ -48,29 +48,16 @@ Sua conta de anúncios ativa para isso, **"conta de anúncios 1"** (ID `33621708
 ao Business **"Colégio Kennedy"** (ID `418840574358953`) — um Business **diferente** do que tem os
 pixels acima. Resultado: **essa conta de anúncios hoje não tem nenhum Pixel associado.**
 
-**✅ Decidido (11/09/2026)**: criar um Pixel novo, limpo, direto no Business "Colégio Kennedy",
-para ser reutilizado em todas as campanhas futuras (não só esta). Nome sugerido:
-**`Pixel CK, Institucional`** (ou algo assim, que não amarre o nome a uma campanha específica, já
-que vai durar além da 2027).
+**✅ Feito (11/09/2026)**: Pixel criado por você no Business Manager, direto no Business "Colégio
+Kennedy", pra ser reutilizado em todas as campanhas futuras (não só esta):
+- **Nome**: "Pixel CK"
+- **ID**: `1626683682316965`
+- Já confirmado via API: ativo, associado ao Business `418840574358953` ("Colégio Kennedy").
+- Já instalado no `colegiokennedy.top` (seção 1.3).
 
-**⚠️ Limitação importante**: as ferramentas de Meta Ads que tenho disponíveis nesta sessão
-conseguem **gerenciar** um Pixel já existente (configurar eventos, ler estatísticas, criar
-públicos a partir dele etc.), mas **não conseguem criar um Pixel/dataset novo do zero** — essa
-ação só existe pela interface do Business Manager, não pela API disponível aqui. Então esse passo
-específico precisa ser feito por você (ou por quem tiver acesso de admin no Business Manager):
-
-1. Acesse [business.facebook.com/events_manager](https://business.facebook.com/events_manager2) →
-   selecione o Business **"Colégio Kennedy"** (não o "Portfolio CONTA FB VINI").
-2. **Conectar fontes de dados** → **Web** → **Meta Pixel** → dar o nome (`Pixel CK, Institucional`)
-   → **Criar Pixel**.
-3. Me envie o **ID numérico** gerado (aparece logo depois de criado, formato `123456789012345`).
-4. Se possível, já associe esse Pixel à conta de anúncios **"conta de anúncios 1"**
-   (`336217086165592`) em Configurações do Pixel → Contas de anúncios conectadas.
-
-Assim que tiver o ID, eu: (a) troco nos 2 lugares de `index.html` (seção 1.3), (b) configuro os
-eventos padrão no Pixel via API (`ads_pixel_event_create`), e (c) configuro o módulo de CAPI no
-Make (seção 2.2) — essas três partes eu resolvo sozinho, só a criação inicial do Pixel depende de
-você.
+**Pendente**: associar esse Pixel à conta de anúncios **"conta de anúncios 1"**
+(`336217086165592`), se ainda não tiver sido feito automaticamente — em Events Manager → Pixel
+"Pixel CK" → Configurações → Contas de anúncios conectadas.
 
 ### 1.3 `colegiokennedy.top` (este repositório)
 
@@ -92,8 +79,9 @@ Nenhum Meta Pixel, nenhuma captura de `fbclid`.
 - Todos esses dados (`fbclid`, `fbp`, `fbc`, `event_id`) agora vão também no payload que o
   `main.js` envia pro webhook do Make, para a CAPI poder usar (seção 3).
 
-**O que falta, e depende de você:**
-- Trocar `000000000000000` pelo ID real do Pixel em **dois lugares** de `index.html`: no `fbq('init', ...)` e na URL `facebook.com/tr?id=...` do `<noscript>`. Busque por `⚠️` no arquivo.
+**✅ Concluído (11/09/2026)**: ID real do Pixel (`1626683682316965`) já substituído nos 2 lugares
+de `index.html` (`fbq('init', ...)` e a URL `facebook.com/tr?id=...` do `<noscript>`), testado
+localmente (navegador headless) sem erros de JS, e publicado no branch de desenvolvimento.
 
 ### 1.4 `colegiokennedy.com` (site institucional), ⏸️ adiado por decisão do Vini
 
@@ -276,12 +264,14 @@ compartilhável.
 
 1. ~~Decisão de Pixel~~ ✅ Decidido em 11/09/2026: Pixel novo, dedicado ao Business "Colégio
    Kennedy", reutilizável em todas as campanhas futuras (seção 1.2).
-2. **Criar esse Pixel no Business Manager** (passo a passo na seção 1.2) e me passar o **ID
-   numérico** gerado — essa criação específica só pode ser feita por você, minhas ferramentas não
-   criam um Pixel do zero, só gerenciam um que já existe.
-3. **Access Token da Conversions API** desse Pixel (depois de criado: Events Manager →
-   Configurações → Conversions API → Gerar token), para eu configurar o módulo no Make.
-4. ~~Acesso ao `colegiokennedy.com`~~ ⏸️ Adiado por decisão sua (11/09/2026) — foco agora é só o
+2. ~~Criar esse Pixel no Business Manager~~ ✅ Criado por você em 11/09/2026: "Pixel CK", ID
+   `1626683682316965`. Já instalado no `colegiokennedy.top` (seção 1.3), testado sem erros.
+3. **Access Token da Conversions API** desse Pixel (Events Manager → Pixel "Pixel CK" →
+   Configurações → Conversions API → Gerar token), para eu configurar o módulo no Make (seção 2.2)
+   — **próximo passo pendente**.
+4. Confirmar que o Pixel "Pixel CK" está associado à conta de anúncios "conta de anúncios 1"
+   (`336217086165592`), em Configurações do Pixel → Contas de anúncios conectadas.
+5. ~~Acesso ao `colegiokennedy.com`~~ ⏸️ Adiado por decisão sua (11/09/2026) — foco agora é só o
    `.top`. Fica registrado na seção 1.4 para quando quiser retomar.
 
 ---
