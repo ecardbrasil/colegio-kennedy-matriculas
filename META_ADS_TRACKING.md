@@ -9,11 +9,11 @@
 | Item | Status |
 |---|---|
 | Meta Pixel em `colegiokennedy.top` | ✅ Código pronto neste repo, **falta só o ID do Pixel real** |
-| Meta Pixel em `colegiokennedy.com` | ⚠️ Existe um Pixel antigo (2021) ainda disparando, mal configurado. Fora deste repositório, preciso de acesso para mexer |
+| Meta Pixel em `colegiokennedy.com` | ⏸️ Adiado por decisão do Vini (11/09/2026) — foco agora é só o `.top`. Retomar depois. |
 | Conversions API (CAPI) | ⚠️ Payload já pronto no front-end (fbclid/fbp/fbc/event_id). Falta criar o módulo no Make e ligar ao Pixel certo |
 | UTM padronizado | ✅ Definido abaixo, já suportado pelo formulário |
 | PII na URL | ✅ Confirmado: nenhum dado pessoal trafega por querystring |
-| Pixel para usar na campanha | ❌ **Decisão sua pendente** (ver seção 1) |
+| Pixel para usar na campanha | ✅ **Decidido**: criar um Pixel novo, dedicado ao Business "Colégio Kennedy", reutilizável em todas as campanhas futuras. **Falta a criação em si**, que precisa ser feita por você na interface do Business Manager (ver seção 1.2) — não existe API disponível aqui para criar um Pixel do zero. |
 
 ---
 
@@ -48,12 +48,29 @@ Sua conta de anúncios ativa para isso, **"conta de anúncios 1"** (ID `33621708
 ao Business **"Colégio Kennedy"** (ID `418840574358953`) — um Business **diferente** do que tem os
 pixels acima. Resultado: **essa conta de anúncios hoje não tem nenhum Pixel associado.**
 
-➡️ **Preciso que você decida (Vini)**: quer que eu ajude a **criar um Pixel novo, limpo**,
-direto no Business "Colégio Kennedy" (o que recomendo, nome sugerido: `Pixel CK Matrículas F1F2
-2027`), ou prefere **compartilhar** um dos pixels existentes (ex.: o `560606423681072`, que nunca
-disparou e está "limpo" de eventos ruins) com esse Business? Isso é feito na Central de Eventos
-(Events Manager) → Fontes de Dados → Adicionar/Compartilhar. Assim que tiver o ID definitivo, é
-uma troca de uma linha em `index.html` (ver seção 2).
+**✅ Decidido (11/09/2026)**: criar um Pixel novo, limpo, direto no Business "Colégio Kennedy",
+para ser reutilizado em todas as campanhas futuras (não só esta). Nome sugerido:
+**`Pixel CK, Institucional`** (ou algo assim, que não amarre o nome a uma campanha específica, já
+que vai durar além da 2027).
+
+**⚠️ Limitação importante**: as ferramentas de Meta Ads que tenho disponíveis nesta sessão
+conseguem **gerenciar** um Pixel já existente (configurar eventos, ler estatísticas, criar
+públicos a partir dele etc.), mas **não conseguem criar um Pixel/dataset novo do zero** — essa
+ação só existe pela interface do Business Manager, não pela API disponível aqui. Então esse passo
+específico precisa ser feito por você (ou por quem tiver acesso de admin no Business Manager):
+
+1. Acesse [business.facebook.com/events_manager](https://business.facebook.com/events_manager2) →
+   selecione o Business **"Colégio Kennedy"** (não o "Portfolio CONTA FB VINI").
+2. **Conectar fontes de dados** → **Web** → **Meta Pixel** → dar o nome (`Pixel CK, Institucional`)
+   → **Criar Pixel**.
+3. Me envie o **ID numérico** gerado (aparece logo depois de criado, formato `123456789012345`).
+4. Se possível, já associe esse Pixel à conta de anúncios **"conta de anúncios 1"**
+   (`336217086165592`) em Configurações do Pixel → Contas de anúncios conectadas.
+
+Assim que tiver o ID, eu: (a) troco nos 2 lugares de `index.html` (seção 1.3), (b) configuro os
+eventos padrão no Pixel via API (`ads_pixel_event_create`), e (c) configuro o módulo de CAPI no
+Make (seção 2.2) — essas três partes eu resolvo sozinho, só a criação inicial do Pixel depende de
+você.
 
 ### 1.3 `colegiokennedy.top` (este repositório)
 
@@ -78,17 +95,23 @@ Nenhum Meta Pixel, nenhuma captura de `fbclid`.
 **O que falta, e depende de você:**
 - Trocar `000000000000000` pelo ID real do Pixel em **dois lugares** de `index.html`: no `fbq('init', ...)` e na URL `facebook.com/tr?id=...` do `<noscript>`. Busque por `⚠️` no arquivo.
 
-### 1.4 `colegiokennedy.com` (site institucional)
+### 1.4 `colegiokennedy.com` (site institucional), ⏸️ adiado por decisão do Vini
 
-Este site **não está neste repositório** — não tenho acesso ao código-fonte/CMS dele nesta sessão.
-➡️ **Preciso que você me dê acesso** (repositório Git, credenciais de FTP/hosting, ou acesso ao
-CMS) se quiser que eu instale/corrija o Pixel diretamente lá também. Pelo achado da seção 1.1, há
-uma pendência real: o pixel antigo `189647716385773` está ativo lá com eventos errados, e deveria
-ou ser desativado/substituído pelo pixel novo, ou pelo menos ter os event rules corrigidos.
+**Status (11/09/2026)**: por decisão sua, ficamos focados só no `colegiokennedy.top` por enquanto.
+O ajuste do `colegiokennedy.com` fica registrado aqui como pendência para quando você quiser
+retomar, sem bloquear nada do que está em andamento.
 
-Como esse não é o site que vai receber o tráfego pago da campanha (é o `colegiokennedy.top`), isso
-**não bloqueia o lançamento da campanha**, mas polui os dados do Gerenciador de Eventos e pode
-atrapalhar otimização de Advantage+/lookalikes no futuro se usar esse Business inteiro como fonte.
+Contexto para quando voltar a isso: este site **não está neste repositório** — não tenho acesso ao
+código-fonte/CMS dele nesta sessão. Vai ser preciso me dar acesso (repositório Git, credenciais de
+FTP/hosting, ou acesso ao CMS). Pelo achado da seção 1.1, há uma pendência real: o pixel antigo
+`189647716385773` está ativo lá com eventos errados (`Purchase` disparado por clique de WhatsApp),
+e deveria ou ser desativado/substituído pelo pixel novo criado na seção 1.2 (o mesmo, já que a
+ideia é ele ser reutilizável em todas as campanhas), ou pelo menos ter os event rules corrigidos.
+
+Como esse não é o site que vai receber o tráfego pago desta campanha (é o `colegiokennedy.top`),
+isso **não bloqueia o lançamento da campanha atual**, mas polui os dados do Gerenciador de Eventos
+e pode atrapalhar otimização de Advantage+/lookalikes no futuro se usar esse Business inteiro como
+fonte.
 
 ---
 
@@ -249,13 +272,14 @@ compartilhável.
 
 ---
 
-## 6. Resumo do que preciso de você para fechar 100%
+## 6. Resumo do que preciso de você para fechar 100% (foco atual: `colegiokennedy.top`)
 
-1. **Decisão de Pixel**: criar um novo dedicado ao Business "Colégio Kennedy", ou reaproveitar o
-   `560606423681072` (nunca usado)? (seção 1.2)
-2. **ID do Pixel definitivo**, para eu substituir em `index.html`.
-3. **Access Token da Conversions API** desse Pixel (Events Manager → Configurações → Conversions
-   API → Gerar token), para eu configurar o módulo no Make.
-4. **Acesso ao `colegiokennedy.com`** (repositório, FTP ou CMS), se quiser que eu também
-   instale/corrija o Pixel lá (achei um pixel antigo mal configurado ainda ativo nesse site,
-   seção 1.4) — não bloqueia a campanha no `.top`, mas fica pendente.
+1. ~~Decisão de Pixel~~ ✅ Decidido em 11/09/2026: Pixel novo, dedicado ao Business "Colégio
+   Kennedy", reutilizável em todas as campanhas futuras (seção 1.2).
+2. **Criar esse Pixel no Business Manager** (passo a passo na seção 1.2) e me passar o **ID
+   numérico** gerado — essa criação específica só pode ser feita por você, minhas ferramentas não
+   criam um Pixel do zero, só gerenciam um que já existe.
+3. **Access Token da Conversions API** desse Pixel (depois de criado: Events Manager →
+   Configurações → Conversions API → Gerar token), para eu configurar o módulo no Make.
+4. ~~Acesso ao `colegiokennedy.com`~~ ⏸️ Adiado por decisão sua (11/09/2026) — foco agora é só o
+   `.top`. Fica registrado na seção 1.4 para quando quiser retomar.
