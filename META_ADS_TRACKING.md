@@ -283,3 +283,14 @@ compartilhável.
    Configurações → Conversions API → Gerar token), para eu configurar o módulo no Make.
 4. ~~Acesso ao `colegiokennedy.com`~~ ⏸️ Adiado por decisão sua (11/09/2026) — foco agora é só o
    `.top`. Fica registrado na seção 1.4 para quando quiser retomar.
+
+---
+
+## 7. Backlog, para retomar depois (fora do escopo desta rodada)
+
+- **Outras fontes de dados do Gerenciador de Eventos** (Offline, CRM, Mensagens): o Vini notou, ao
+  criar o Pixel (11/09/2026), que o Events Manager também oferece conectar dados de vendas
+  offline, CRM e mensagens (WhatsApp/Instagram/Messenger) como fontes adicionais de sinal. Ainda
+  não discutimos isso — fica registrado aqui para retomar numa próxima conversa, depois que o
+  Pixel + CAPI do `.top` estiverem 100% validados. Pode ser relevante especialmente para CRM
+  (Pipefy já tem os leads) e Mensagens (o fluxo desta campanha já redireciona pro WhatsApp).
