@@ -11,11 +11,23 @@ const { paraPipefyValues } = require('./_lib/campos');
 // NodeFieldValueInput = { fieldId: ID!, value: [UndefinedInput], operation, generatedByAi }
 // `value` e sempre uma LISTA, mesmo para campos de valor unico (ver
 // _lib/campos.js -> paraPipefyValues).
+// UpdateFieldsValuesPayload = { success: Boolean!, updatedNode: UpdatedNode, userErrors: [UserError!] }
+// UserError = { field: [String], message: String! }
+//
+// BUG REAL (17/09/2026): a versao anterior pedia `updatedNode { id }`.
+// `updatedNode` e um UNION (`Card | TableRecord`), entao o GraphQL recusava a
+// mutation INTEIRA na validacao ("Selections can't be made directly on unions
+// (see selections on UpdatedNode)") sem executar nada. Como esse erro do
+// Pipefy nao casava com nenhum caso conhecido de mensagemErroPipefy, o tablet
+// mostrava so "Nao foi possivel salvar os dados. Tente novamente." e o dado
+// nunca era gravado. Nada aqui precisa do `updatedNode` (ja temos o id do
+// card), entao ele foi removido; `userErrors` entrou no lugar porque e o que
+// explica uma recusa do Pipefy (ex.: "Field not found").
 const MUTATION_ATUALIZAR = `
   mutation AtualizarCampos($input: UpdateFieldsValuesInput!) {
     updateFieldsValues(input: $input) {
       success
-      updatedNode { id }
+      userErrors { field message }
     }
   }
 `;
@@ -34,6 +46,28 @@ const MUTATION_MOVER_FASE = `
     }
   }
 `;
+
+// Transforma os `userErrors` do Pipefy numa frase curta e legivel para o
+// tablet (ex.: "Field not found"), em vez de um erro opaco. `field` vem como
+// lista de caminhos (ex.: ["values", "fieldId", "nome_do_respons_vel_2"]).
+function descreverUserErrors(userErrors) {
+  if (!Array.isArray(userErrors) || userErrors.length === 0) return '';
+  const partes = userErrors
+    .filter((e) => e && e.message)
+    .map((e) => {
+      const caminho = Array.isArray(e.field) && e.field.length > 0 ? e.field[e.field.length - 1] : '';
+      return caminho ? `${e.message} (${caminho})` : String(e.message);
+    });
+  return partes.join('; ').slice(0, 200);
+}
+
+// Erro interno que carrega a mensagem ja pronta para a tela, usado para
+// devolver o motivo real de uma recusa do Pipefy sem repetir o try/catch.
+function criarErroRecusa(mensagem, detalhe) {
+  const err = new Error(detalhe ? `${mensagem} (${detalhe})` : mensagem);
+  err.code = 'pipefy_recusa';
+  return err;
+}
 
 function getBody(req) {
   if (req.body === undefined || req.body === null) return {};
@@ -88,10 +122,14 @@ module.exports = async (req, res) => {
         input: { nodeId: id, values },
       });
 
-      if (!resultado || !resultado.updateFieldsValues || !resultado.updateFieldsValues.success) {
-        console.error('[visitas/atualizar] Pipefy retornou success=false', resultado);
-        res.status(502).json({ error: 'Não foi possível salvar os dados no Pipefy.' });
-        return;
+      const atualizacao = resultado && resultado.updateFieldsValues;
+      if (!atualizacao || !atualizacao.success) {
+        // `userErrors` e o que explica a recusa (ex.: "Field not found" quando
+        // um id de campo em _lib/campos.js deixa de existir no Pipefy). Sem
+        // isso o tablet so mostrava "Tente novamente", sem pista nenhuma.
+        const detalhe = descreverUserErrors(atualizacao && atualizacao.userErrors);
+        console.error('[visitas/atualizar] Pipefy retornou success=false', detalhe, resultado);
+        throw criarErroRecusa('O Pipefy não aceitou os dados', detalhe);
       }
     }
 
@@ -101,8 +139,7 @@ module.exports = async (req, res) => {
       const faseDestino = (process.env.PIPEFY_FASE_FEZ_VISITA_ID || '').trim();
       if (!faseDestino) {
         console.error('[visitas/atualizar] PIPEFY_FASE_FEZ_VISITA_ID nao configurado');
-        res.status(502).json({ error: 'Fase "9. FEZ VISITA" não configurada no servidor. Avisar o responsável.' });
-        return;
+        throw criarErroRecusa('Fase "9. FEZ VISITA" não configurada no servidor');
       }
 
       const movido = await pipefyRequest(MUTATION_MOVER_FASE, {
@@ -111,8 +148,7 @@ module.exports = async (req, res) => {
 
       if (!movido || !movido.moveCardToPhase || !movido.moveCardToPhase.card) {
         console.error('[visitas/atualizar] moveCardToPhase nao retornou o card', movido);
-        res.status(502).json({ error: 'Não foi possível mover o card para a fase "9. FEZ VISITA".' });
-        return;
+        throw criarErroRecusa('Não foi possível mover o card para a fase "9. FEZ VISITA"');
       }
     }
 

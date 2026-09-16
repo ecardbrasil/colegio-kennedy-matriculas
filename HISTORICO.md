@@ -505,6 +505,63 @@ momento." mesmo com um card na fase "7. AGENDOU VISITA". Investigação e result
 **Ainda pendente**: testar login (senha certa/errada), gravar responsável 2 refletindo no Pipefy,
 "marcar visita como realizada" movendo o card para a fase `343928427` e os testes em tablet.
 
+## 13. Correção: salvamento da visita sempre falhando (17/09/2026)
+
+O Diego tentou salvar o dado do segundo responsável na tela da visita e a tela respondeu sempre
+"Não foi possível salvar os dados. Tente novamente.", sem gravar nada no Pipefy. O sintoma era
+idêntico para "Salvar dados preenchidos" e para "Marcar visita como realizada".
+
+**Causa raiz (uma só)**: a mutation `updateFieldsValues` em `api/visitas/atualizar.js` pedia
+`updatedNode { id }`. `updatedNode` é um **union** (`Card | TableRecord`) no schema do Pipefy, e
+GraphQL não permite selecionar campo direto em union. Resultado: o Pipefy **recusava a mutation
+inteira na validação**, sem executar nada, devolvendo
+
+```
+Selections can't be made directly on unions (see selections on UpdatedNode)
+path: mutation.updateFieldsValues.updatedNode.id
+```
+
+Esse erro chegava como `pipefy_graphql`, não casava com nenhum caso conhecido de
+`mensagemErroPipefy()` (que só tratava token/acesso negado) e caía no texto genérico
+"Não foi possível salvar os dados. Tente novamente.". Ou seja: o erro era real, mas ficou invisível.
+
+**Como foi diagnosticado**: repetindo a chamada real na API do Pipefy com o token do projeto, um
+campo por vez, e lendo o `errors` cru do GraphQL. Em seguida, introspecção do schema para confirmar
+os shapes: `UpdateFieldsValuesPayload = { success: Boolean!, updatedNode: UpdatedNode (UNION),
+userErrors: [UserError!] }`, `UserError = { field: [String], message: String! }`,
+`MoveCardToPhaseInput = { card_id: ID!, destination_phase_id: ID! }` (esse já estava correto).
+
+**Mudanças de código nesta rodada**:
+- `atualizar.js`: `updatedNode { id }` removido da mutation (o id do card já é conhecido) e trocado
+  por `userErrors { field message }`. Com isso foi possível também **trocar o `success=false` mudo
+  por um motivo legível**, via `descreverUserErrors()` + `criarErroRecusa()` (código `pipefy_recusa`).
+  Sem mudança de comportamento na API: segue 200 `{ ok: true }` no sucesso e 502 com motivo no erro.
+- `_lib/pipefy.js`: `mensagemErroPipefy()` passou a mostrar o texto original do Pipefy (resumido a
+  160 caracteres, sem quebras de linha) quando o erro é `pipefy_graphql` fora dos casos de acesso
+  negado, e também em `pipefy_http`. É exatamente o que teria evitado esse bug passar despercebido.
+  Os casos de token inválido/ausente, resposta inesperada e acesso negado continuam com o texto
+  amigável, e o token nunca aparece (nem no log nem na tela).
+
+**Validação**:
+- Antes da correção, um teste de leitura em `card` mostrou o card sem os campos do responsável 2.
+  Depois, a mesma mutation corrigida (`success` + `userErrors`) gravou de verdade os dois campos
+  (`nome_do_respons_vel_2 = "RESPONS 2"`, `telefone_respons_vel_2 = "51981246336"`) no card de
+  teste `1445994068`, e `local/teste-visitas.js` passou a devolver `faltantes: []`.
+- Novo `local/teste-atualizar.js` (pasta gitignored, nada versionado): executa o handler real
+  `api/visitas/atualizar.js` com req/res falsos em 9 casos. Nenhum dado real é alterado: tudo usa o
+  card inexistente `"0"`, justamente para provar que a query **passou na validação do schema e
+  chegou a executar**. O caso 5 é a regressão do bug: se `updatedNode { id }` voltar, a mensagem
+  passa a conter "unions" e o teste falha. O caso 6 faz a mesma checagem para `moveCardToPhase`.
+- `local/teste-visitas.js`, `local/teste-agenda-dom.js` e `local/teste-card-dom.js` continuam
+  passando (10 + 17 + 11 asserções), sem regressão.
+
+**Importante para o deploy**: a correção é só de backend, então não houve bump de `?v=` nos HTML de
+`visitas/` (nada de frontend mudou). Mas env var e código só valem após novo deploy, e o bug estava
+em produção: até o deploy sair, nenhum salvamento pela tela funciona.
+
+**Ainda pendente** (inalterado): testar login (senha certa/errada), "marcar visita como realizada"
+movendo o card para a fase `343928427` e os testes em tablet.
+
 ## Como retomar
 
 1. Ler o `CHECKLIST.md` pra ver o estado atual item a item

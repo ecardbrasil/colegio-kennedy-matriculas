@@ -239,8 +239,15 @@ Ver detalhes completos em HISTORICO.md, seção "11. Ferramenta interna /visitas
 - [x] Validado localmente com scripts em `local/` (pasta gitignored, nada versionado): handlers reais
       do backend com req/res falsos (10 casos, incluindo token inválido) e JS do frontend em DOM
       simulado (17 + 11 asserções)
-- [ ] Testar login (senha certa/errada) e o preenchimento de responsável 2 refletindo no Pipefy de
-      verdade
+- [x] **Bug corrigido (17/09/2026)** — salvar pela tela da visita sempre respondia "Não foi possível
+      salvar os dados. Tente novamente." sem gravar nada. Causa: a mutation `updateFieldsValues` pedia
+      `updatedNode { id }`, e `updatedNode` é um union no schema do Pipefy, então o Pipefy recusava a
+      mutation inteira na validação. Corrigido em `api/visitas/atualizar.js` (mutation agora pede
+      `success` + `userErrors`) e `mensagemErroPipefy()` passou a mostrar o motivo real do Pipefy em
+      vez de escondê-lo atrás do texto genérico. Detalhes em HISTORICO.md, seção "13"
+- [x] Preenchimento do responsável 2 refletindo no Pipefy de verdade (validado no card de teste
+      `1445994068`: `nome_do_respons_vel_2` e `telefone_respons_vel_2` gravados, `faltantes: []`)
+- [ ] Testar login (senha certa/errada)
 - [ ] Testar "marcar visita como realizada" movendo o card pra fase "9. FEZ VISITA" (`343928427`)
 
 - [ ] Testar em tablet (viewport ~768-1024px) — é o dispositivo real que o Diego vai usar
