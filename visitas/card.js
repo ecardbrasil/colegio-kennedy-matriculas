@@ -99,6 +99,7 @@
   var listaRoteiro = document.getElementById('listaRoteiro');
   var camposAlunos = document.getElementById('camposAlunos');
   var btnAdicionarAluno = document.getElementById('btnAdicionarAluno');
+  var conteudoResumo = document.getElementById('conteudoResumo');
   var camposResponsavel1 = document.getElementById('camposResponsavel1');
   var camposResponsavel2 = document.getElementById('camposResponsavel2');
   var camposNecessidade = document.getElementById('camposNecessidade');
@@ -386,6 +387,55 @@
     renderizarCampos(camposOutros, restantes, card, faltantes, meta);
   }
 
+  function renderizarResumo(card) {
+    limpar(conteudoResumo);
+
+    var resp1Nome = estaVazio(card.responsavel_1_nome) ? null : String(card.responsavel_1_nome).trim();
+    var resp2Nome = estaVazio(card.responsavel_2_nome) ? null : String(card.responsavel_2_nome).trim();
+
+    if (resp1Nome) {
+      var item1 = document.createElement('div');
+      item1.className = 'resumo-item';
+      item1.innerHTML = '<strong>Responsável 1:</strong> ' + escapeHtml(resp1Nome);
+      conteudoResumo.appendChild(item1);
+    }
+
+    if (resp2Nome) {
+      var item2 = document.createElement('div');
+      item2.className = 'resumo-item';
+      item2.innerHTML = '<strong>Responsável 2:</strong> ' + escapeHtml(resp2Nome);
+      conteudoResumo.appendChild(item2);
+    }
+
+    for (var n = 1; n <= MAX_ALUNOS; n++) {
+      var nomeAluno = card['nome_aluno_' + n];
+      if (!estaVazio(nomeAluno)) {
+        var itemAluno = document.createElement('div');
+        itemAluno.className = 'resumo-item';
+        itemAluno.innerHTML = '<strong>Aluno ' + n + ':</strong> ' + escapeHtml(String(nomeAluno).trim());
+        conteudoResumo.appendChild(itemAluno);
+      }
+    }
+
+    if (conteudoResumo.children.length === 0) {
+      var vazio = document.createElement('p');
+      vazio.className = 'texto-cinzento';
+      vazio.textContent = 'Nenhum nome cadastrado ainda.';
+      conteudoResumo.appendChild(vazio);
+    }
+  }
+
+  function escapeHtml(texto) {
+    var map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#039;'
+    };
+    return texto.replace(/[&<>"']/g, function (char) { return map[char]; });
+  }
+
   function renderizarRoteiro(card) {
     limpar(listaRoteiro);
     var itens = window.montarRoteiro(card);
@@ -428,6 +478,7 @@
     }
 
     renderizarRoteiro(card);
+    renderizarResumo(card);
 
     // Quantos alunos mostrar de largada: o maior entre os que ja tem dados e a
     // quantidade informada no proprio card.

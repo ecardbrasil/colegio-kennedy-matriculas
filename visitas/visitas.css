@@ -524,3 +524,48 @@ a {
 .btn-secundario:disabled {
   opacity: 0.6;
 }
+
+/* ========================
+   RESUMO DE VISITANTES
+   ======================== */
+.resumo-visitantes {
+  background: linear-gradient(135deg, #f0f4fb 0%, #e8f0f9 100%);
+  border-left: 5px solid var(--color-primary);
+}
+
+.resumo-visitantes h2 {
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+}
+
+.resumo-item {
+  padding: 0.6rem 0;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  border-bottom: 1px solid rgba(12, 44, 92, 0.1);
+}
+
+.resumo-item:last-child {
+  border-bottom: none;
+}
+
+.resumo-item strong {
+  color: var(--color-primary);
+  font-weight: 700;
+  display: block;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.2rem;
+}
+
+.resumo-item:not(:has(strong)) {
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.texto-cinzento {
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  font-style: italic;
+}
