@@ -559,6 +559,55 @@ userErrors: [UserError!] }`, `UserError = { field: [String], message: String! }`
 `visitas/` (nada de frontend mudou). Mas env var e código só valem após novo deploy, e o bug estava
 em produção: até o deploy sair, nenhum salvamento pela tela funciona.
 
+## 14. Tela da visita: todos os dados do card editáveis (17/09/2026)
+
+Antes, `card.html` era uma tela de consulta (roteiro + resumo do responsável 1 e 2 + origem). O
+Diego precisava abrir o Pipefy para corrigir qualquer outro dado do card (nome do aluno, série,
+horário da visita, UTM etc.). Agora a tela da visita é o formulário completo do card:
+
+**Backend**:
+- `api/visitas/_lib/campos.js`: a tabela `CAMPOS` passou a cobrir TODOS os 33 campos do formulário
+  do pipe (conferidos por introspecção) mais o campo `visita` da fase "7. AGENDOU VISITA". Também
+  exporta `CAMPOS_POR_ALUNO`, `CAMPOS_ALUNO_1` e `REQUIRED_FIELDS`.
+- `api/visitas/card.js` (NOVO endpoint `GET /api/visitas/card?id=...`): numa única ida ao Pipefy
+  devolve os valores normalizados do card + `faltantes` + os **metadados** de cada campo (label,
+  tipo, opcoes), cruzando o mapeamento interno com `pipe.start_form_fields` e
+  `card.current_phase.fields` (a fase vence em caso de duplicidade; é de onde vem o campo `visita`,
+  que é `due_date` e só existe na fase da agenda). Campo do mapeamento que sumiu do pipe fica de
+  fora da resposta (e o backend loga o aviso) em vez de quebrar a tela.
+
+**Frontend** (`visitas/card.html` + `card.js` reescrito, `visitas.css` + blocos de campo editável):
+- Todo campo é editável. O tipo do controle NÃO é chutado no frontend: vem do Pipefy. `radio`/
+  `select`/`checklist` viram `<select>` com as opções exatas (e "Não informado" como vazio; valor
+  atual fora da lista entra como opção extra para não ser apagado sem quem edita ver); `due_date`/
+  `datetime` viram `datetime-local` (formato testado gravando no Pipefy: `2026-09-17T15:45` volta
+  como `17/09/2026 15:45`); `phone`/`email`/`number` viram inputs tipados; `long_text` vira
+  textarea.
+- Blocos: Aluno(s) (1 a 4, com "Adicionar aluno" que preserva o que já foi digitado), Responsável 1
+  e 2 (com CPF e parentesco, que eram invisíveis antes), Necessidade educacional especial, Origem e
+  campanha (baixa ênfase), Data e hora da visita no cabeçalho e um bloco de segurança "Outros dados
+  do card" para qualquer campo mapeado que não caiba nos anteriores.
+- Só os campos ALTERADOS são enviados (`POST /api/visitas/atualizar`, contrato inalterado), evitando
+  reescrever UTM/GCLID só porque a tela foi aberta. Valor vazio é enviado de propósito: é assim que
+  um campo é limpo no Pipefy (testado).
+- Durante o salvamento os controles ficam desabilitados (evita editar durante a recarga silenciosa);
+  em erro, o rascunho é preservado e dá para tentar de novo; "Marcar visita como realizada" envia
+  alterações + movimento de fase na MESMA requisição.
+- O selo "Falta preencher" continua nos campos obrigatórios vazios e o roteiro (`roteiro.js`) segue
+  funcionando em cima dos mesmos dados.
+
+**Versionamento de cache**: `card.html` agora referencia `visitas.css?v=5`, `roteiro.js?v=4` e
+`card.js?v=5` (regra de bump em CLAUDE.md).
+
+**Validação**: `local/teste-card-dom.js` reescrito (DOM simulado): 43 asserções cobrindo
+carregamento, controle certo por tipo do Pipefy, selo de obrigatório, envio só do que mudou,
+"Adicionar aluno" preservando rascunho, bloqueio durante envio, erro preservando rascunho, "marcar
+como realizada" com movimento de fase e falhas visíveis (502, 404, sem metadados). Todos passaram,
+sem regressão em `teste-visitas.js` (10) e `teste-agenda-dom.js` (17). O token usado nas validações
+ao vivo anteriores passou a responder `invalid_token` no Pipefy; validação final da nova query de
+metadados em produção ficou pendente de token novo.
+
+## Como retomar
 **Ainda pendente** (inalterado): testar login (senha certa/errada), "marcar visita como realizada"
 movendo o card para a fase `343928427` e os testes em tablet.
 

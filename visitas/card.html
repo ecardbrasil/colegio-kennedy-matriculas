@@ -6,7 +6,7 @@
   <meta name="robots" content="noindex, nofollow" />
   <title>Visita, Colégio Kennedy</title>
   <link rel="icon" href="/assets/images/favicon.webp" type="image/webp" />
-  <link rel="stylesheet" href="/visitas/visitas.css?v=3" />
+  <link rel="stylesheet" href="/visitas/visitas.css?v=5" />
 </head>
 <body>
   <header class="topo">
@@ -25,6 +25,7 @@
     <div id="conteudoCard" hidden>
       <div class="cabecalho-visita">
         <div class="horario-visita" id="horarioVisita"></div>
+        <div id="campoVisita"></div>
       </div>
 
       <section class="bloco" id="blocoRoteiro">
@@ -35,6 +36,7 @@
       <section class="bloco" id="blocoAlunos">
         <h2>Aluno(s)</h2>
         <div id="camposAlunos"></div>
+        <button type="button" class="btn-adicionar-aluno" id="btnAdicionarAluno">Adicionar aluno</button>
       </section>
 
       <section class="bloco" id="blocoResponsavel1">
@@ -47,7 +49,7 @@
         <div id="camposResponsavel2"></div>
       </section>
 
-      <section class="bloco" id="blocoNecessidade" hidden>
+      <section class="bloco" id="blocoNecessidade">
         <h2>Necessidade educacional especial</h2>
         <div id="camposNecessidade"></div>
       </section>
@@ -57,11 +59,16 @@
         <div id="camposOrigem"></div>
       </section>
 
+      <section class="bloco baixa-enfase" id="blocoOutros" hidden>
+        <h2>Outros dados do card</h2>
+        <div id="camposOutros"></div>
+      </section>
+
       <p class="mensagem-erro" id="mensagemErroSalvar"></p>
-      <p class="mensagem-sucesso" id="mensagemSucesso" hidden>Visita marcada como realizada.</p>
+      <p class="mensagem-sucesso" id="mensagemSucesso" hidden>Dados salvos.</p>
 
       <div class="barra-acoes" id="barraAcoes">
-        <button type="button" class="btn-secundario" id="btnSalvar" hidden>Salvar dados preenchidos</button>
+        <button type="button" class="btn-secundario" id="btnSalvar" disabled>Nenhuma alteração para salvar</button>
         <button type="button" class="btn-realizada" id="btnRealizada">Marcar visita como realizada</button>
         <a class="voltar" href="/visitas/index.html" id="linkVoltarAgenda" style="text-align:center; display:none;">Voltar para a agenda</a>
       </div>
@@ -69,7 +76,7 @@
   </main>
 
   <script src="/visitas/auth.js?v=3"></script>
-  <script src="/visitas/roteiro.js?v=3"></script>
-  <script src="/visitas/card.js?v=3" defer></script>
+  <script src="/visitas/roteiro.js?v=4"></script>
+  <script src="/visitas/card.js?v=5" defer></script>
 </body>
 </html>

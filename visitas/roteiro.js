@@ -16,19 +16,19 @@ function montarRoteiro(card) {
       id: 'origem_campanha',
       quando: (c) => !!c.utm_campaign,
       texto: (c) =>
-        `A familia chegou pela campanha "${c.utm_campaign}". Pergunte o que mais chamou atencao no anuncio.`,
+        `A família chegou pela campanha "${c.utm_campaign}". Pergunte o que mais chamou atenção no anúncio.`,
     },
     {
       id: 'multiplos_filhos',
       quando: (c) => Number(c.quantidade_alunos) > 1,
       texto: (c) =>
-        `Familia com ${c.quantidade_alunos} filhos. Reforce o desconto de irmaos e mostre as turmas de cada serie.`,
+        `Família com ${c.quantidade_alunos} filhos. Reforce o desconto de irmãos e mostre as turmas de cada série.`,
     },
     {
       id: 'segundo_responsavel_ausente',
       quando: (c) => !c.responsavel_2_nome,
       texto: () =>
-        'Apenas um responsavel esta cadastrado. Se o segundo responsavel tambem estiver presente, colete o nome e o telefone dele no formulario ao lado.',
+        'Apenas um responsável está cadastrado. Se o segundo responsável também estiver presente, colete o nome e o telefone dele no bloco Responsável 2, logo abaixo.',
     },
     {
       id: 'necessidade_especial',
@@ -38,8 +38,8 @@ function montarRoteiro(card) {
         c.necessidade_especial.toLowerCase() !== 'não',
       texto: (c) =>
         c.necessidade_especial_obs
-          ? `Necessidade educacional especial informada: ${c.necessidade_especial_obs}. Inclua a equipe pedagogica de apoio no roteiro da visita.`
-          : 'Necessidade educacional especial informada. Inclua a equipe pedagogica de apoio no roteiro da visita.',
+          ? `Necessidade educacional especial informada: ${c.necessidade_especial_obs}. Inclua a equipe pedagógica de apoio no roteiro da visita.`
+          : 'Necessidade educacional especial informada. Inclua a equipe pedagógica de apoio no roteiro da visita.',
     },
   ];
 

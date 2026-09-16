@@ -247,8 +247,15 @@ Ver detalhes completos em HISTORICO.md, seção "11. Ferramenta interna /visitas
       vez de escondê-lo atrás do texto genérico. Detalhes em HISTORICO.md, seção "13"
 - [x] Preenchimento do responsável 2 refletindo no Pipefy de verdade (validado no card de teste
       `1445994068`: `nome_do_respons_vel_2` e `telefone_respons_vel_2` gravados, `faltantes: []`)
+- [x] **Tela da visita editável (17/09/2026)** — `card.html` agora mostra TODOS os dados do card
+      como formulário editável (alunos 1 a 4, responsáveis 1 e 2 com CPF/parentesco, necessidade
+      especial, origem/UTM, horário da visita), com tipo de controle vindo dos metadados do Pipefy
+      (novo endpoint `GET /api/visitas/card`) e envio só dos campos alterados. Detalhes em
+      HISTORICO.md, seção "14"
 - [ ] Testar login (senha certa/errada)
 - [ ] Testar "marcar visita como realizada" movendo o card pra fase "9. FEZ VISITA" (`343928427`)
+- [ ] Renovar `PIPEFY_API_TOKEN` (o atual passou a responder `invalid_token`) e revalidar ao vivo a
+      nova query de metadados do card
 
 - [ ] Testar em tablet (viewport ~768-1024px) — é o dispositivo real que o Diego vai usar
 - [ ] QA do roteiro condicional (`visitas/roteiro.js`) com pelo menos 3 combinações de dados

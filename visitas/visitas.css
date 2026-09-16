@@ -399,16 +399,16 @@ a {
   vertical-align: middle;
 }
 
-.campo-faltante {
+.campo-editavel {
   padding: 0.6rem 0;
   border-bottom: 1px solid var(--color-border);
 }
 
-.campo-faltante:last-child {
+.campo-editavel:last-child {
   border-bottom: none;
 }
 
-.campo-faltante label {
+.campo-editavel label {
   display: flex;
   align-items: center;
   gap: 0.4rem;
@@ -417,17 +417,59 @@ a {
   font-size: 0.98rem;
 }
 
-.campo-faltante input {
+.campo-editavel input,
+.campo-editavel select,
+.campo-editavel textarea {
   width: 100%;
-  padding: 0.85rem 1rem;
+  padding: 0.8rem 1rem;
   font-size: 1.05rem;
+  font-family: inherit;
+  color: var(--color-text);
+  background: var(--color-white);
   border: 2px solid var(--color-border);
   border-radius: var(--radius-sm);
 }
 
-.campo-faltante input:focus {
+.campo-editavel textarea {
+  resize: vertical;
+  min-height: 4.5rem;
+}
+
+.campo-editavel input:focus,
+.campo-editavel select:focus,
+.campo-editavel textarea:focus {
   outline: none;
   border-color: var(--color-primary);
+}
+
+/* Um campo de texto de aluno fica logo abaixo do titulo "Aluno N": a borda
+   separadora ali atrapalha mais do que ajuda. */
+.titulo-aluno {
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-top: 0.9rem;
+  font-size: 1rem;
+}
+
+.titulo-aluno:first-child {
+  margin-top: 0;
+}
+
+.btn-adicionar-aluno {
+  display: block;
+  width: 100%;
+  margin-top: 0.9rem;
+  padding: 0.8rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  background: transparent;
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.btn-adicionar-aluno:active {
+  background: #f7f4ec;
 }
 
 /* ========================
@@ -478,6 +520,7 @@ a {
 }
 
 .btn-realizada:disabled,
-.btn-primario:disabled {
+.btn-primario:disabled,
+.btn-secundario:disabled {
   opacity: 0.6;
 }
