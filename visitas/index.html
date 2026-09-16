@@ -6,7 +6,7 @@
   <meta name="robots" content="noindex, nofollow" />
   <title>Agenda de visitas, Colégio Kennedy</title>
   <link rel="icon" href="/assets/images/favicon.webp" type="image/webp" />
-  <link rel="stylesheet" href="/visitas/visitas.css?v=4" />
+  <link rel="stylesheet" href="/visitas/visitas.css?v=6" />
 </head>
 <body>
   <header class="topo">
@@ -18,8 +18,13 @@
   </header>
 
   <main class="conteudo">
+    <div class="abas">
+      <button type="button" class="aba-btn aba-proximas ativa" id="abaProximas">Próximas visitas</button>
+      <button type="button" class="aba-btn aba-encerradas" id="abaEncerradas">Visitas encerradas</button>
+    </div>
+
     <p class="mensagem-carregando" id="mensagemCarregando">Carregando agenda...</p>
-    <p class="mensagem-vazia" id="mensagemVazia" hidden>Nenhuma visita agendada no momento.</p>
+    <p class="mensagem-vazia" id="mensagemVazia" hidden>Nenhuma visita nesta categoria.</p>
     <div class="mensagem-erro-tela" id="mensagemErroTela" hidden>
       <p id="textoErroCarregamento">Não foi possível carregar a agenda. Verifique a internet.</p>
       <button type="button" class="btn-primario" id="btnTentarNovamente">Tentar novamente</button>
@@ -28,6 +33,6 @@
   </main>
 
   <script src="/visitas/auth.js?v=3"></script>
-  <script src="/visitas/agenda.js?v=3" defer></script>
+  <script src="/visitas/agenda.js?v=5" defer></script>
 </body>
 </html>

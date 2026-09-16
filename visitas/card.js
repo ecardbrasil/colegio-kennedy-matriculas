@@ -108,6 +108,8 @@
   var camposOutros = document.getElementById('camposOutros');
   var btnSalvar = document.getElementById('btnSalvar');
   var btnRealizada = document.getElementById('btnRealizada');
+  var btnFlutuante = document.getElementById('btnFlutuante');
+  var notificacaoSistema = document.getElementById('notificacaoSistema');
   var mensagemErroSalvar = document.getElementById('mensagemErroSalvar');
   var mensagemSucesso = document.getElementById('mensagemSucesso');
   var linkVoltarAgenda = document.getElementById('linkVoltarAgenda');
@@ -287,6 +289,13 @@
   function limparAvisos() {
     mensagemSucesso.hidden = true;
     mensagemErroSalvar.textContent = '';
+  }
+
+  function mostrarNotificacaoSistema() {
+    notificacaoSistema.classList.add('visivel');
+    setTimeout(function () {
+      notificacaoSistema.classList.remove('visivel');
+    }, 3000);
   }
 
   // Registra o controle na lista da tela. O valor "original" (o que veio do
@@ -667,6 +676,26 @@
         linkVoltarAgenda.style.display = 'block';
       })
       .catch(function () {});
+  });
+
+  btnFlutuante.addEventListener('click', function () {
+    var controleNecessidade = controles.necessidade_especial;
+    if (!controleNecessidade) return;
+
+    controleNecessidade.value = 'Sim';
+    controleNecessidade.dispatchEvent(new Event('input', { bubbles: true }));
+
+    var campos = coletarCamposAlterados();
+    if (Object.keys(campos).length > 0) {
+      enviarAtualizacao(campos, false)
+        .then(function (resultado) {
+          if (!resultado) return;
+          return carregarCard({ silencioso: true }).then(function () {
+            mostrarNotificacaoSistema();
+          });
+        })
+        .catch(function () {});
+    }
   });
 
   carregarCard();
