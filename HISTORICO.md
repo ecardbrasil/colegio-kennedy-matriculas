@@ -607,8 +607,27 @@ sem regressão em `teste-visitas.js` (10) e `teste-agenda-dom.js` (17). O token 
 ao vivo anteriores passou a responder `invalid_token` no Pipefy; validação final da nova query de
 metadados em produção ficou pendente de token novo.
 
-## Como retomar
-**Ainda pendente** (inalterado): testar login (senha certa/errada), "marcar visita como realizada"
+## 15. Resumo de visitantes na tela de visita (16/09/2026)
+
+Diego precisa chamar os responsáveis e alunos pelo nome assim que chega para a visita. Adicionado
+um bloco "Quem é" no topo da tela de visita (logo após o horário), que exibe:
+- Nome do Responsável 1
+- Nome do Responsável 2
+- Nomes de todos os alunos (1 a 4)
+
+**Implementação**:
+- `visitas/card.html`: novo bloco `#blocoResumo` com heading "Quem é" e container `#conteudoResumo`
+  (renderizado pelo JS, não hardcodado)
+- `visitas/card.js`: nova função `renderizarResumo(card)` que monta os nomes a partir dos dados do
+  card; também adicionada função auxiliar `escapeHtml()` para sanitizar (contra XSS). A função é
+  chamada em `renderizarCard()` logo após `renderizarRoteiro()`.
+- `visitas/visitas.css`: nova classe `.resumo-visitantes` (fundo gradiente azul claro, borda
+  esquerda, styling clean) e `.resumo-item` (texto legível em tablet). Se nenhum nome estiver
+  preenchido, mostra "Nenhum nome cadastrado ainda."
+
+**Cache-busting**: `card.html` referencia `card.js?v=6` (alterado durante o desenvolvimento).
+
+**Ainda pendente**: testar login (senha certa/errada), "marcar visita como realizada"
 movendo o card para a fase `343928427` e os testes em tablet.
 
 ## Como retomar

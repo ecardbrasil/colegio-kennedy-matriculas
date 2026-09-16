@@ -252,6 +252,10 @@ Ver detalhes completos em HISTORICO.md, seção "11. Ferramenta interna /visitas
       especial, origem/UTM, horário da visita), com tipo de controle vindo dos metadados do Pipefy
       (novo endpoint `GET /api/visitas/card`) e envio só dos campos alterados. Detalhes em
       HISTORICO.md, seção "14"
+- [x] **Resumo de visitantes (16/09/2026)** — Bloco "Quem é" adicionado no topo da tela de visita
+      logo após o horário, exibindo nomes do responsável 1, responsável 2 e todos os alunos
+      cadastrados. Permite que Diego chame as pessoas pelo nome assim que chegar para a visita
+      presencial. Detalhes em HISTORICO.md, seção "15"
 - [ ] Testar login (senha certa/errada)
 - [ ] Testar "marcar visita como realizada" movendo o card pra fase "9. FEZ VISITA" (`343928427`)
 - [ ] Renovar `PIPEFY_API_TOKEN` (o atual passou a responder `invalid_token`) e revalidar ao vivo a
