@@ -630,6 +630,18 @@ um bloco "Quem é" no topo da tela de visita (logo após o horário), que exibe:
 **Ainda pendente**: testar login (senha certa/errada), "marcar visita como realizada"
 movendo o card para a fase `343928427` e os testes em tablet.
 
+## 16. Confirmação do ID da fase "Não veio" (16/09/2026)
+
+`visitas/agenda.js` usa o botão "Não veio" (aba Visitas encerradas) pra mover o card pra fase
+`343928419`, mas esse ID nunca tinha sido documentado aqui nem no CHECKLIST.md — só apareceu
+hardcoded no código, sem registro de como foi confirmado (diferente de `343928415` e `343928427`,
+que vieram de introspecção GraphQL registrada na seção 11). Usuário confirmou o ID certo:
+
+- Fase "8. Ñ VEIO VISITA, REMARCAR", id `343928419`, pipe "CK 2027" (`307287863`).
+
+Nenhuma mudança de código necessária, o ID já estava certo. Registrando aqui só pra não repetir a
+dúvida/investigação da próxima vez.
+
 ## Como retomar
 
 1. Ler o `CHECKLIST.md` pra ver o estado atual item a item
