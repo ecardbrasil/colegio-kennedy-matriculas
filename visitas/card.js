@@ -41,16 +41,20 @@
     necessidade_especial: 'Existe necessidade educacional especial?',
     necessidade_especial_obs: 'Se sim, qual?',
     origem: 'Como chegou até a gente',
-    utm_source: 'Origem (UTM)',
-    utm_medium: 'Mídia (UTM)',
-    utm_campaign: 'Campanha (UTM)',
-    utm_term: 'Termo (UTM)',
-    utm_content: 'Conteúdo (UTM)',
-    gclid: 'Gclid',
-    url_pagina: 'URL da página do formulário',
-    data_hora_lead: 'Data e hora do formulário',
     visita_horario: 'Data e hora da visita',
   };
+
+  // Campos de rastreio (UTM/GCLID etc.) que nao devem aparecer na tela.
+  var CAMPOS_OCULTOS = [
+    'utm_source',
+    'utm_medium',
+    'utm_campaign',
+    'utm_term',
+    'utm_content',
+    'gclid',
+    'url_pagina',
+    'data_hora_lead',
+  ];
 
   var CHAVES_RESPONSAVEL_1 = [
     'responsavel_1_nome',
@@ -70,14 +74,6 @@
   // Bloco de baixa enfase: dado de rastreio, quase nunca precisa ser tocado.
   var CHAVES_ORIGEM = [
     'origem',
-    'utm_source',
-    'utm_medium',
-    'utm_campaign',
-    'utm_term',
-    'utm_content',
-    'gclid',
-    'url_pagina',
-    'data_hora_lead',
   ];
   // So existem para o primeiro filho: o formulario publico pergunta uma vez.
   var CHAVES_ALUNO_1 = ['data_nascimento_aluno_1', 'escola_atual_aluno_1'];
@@ -382,7 +378,7 @@
       .concat(CHAVES_NECESSIDADE, CHAVES_ORIGEM, ['visita_horario']);
 
     var restantes = Object.keys(meta).filter(function (chave) {
-      return conhecidas.indexOf(chave) === -1;
+      return conhecidas.indexOf(chave) === -1 && CAMPOS_OCULTOS.indexOf(chave) === -1;
     });
 
     limpar(camposOutros);
