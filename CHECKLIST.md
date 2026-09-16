@@ -208,6 +208,26 @@ vercel --prod
 - [ ] **FUTURO:** importar conversões offline usando o GCLID capturado no webhook, quando já
       houver leads reais convertidos em matrícula no Pipefy
 
+## 14. Ferramenta interna /visitas (16/09/2026) — código pronto, configuração e testes pendentes
+Ver detalhes completos em HISTORICO.md, seção "11. Ferramenta interna /visitas para o Diego".
+- [x] Backend criado em `api/visitas/*` (login, logout, agenda, card, atualizar + `_lib/session.js`,
+      `_lib/pipefy.js`, `_lib/campos.js`)
+- [x] Frontend criado em `visitas/*` (login.html, index.html, card.html, visitas.css, agenda.js,
+      card.js, roteiro.js, auth.js), design tablet-first
+- [x] `vercel.json` atualizado com `Cache-Control: no-store` para `/api/visitas/*`
+- [x] `.gitignore` atualizado com `.env*.local`
+- [x] Configurar env vars no projeto da Vercel: `PIPEFY_API_TOKEN`, `PIPEFY_PIPE_ID` (`307287863`),
+      `PIPEFY_FASE_AGENDOU_VISITA_ID` (`343928415`), `PIPEFY_FASE_FEZ_VISITA_ID` (`343928427`),
+      `VISITAS_SENHA`, `SESSION_SECRET` — configuradas manualmente no dashboard da Vercel e redeploy
+      feito (16/09/2026)
+- [ ] Confirmar se o campo `visita` (fase "7. AGENDOU VISITA") grava data **e hora** ou só data
+      (testar com um card real); se vier só data, trocar o tipo do campo pra `datetime` no Pipefy
+- [ ] Testar login (senha errada/certa), agenda carregando um card de teste na fase "7. AGENDOU
+      VISITA", preenchimento de responsável 2 refletindo no Pipefy de verdade, e "marcar visita como
+      realizada" movendo o card pra fase "9. FEZ VISITA"
+- [ ] Testar em tablet (viewport ~768-1024px) — é o dispositivo real que o Diego vai usar
+- [ ] QA do roteiro condicional (`visitas/roteiro.js`) com pelo menos 3 combinações de dados
+
 ## 9. Teste final
 - [ ] Abrir a página com `?gclid=TESTE123&utm_source=google&utm_medium=cpc&utm_campaign=matriculas`
 - [ ] Verificar campos hidden preenchidos (DevTools → Elements)

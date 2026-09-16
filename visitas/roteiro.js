@@ -1,0 +1,49 @@
+// roteiro.js
+// Modulo puro (sem DOM, sem fetch) que monta o roteiro de conversa
+// exibido em card.html a partir dos dados do card. Cada bloco decide
+// sozinho se entra no roteiro (quando) e qual texto mostrar (texto).
+// Adicionar uma nova condicao aqui nunca deve exigir mudar card.js.
+
+function montarRoteiro(card) {
+  const blocos = [
+    {
+      id: 'abertura',
+      quando: () => true,
+      texto: (c) =>
+        `Bem-vindo(a)! Vamos falar sobre a visita de ${c.nome_aluno_1 || 'seu filho ou sua filha'} na Kennedy.`,
+    },
+    {
+      id: 'origem_campanha',
+      quando: (c) => !!c.utm_campaign,
+      texto: (c) =>
+        `A familia chegou pela campanha "${c.utm_campaign}". Pergunte o que mais chamou atencao no anuncio.`,
+    },
+    {
+      id: 'multiplos_filhos',
+      quando: (c) => Number(c.quantidade_alunos) > 1,
+      texto: (c) =>
+        `Familia com ${c.quantidade_alunos} filhos. Reforce o desconto de irmaos e mostre as turmas de cada serie.`,
+    },
+    {
+      id: 'segundo_responsavel_ausente',
+      quando: (c) => !c.responsavel_2_nome,
+      texto: () =>
+        'Apenas um responsavel esta cadastrado. Se o segundo responsavel tambem estiver presente, colete o nome e o telefone dele no formulario ao lado.',
+    },
+    {
+      id: 'necessidade_especial',
+      quando: (c) =>
+        !!c.necessidade_especial &&
+        c.necessidade_especial.toLowerCase() !== 'nao' &&
+        c.necessidade_especial.toLowerCase() !== 'não',
+      texto: (c) =>
+        c.necessidade_especial_obs
+          ? `Necessidade educacional especial informada: ${c.necessidade_especial_obs}. Inclua a equipe pedagogica de apoio no roteiro da visita.`
+          : 'Necessidade educacional especial informada. Inclua a equipe pedagogica de apoio no roteiro da visita.',
+    },
+  ];
+
+  return blocos.filter((b) => b.quando(card)).map((b) => ({ id: b.id, texto: b.texto(card) }));
+}
+
+window.montarRoteiro = montarRoteiro;

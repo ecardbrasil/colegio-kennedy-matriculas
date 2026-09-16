@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Visita, Colégio Kennedy</title>
+  <link rel="icon" href="../assets/images/favicon.webp" type="image/webp" />
+  <link rel="stylesheet" href="visitas.css?v=1" />
+</head>
+<body>
+  <header class="topo">
+    <a class="voltar" href="index.html">&larr; Agenda</a>
+    <h1>Visita</h1>
+    <span style="width: 3rem"></span>
+  </header>
+
+  <main class="conteudo">
+    <p class="mensagem-carregando" id="mensagemCarregando">Carregando visita...</p>
+    <div class="mensagem-erro-tela" id="mensagemErroTela" hidden>
+      <p id="textoErroCarregamento">Não foi possível carregar esta visita.</p>
+      <button type="button" class="btn-primario" id="btnTentarNovamente">Tentar novamente</button>
+    </div>
+
+    <div id="conteudoCard" hidden>
+      <div class="cabecalho-visita">
+        <div class="horario-visita" id="horarioVisita"></div>
+      </div>
+
+      <section class="bloco" id="blocoRoteiro">
+        <h2>Roteiro da conversa</h2>
+        <ul class="lista-roteiro" id="listaRoteiro"></ul>
+      </section>
+
+      <section class="bloco" id="blocoAlunos">
+        <h2>Aluno(s)</h2>
+        <div id="camposAlunos"></div>
+      </section>
+
+      <section class="bloco" id="blocoResponsavel1">
+        <h2>Responsável 1</h2>
+        <div id="camposResponsavel1"></div>
+      </section>
+
+      <section class="bloco" id="blocoResponsavel2">
+        <h2>Responsável 2</h2>
+        <div id="camposResponsavel2"></div>
+      </section>
+
+      <section class="bloco" id="blocoNecessidade" hidden>
+        <h2>Necessidade educacional especial</h2>
+        <div id="camposNecessidade"></div>
+      </section>
+
+      <section class="bloco baixa-enfase" id="blocoOrigem">
+        <h2>Origem e campanha</h2>
+        <div id="camposOrigem"></div>
+      </section>
+
+      <p class="mensagem-erro" id="mensagemErroSalvar"></p>
+      <p class="mensagem-sucesso" id="mensagemSucesso" hidden>Visita marcada como realizada.</p>
+
+      <div class="barra-acoes" id="barraAcoes">
+        <button type="button" class="btn-secundario" id="btnSalvar" hidden>Salvar dados preenchidos</button>
+        <button type="button" class="btn-realizada" id="btnRealizada">Marcar visita como realizada</button>
+        <a class="voltar" href="index.html" id="linkVoltarAgenda" style="text-align:center; display:none;">Voltar para a agenda</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="auth.js?v=1"></script>
+  <script src="roteiro.js?v=1"></script>
+  <script src="card.js?v=1" defer></script>
+</body>
+</html>

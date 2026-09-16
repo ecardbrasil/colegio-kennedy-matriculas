@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Agenda de visitas, Colégio Kennedy</title>
+  <link rel="icon" href="../assets/images/favicon.webp" type="image/webp" />
+  <link rel="stylesheet" href="visitas.css?v=1" />
+</head>
+<body>
+  <header class="topo">
+    <h1>Agenda de visitas</h1>
+    <button type="button" class="btn-sair" id="btnSair">Sair</button>
+  </header>
+
+  <main class="conteudo">
+    <p class="mensagem-carregando" id="mensagemCarregando">Carregando agenda...</p>
+    <p class="mensagem-vazia" id="mensagemVazia" hidden>Nenhuma visita agendada no momento.</p>
+    <div class="mensagem-erro-tela" id="mensagemErroTela" hidden>
+      <p>Não foi possível carregar a agenda. Verifique a internet.</p>
+      <button type="button" class="btn-primario" id="btnTentarNovamente">Tentar novamente</button>
+    </div>
+    <ul class="lista-agenda" id="listaAgenda"></ul>
+  </main>
+
+  <script src="auth.js?v=1"></script>
+  <script src="agenda.js?v=1" defer></script>
+</body>
+</html>

@@ -409,6 +409,52 @@ enquadramento de voucher/acesso com desconto, a pedido explícito do usuário. O
 (`href="#formulario"` + `onclick="scrollToForm(event)"`, âncora até o formulário) não foi alterado,
 só o texto visível. Deploy feito de forma autônoma na Vercel logo em seguida, a pedido do usuário.
 
+## 11. Ferramenta interna /visitas para o Diego (16/09/2026)
+
+Nova funcionalidade, separada da landing page pública: uma tela protegida por senha em `/visitas`
+para o Diego (visitação presencial), que mostra a agenda de visitas do dia, os dados do card do
+Pipefy, destaca campos faltantes (o mais comum é o segundo responsável, quando pai e mãe aparecem
+juntos mas só um foi cadastrado no formulário original) e permite preencher ali mesmo, além de um
+roteiro de falas condicional baseado nos dados do card.
+
+**Decisões principais**:
+- Gravação no Pipefy é **direta via GraphQL** (não passa pelo Make) — é uma segunda integração,
+  independente do webhook público, para não confundir os dois fluxos.
+- Autenticação simples: senha única (`VISITAS_SENHA`), sessão em cookie assinado (HMAC, sem lib
+  externa, sem JWT).
+- Backend novo em `api/visitas/*` como Vercel Serverless Functions, zero dependências, sem
+  `package.json` (mesmo padrão "sem build step" do resto do repo).
+- Antes de implementar, consultei o pipe real do Pipefy via introspecção GraphQL (somente leitura)
+  para não chutar nomes de campo. Resultado: **nada precisou ser criado no Pipefy** — os campos e
+  fases necessários já existiam:
+  - Pipe "CK 2027", id `307287863`.
+  - Fase "7. AGENDOU VISITA" (id `343928415`) já tem o campo `visita` (data/hora da visita) — é o
+    que alimenta a agenda.
+  - Fase "9. FEZ VISITA" (id `343928427`) já existe como a etapa de "visita realizada" — marcar a
+    visita como concluída move o card pra essa fase (`moveCardToPhase`), não grava um campo novo.
+  - O formulário do pipe já tinha os campos do segundo responsável (`nome_do_respons_vel_2`,
+    `telefone_respons_vel_2`, `email_resp_2`) só que vazios, porque o formulário público só
+    captura um responsável.
+- Mutations do Pipefy confirmadas por introspecção ao vivo do schema (não chutadas):
+  `updateFieldsValues(input: { nodeId, values: [{ fieldId, value: [...] }] })` (note que `value` é
+  sempre lista, mesmo pra campo de texto simples) e `moveCardToPhase(input: { card_id,
+  destination_phase_id })` (em snake_case, diferente da primeira — inconsistência do próprio
+  schema do Pipefy, não erro de digitação).
+- Implementação dividida em dois agentes em paralelo (backend `api/visitas/*` e frontend
+  `visitas/*`), contra um contrato de API fixado antes de escrever código, pra economizar
+  tokens/tempo e reduzir risco de desalinhamento.
+- Design pensado pra tablet (é o que o Diego usa durante a visita): 3 telas só (login, agenda,
+  card), sem framework CSS/JS, sem fontes externas, payloads pequenos.
+
+**Pendente antes de usar em produção** (ver CHECKLIST.md): configurar as env vars na Vercel
+(`PIPEFY_API_TOKEN`, `PIPEFY_PIPE_ID`, `PIPEFY_FASE_AGENDOU_VISITA_ID`,
+`PIPEFY_FASE_FEZ_VISITA_ID`, `VISITAS_SENHA`, `SESSION_SECRET`), confirmar se o campo `visita`
+grava data e hora ou só data, e testar o fluxo completo com um card real/de teste.
+
+**Atenção, nunca commitar**: o token de API do Pipefy usado durante a introspecção não foi salvo
+em nenhum arquivo do repo, só usado em memória via variável de ambiente local na sessão do
+terminal, por pedido explícito do usuário.
+
 ## Como retomar
 
 1. Ler o `CHECKLIST.md` pra ver o estado atual item a item

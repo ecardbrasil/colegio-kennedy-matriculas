@@ -6,3 +6,6 @@ skills-lock.json
 
 # Materiais de referência local (não fazem parte do site)
 local/
+
+# Variáveis de ambiente locais (segredos: tokens, senhas) — nunca commitar
+.env*.local
