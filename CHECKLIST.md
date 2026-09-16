@@ -220,11 +220,29 @@ Ver detalhes completos em HISTORICO.md, seção "11. Ferramenta interna /visitas
       `PIPEFY_FASE_AGENDOU_VISITA_ID` (`343928415`), `PIPEFY_FASE_FEZ_VISITA_ID` (`343928427`),
       `VISITAS_SENHA`, `SESSION_SECRET` — configuradas manualmente no dashboard da Vercel e redeploy
       feito (16/09/2026)
-- [ ] Confirmar se o campo `visita` (fase "7. AGENDOU VISITA") grava data **e hora** ou só data
-      (testar com um card real); se vier só data, trocar o tipo do campo pra `datetime` no Pipefy
-- [ ] Testar login (senha errada/certa), agenda carregando um card de teste na fase "7. AGENDOU
-      VISITA", preenchimento de responsável 2 refletindo no Pipefy de verdade, e "marcar visita como
-      realizada" movendo o card pra fase "9. FEZ VISITA"
+- [x] **Troubleshooting (16/09/2026)** — a agenda mostrava sempre "Nenhuma visita agendada no
+      momento" com o card já na fase "7. AGENDOU VISITA". Causa: valores das env vars errados na
+      Vercel. Corrigido gerando token novo no Pipefy, reconfigurando `PIPEFY_API_TOKEN` e
+      `PIPEFY_FASE_AGENDOU_VISITA_ID` e refazendo o deploy. Detalhes em HISTORICO.md, seção "12"
+- [x] Endurecer o backend para falha de configuração não virar "agenda vazia" silenciosa (token
+      inválido/ausente, ID de fase inexistente): `_lib/pipefy.js` agora checa `res.ok` e o `error`
+      (singular) do HTTP 401, e `agenda.js`/`card.js`/`atualizar.js` respondem 502 com motivo
+- [x] Mostrar o motivo real na tela (via `mensagemErroResposta` em `visitas/auth.js`) em vez do
+      genérico "Verifique a internet"
+- [x] Agenda com botão **Atualizar** e recarga automática quando a aba volta ao foco
+      (`visibilitychange`); antes ela buscava uma vez só ao abrir e ficava congelada
+- [x] Agenda carregando um card real na fase "7. AGENDOU VISITA" (confirmado pelo usuário em
+      16/09/2026)
+- [x] Confirmar se o campo `visita` (fase "7. AGENDOU VISITA") grava data **e hora** ou só data —
+      confirmado com o card real: grava data **e hora** (`17/09/2026 13:50`), não precisa trocar o
+      tipo do campo no Pipefy
+- [x] Validado localmente com scripts em `local/` (pasta gitignored, nada versionado): handlers reais
+      do backend com req/res falsos (10 casos, incluindo token inválido) e JS do frontend em DOM
+      simulado (17 + 11 asserções)
+- [ ] Testar login (senha certa/errada) e o preenchimento de responsável 2 refletindo no Pipefy de
+      verdade
+- [ ] Testar "marcar visita como realizada" movendo o card pra fase "9. FEZ VISITA" (`343928427`)
+
 - [ ] Testar em tablet (viewport ~768-1024px) — é o dispositivo real que o Diego vai usar
 - [ ] QA do roteiro condicional (`visitas/roteiro.js`) com pelo menos 3 combinações de dados
 

@@ -2,7 +2,7 @@
 // Exige sessao valida.
 
 const { verifySession } = require('./_lib/session');
-const { pipefyRequest } = require('./_lib/pipefy');
+const { pipefyRequest, mensagemErroPipefy } = require('./_lib/pipefy');
 const { normalizarCampos, calcularFaltantes } = require('./_lib/campos');
 
 const QUERY = `
@@ -39,8 +39,8 @@ module.exports = async (req, res) => {
   try {
     data = await pipefyRequest(QUERY, { cardId: id });
   } catch (err) {
-    console.error('[visitas/card] erro ao consultar Pipefy', err);
-    res.status(502).json({ error: 'Erro ao consultar o Pipefy.' });
+    console.error('[visitas/card] erro ao consultar Pipefy', err && err.code, err && err.message);
+    res.status(502).json({ error: mensagemErroPipefy(err) });
     return;
   }
 

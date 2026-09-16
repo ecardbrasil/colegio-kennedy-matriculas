@@ -3,12 +3,14 @@
 // (tablet-first), nunca o blob bruto de fields do Pipefy.
 
 const { verifySession } = require('./_lib/session');
-const { pipefyRequest } = require('./_lib/pipefy');
+const { pipefyRequest, mensagemErroPipefy } = require('./_lib/pipefy');
 const { normalizarCampos } = require('./_lib/campos');
 
 const QUERY = `
   query VisitasDaFase($phaseId: ID!) {
     phase(id: $phaseId) {
+      id
+      name
       cards(first: 50) {
         edges {
           node {
@@ -64,10 +66,12 @@ module.exports = async (req, res) => {
     return;
   }
 
-  const phaseId = process.env.PIPEFY_FASE_AGENDOU_VISITA_ID;
+  // `.trim()` porque espaco ou aspas vindos de copy-paste no dashboard da
+  // Vercel fazem o Pipefy responder "Acesso negado" numa fase que existe.
+  const phaseId = (process.env.PIPEFY_FASE_AGENDOU_VISITA_ID || '').trim();
   if (!phaseId) {
     console.error('[visitas/agenda] PIPEFY_FASE_AGENDOU_VISITA_ID nao configurado');
-    res.status(502).json({ error: 'Configuração inválida no servidor.' });
+    res.status(502).json({ error: 'Fase da agenda não configurada no servidor. Avisar o responsável.' });
     return;
   }
 
@@ -75,13 +79,29 @@ module.exports = async (req, res) => {
   try {
     data = await pipefyRequest(QUERY, { phaseId });
   } catch (err) {
-    console.error('[visitas/agenda] erro ao consultar Pipefy', err);
-    res.status(502).json({ error: 'Erro ao consultar o Pipefy.' });
+    console.error('[visitas/agenda] erro ao consultar Pipefy', err && err.code, err && err.message);
+    res.status(502).json({ error: mensagemErroPipefy(err) });
     return;
   }
 
-  const edges = (data && data.phase && data.phase.cards && data.phase.cards.edges) || [];
+  const fase = data && data.phase;
+  if (!fase) {
+    // Antes isso virava `|| []`, ou seja: problema de configuracao aparecia na
+    // tela como "Nenhuma visita agendada no momento." (ver _lib/pipefy.js).
+    console.error('[visitas/agenda] fase nao encontrada no Pipefy', phaseId);
+    res.status(502).json({ error: 'Fase da agenda não encontrada no Pipefy. Avisar o responsável.' });
+    return;
+  }
+
+  // Sanidade da configuracao: se o ID apontar para outra etapa por engano, o
+  // log deixa isso explicito em vez de entregar uma agenda vazia.
+  if (fase.name && !/visita/i.test(fase.name)) {
+    console.error('[visitas/agenda] fase configurada nao parece ser a de visitas', fase.id, fase.name);
+  }
+
+  const edges = (fase.cards && fase.cards.edges) || [];
   const agora = Date.now();
+  console.log('[visitas/agenda] fase', fase.id, `"${fase.name}"`, '->', edges.length, 'card(s)');
 
   const cards = edges
     .map(({ node }) => {

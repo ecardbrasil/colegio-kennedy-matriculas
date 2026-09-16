@@ -3,7 +3,7 @@
 // "9. FEZ VISITA" via moveCardToPhase. Exige sessao valida.
 
 const { verifySession } = require('./_lib/session');
-const { pipefyRequest } = require('./_lib/pipefy');
+const { pipefyRequest, mensagemErroPipefy } = require('./_lib/pipefy');
 const { paraPipefyValues } = require('./_lib/campos');
 
 // Shape confirmado via introspecao ao vivo do schema do Pipefy:
@@ -96,21 +96,31 @@ module.exports = async (req, res) => {
     }
 
     if (moverParaFeitaVisita) {
-      const faseDestino = process.env.PIPEFY_FASE_FEZ_VISITA_ID;
+      // `.trim()` pelo mesmo motivo da agenda: espaco ou aspas vindos de
+      // copy-paste no dashboard da Vercel quebram a mutation.
+      const faseDestino = (process.env.PIPEFY_FASE_FEZ_VISITA_ID || '').trim();
       if (!faseDestino) {
         console.error('[visitas/atualizar] PIPEFY_FASE_FEZ_VISITA_ID nao configurado');
-        res.status(502).json({ error: 'Configuração inválida no servidor.' });
+        res.status(502).json({ error: 'Fase "9. FEZ VISITA" não configurada no servidor. Avisar o responsável.' });
         return;
       }
 
-      await pipefyRequest(MUTATION_MOVER_FASE, {
+      const movido = await pipefyRequest(MUTATION_MOVER_FASE, {
         input: { card_id: id, destination_phase_id: faseDestino },
       });
+
+      if (!movido || !movido.moveCardToPhase || !movido.moveCardToPhase.card) {
+        console.error('[visitas/atualizar] moveCardToPhase nao retornou o card', movido);
+        res.status(502).json({ error: 'Não foi possível mover o card para a fase "9. FEZ VISITA".' });
+        return;
+      }
     }
 
     res.status(200).json({ ok: true });
   } catch (err) {
-    console.error('[visitas/atualizar] erro ao atualizar no Pipefy', err);
-    res.status(400).json({ error: 'Não foi possível salvar os dados. Tente novamente.' });
+    console.error('[visitas/atualizar] erro ao atualizar no Pipefy', err && err.code, err && err.message);
+    res.status(502).json({
+      error: mensagemErroPipefy(err, 'Não foi possível salvar os dados. Tente novamente.'),
+    });
   }
 };

@@ -48,10 +48,23 @@
 
   var cardAtual = null;
   var faltantesAtual = [];
+  var MENSAGEM_ERRO_PADRAO = 'Não foi possível carregar esta visita.';
 
-  function formatarDataHora(isoString) {
-    var data = new Date(isoString);
-    if (isNaN(data.getTime())) return isoString;
+  // O campo "visita" do Pipefy chega como "DD/MM/AAAA HH:MM", que o `new Date`
+  // do navegador nao entende (nao e ISO): trata esse padrao primeiro e so
+  // depois tenta o parse generico.
+  function formatarDataHora(valorBruto) {
+    if (valorBruto === null || valorBruto === undefined || valorBruto === '') return '';
+    var texto = String(valorBruto).trim();
+
+    var partes = texto.match(/^(\d{2})\/(\d{2})\/(\d{4})(?:,?\s+(\d{2}):(\d{2}))?/);
+    if (partes) {
+      var dataCurta = partes[1] + '/' + partes[2] + '/' + partes[3];
+      return partes[4] ? dataCurta + ', ' + partes[4] + ':' + partes[5] : dataCurta;
+    }
+
+    var data = new Date(texto);
+    if (isNaN(data.getTime())) return texto;
     var dia = String(data.getDate()).padStart(2, '0');
     var mes = String(data.getMonth() + 1).padStart(2, '0');
     var ano = data.getFullYear();
@@ -268,7 +281,13 @@
     fetchAutenticado('/api/visitas/card?id=' + encodeURIComponent(idVisita))
       .then(function (res) {
         if (res.status === 404) throw new Error('nao_encontrado');
-        if (!res.ok) throw new Error('erro_card');
+        if (!res.ok) {
+          // Mostra o motivo enviado pela API (ex.: token do Pipefy invalido)
+          // em vez do generico "nao foi possivel carregar esta visita".
+          return window.mensagemErroResposta(res, MENSAGEM_ERRO_PADRAO).then(function (mensagem) {
+            throw new Error(mensagem);
+          });
+        }
         return res.json();
       })
       .then(function (corpo) {
@@ -280,7 +299,7 @@
         if (erro && erro.message === 'nao_encontrado') {
           textoErroCarregamento.textContent = 'Esta visita não foi encontrada.';
         } else {
-          textoErroCarregamento.textContent = 'Não foi possível carregar esta visita.';
+          textoErroCarregamento.textContent = (erro && erro.message) || MENSAGEM_ERRO_PADRAO;
         }
         mensagemErroTela.hidden = false;
       });

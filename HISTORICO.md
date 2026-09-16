@@ -455,6 +455,56 @@ grava data e hora ou só data, e testar o fluxo completo com um card real/de tes
 em nenhum arquivo do repo, só usado em memória via variável de ambiente local na sessão do
 terminal, por pedido explícito do usuário.
 
+## 12. Correção: agenda vazia escondendo erro de configuração (16/09/2026)
+
+Com a ferramenta já no ar, a agenda do `/visitas` passou a mostrar "Nenhuma visita agendada no
+momento." mesmo com um card na fase "7. AGENDOU VISITA". Investigação e resultado:
+
+**Causa raiz dupla**:
+1. Os valores salvos na Vercel (`PIPEFY_API_TOKEN` e `PIPEFY_FASE_AGENDOU_VISITA_ID`) estavam
+   errados. Correção: token novo gerado no Pipefy, as duas env vars reconfiguradas e deploy refeito
+   (env var só passa a valer em deploy novo).
+2. O código **escondia** esse tipo de falha. `api/visitas/_lib/pipefy.js` só verificava
+   `json.errors` (plural), mas a API do Pipefy responde HTTP 401 com `{"error":"invalid_token",...}`
+   (**singular**): o erro passava batido, `json.data` virava `undefined` e o `|| []` do `agenda.js`
+   transformava falha de credencial em agenda vazia, com HTTP 200 e sem nenhum log. Foi isso que
+   fez um problema de configuração parecer "não tem visita nenhuma".
+
+**Como foi diagnosticado** (consultas reais, só leitura, direto na API do Pipefy):
+- a fase `343928415` ("7. AGENDOU VISITA", pipe `307287863`) tinha 1 card com `visita =
+  17/09/2026 13:50` — logo a query do código estava correta;
+- ID de fase inválido/inexistente devolve `errors: [{ code: "PERMISSION_DENIED" }]` (viraria 502, não
+  agenda vazia);
+- fase válida e vazia devolve `200` com array vazio (este é o único caso legítimo de "agenda vazia");
+- token inválido devolve `401 {"error":"invalid_token"}` — que, com o código antigo, virava `200 []`.
+  Sintoma idêntico ao relatado, o que fechou o diagnóstico.
+
+**Mudanças de código nesta rodada**:
+- `_lib/pipefy.js`: `.trim()` no token, checagem de `res.ok` (401/403 → código
+  `pipefy_nao_autorizado`), erro quando a resposta não tem `data`, códigos em `err.code` e o helper
+  `mensagemErroPipefy()` que traduz para uma frase pt-BR segura para a tela (nunca cita o token).
+- `agenda.js` / `card.js` / `atualizar.js`: 502 com o motivo real; fase nula deixou de virar `[]`;
+  `.trim()` nos IDs de fase lidos de `process.env`; log da fase consultada e da quantidade de cards;
+  `moveCardToPhase` agora confere se o card voltou na resposta antes de dizer que deu certo.
+- Frontend: `visitas/auth.js` ganhou `mensagemErroResposta()`; agenda e tela do card mostram o motivo
+  vindo do servidor em vez do genérico "Verifique a internet"; a agenda ganhou botão **Atualizar** e
+  recarga silenciosa em `visibilitychange` (antes ela buscava uma vez só ao abrir e ficava congelada,
+  o que também alimentou a confusão de "não apareceu"); `formatarDataHora()` passou a entender o
+  formato "DD/MM/AAAA HH:MM" do Pipefy (`new Date` do navegador não entende) e exibe
+  "DD/MM/AAAA, HH:MM"; `visitas.css` ganhou a regra `[hidden] { display: none !important; }` que
+  faltava (mesmo padrão já usado no `style.css`).
+- Cache-busting: `?v=2` → `?v=3` em `visitas/*.html`.
+
+**Validação** (scripts na pasta `local/`, que é gitignored — nada versionado):
+- `local/teste-visitas.js` executa os handlers reais (`agenda`, `card`) com req/res falsos: 10 casos,
+  incluindo token inválido, token ausente, fase inexistente, ID de fase com espaços e fase vazia;
+- `local/teste-agenda-dom.js` e `local/teste-card-dom.js` rodam o JS do frontend num DOM simulado
+  (17 + 11 asserções): lista renderizada, estado vazio, mensagem de erro do servidor, botão
+  Atualizar, recarga silenciosa, redirecionamento em 401 e horário formatado.
+
+**Ainda pendente**: testar login (senha certa/errada), gravar responsável 2 refletindo no Pipefy,
+"marcar visita como realizada" movendo o card para a fase `343928427` e os testes em tablet.
+
 ## Como retomar
 
 1. Ler o `CHECKLIST.md` pra ver o estado atual item a item

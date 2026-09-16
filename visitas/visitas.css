@@ -51,6 +51,13 @@ a {
   color: var(--color-primary);
 }
 
+/* O atributo hidden so e escondido pela UA stylesheet: sem esta regra,
+   qualquer `display` declarado aqui vence e o elemento escondido continua
+   visivel (mesmo padrao usado no style.css da landing page). */
+[hidden] {
+  display: none !important;
+}
+
 /* ========================
    TOPO
    ======================== */
@@ -83,7 +90,13 @@ a {
   background: rgba(255, 255, 255, 0.15);
 }
 
-.btn-sair {
+.topo-acoes {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-sair,
+.btn-atualizar {
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.5);
   color: var(--color-white);
@@ -92,7 +105,12 @@ a {
   font-size: 0.95rem;
 }
 
-.btn-sair:active {
+.btn-atualizar {
+  font-weight: 700;
+}
+
+.btn-sair:active,
+.btn-atualizar:active {
   background: rgba(255, 255, 255, 0.15);
 }
 

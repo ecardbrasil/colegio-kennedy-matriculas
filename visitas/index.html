@@ -6,25 +6,28 @@
   <meta name="robots" content="noindex, nofollow" />
   <title>Agenda de visitas, Colégio Kennedy</title>
   <link rel="icon" href="/assets/images/favicon.webp" type="image/webp" />
-  <link rel="stylesheet" href="/visitas/visitas.css?v=2" />
+  <link rel="stylesheet" href="/visitas/visitas.css?v=3" />
 </head>
 <body>
   <header class="topo">
     <h1>Agenda de visitas</h1>
-    <button type="button" class="btn-sair" id="btnSair">Sair</button>
+    <div class="topo-acoes">
+      <button type="button" class="btn-atualizar" id="btnAtualizar">Atualizar</button>
+      <button type="button" class="btn-sair" id="btnSair">Sair</button>
+    </div>
   </header>
 
   <main class="conteudo">
     <p class="mensagem-carregando" id="mensagemCarregando">Carregando agenda...</p>
     <p class="mensagem-vazia" id="mensagemVazia" hidden>Nenhuma visita agendada no momento.</p>
     <div class="mensagem-erro-tela" id="mensagemErroTela" hidden>
-      <p>Não foi possível carregar a agenda. Verifique a internet.</p>
+      <p id="textoErroCarregamento">Não foi possível carregar a agenda. Verifique a internet.</p>
       <button type="button" class="btn-primario" id="btnTentarNovamente">Tentar novamente</button>
     </div>
     <ul class="lista-agenda" id="listaAgenda"></ul>
   </main>
 
-  <script src="/visitas/auth.js?v=2"></script>
-  <script src="/visitas/agenda.js?v=2" defer></script>
+  <script src="/visitas/auth.js?v=3"></script>
+  <script src="/visitas/agenda.js?v=3" defer></script>
 </body>
 </html>
