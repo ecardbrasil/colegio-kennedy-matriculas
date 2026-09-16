@@ -22,7 +22,7 @@
 
   function criarItemAgenda(visita) {
     var item = document.createElement('a');
-    item.href = 'card.html?id=' + encodeURIComponent(visita.id);
+    item.href = '/visitas/card.html?id=' + encodeURIComponent(visita.id);
     item.className = 'item-agenda' + (visita.chegando ? ' chegando' : '');
 
     var badge = '';
