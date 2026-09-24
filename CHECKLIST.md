@@ -14,12 +14,18 @@
       produção (`claude/kennedy-landing-page-je9uds`) que a Vercel publica — sem isso o GTM nunca
       chegaria ao site ao vivo
 
-## 2. Webhook do Make (Integromat)
-- [x] Criar cenário no Make com módulo "Webhook"
+## 2. Webhook (Make → n8n, migrado em 24/09/2026)
+- [x] Criar cenário no Make com módulo "Webhook" *(descontinuado, ver abaixo)*
 - [x] Copiar a URL gerada
 - [x] Substituir `WEBHOOK_URL` em **main.js** → `CONFIG.WEBHOOK_URL`
-- [x] Conectar o Make ao Pipefy
+- [x] Conectar o Make ao Pipefy *(descontinuado, ver abaixo)*
 - [x] Testar o envio com dados reais (lead de teste na Vercel → Make → Pipefy OK)
+- [x] **Migração para n8n**: `WEBHOOK_URL` trocado para
+      `https://n8n.colegiokennedy.top/webhook/formulario-ck-pipefy` (ver HISTORICO.md, seção "17")
+- [ ] Configurar o workflow no n8n para aceitar o mesmo payload de `buildPayload()` (main.js) e
+      mapear os mesmos campos no card do Pipefy que o Make mapeava
+- [ ] Testar o envio end-to-end com dados reais (lead de teste na Vercel → n8n → Pipefy OK)
+- [ ] Depois de validado, pausar/desativar o cenário antigo no Make
 - [x] Criar campos no Pipefy (texto curto) para: GCLID, UTM Source, UTM Medium, UTM Campaign,
       UTM Term, UTM Content, Série de Interesse, URL da Página, Data/Hora do Lead
 - [x] Mapear no Make (módulo Pipefy) cada campo novo com o correspondente do Webhook

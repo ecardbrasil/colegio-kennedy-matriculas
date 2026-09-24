@@ -6,7 +6,8 @@
 
 Landing page de captura de leads (matrículas) para o Colégio Kennedy, feita para rodar campanhas
 de Google Ads. Stack: HTML/CSS/JS puro (`index.html`, `style.css`, `main.js`), hospedada na Vercel,
-com o formulário enviando dados via webhook pro Make (Integromat), que cria o card no Pipefy.
+com o formulário enviando dados via webhook pro n8n (`https://n8n.colegiokennedy.top/webhook/formulario-ck-pipefy`),
+que cria o card no Pipefy. Antes rodava via Make (Integromat); trocado em 24/09/2026 (ver seção "17").
 
 **URL em produção**: https://www.colegiokennedy.top/
 (domínio raiz `colegiokennedy.top` redireciona 308 pra `www`)
@@ -641,6 +642,30 @@ que vieram de introspecção GraphQL registrada na seção 11). Usuário confirm
 
 Nenhuma mudança de código necessária, o ID já estava certo. Registrando aqui só pra não repetir a
 dúvida/investigação da próxima vez.
+
+## 17. Migração do webhook: Make → n8n (24/09/2026)
+
+O usuário trocou a automação que recebe o lead e cria o card no Pipefy, saindo do Make
+(Integromat) para um n8n próprio. Único ponto de código que precisava mudar: `CONFIG.WEBHOOK_URL`
+em `main.js`, que era o único lugar do repo com a URL do Make hardcoded.
+
+- `main.js`: `WEBHOOK_URL` trocado de `https://hook.us2.make.com/y8xbso3x3tz77mnn79whh9k7tk7vqhzb`
+  para `https://n8n.colegiokennedy.top/webhook/formulario-ck-pipefy`.
+- `index.html`: cache-busting `main.js?v=6` → `v=7` (regra do CLAUDE.md sempre que `main.js` muda).
+- **Nada mais no código depende do Make** — o `fetch()` em `main.js` só faz um POST JSON genérico
+  pro `CONFIG.WEBHOOK_URL`, sem nada específico da API do Make, então a troca de destino é
+  suficiente do lado do site.
+- **Pendente, fora do repo**: o cenário/workflow no n8n em `n8n.colegiokennedy.top` precisa aceitar
+  o mesmo payload que o Make aceitava (todos os campos de `buildPayload()` em `main.js`: nome,
+  telefone, email, `nome_aluno_1..4`/`serie_1..4`, `quantidade_alunos`, `resumo_alunos`, gclid,
+  UTMs, `page_url`, `timestamp`) e mapear pros mesmos campos no card do Pipefy (pipe "CK 2027",
+  `307287863`). Isso é configuração do workflow do n8n, não deste repo.
+- **Teste end-to-end obrigatório antes de considerar migrado**: enviar um lead de teste pela
+  landing page (produção ou preview) e confirmar que o card aparece certo no Pipefy — só ver a
+  tela de sucesso no site não garante que o n8n processou (mesma lição da seção "Problema
+  encontrado e resolvido" acima, sobre o Make).
+- Depois de validar, considerar desativar/pausar o cenário antigo no Make para não pagar operações
+  à toa (fora do escopo deste repo).
 
 ## Como retomar
 
