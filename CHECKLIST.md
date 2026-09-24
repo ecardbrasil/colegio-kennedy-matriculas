@@ -38,6 +38,19 @@
 - [x] Testar com `?gclid=TESTE123&utm_source=google&utm_medium=cpc&utm_campaign=matriculas` e
       confirmar que os campos chegaram preenchidos no card do Pipefy
 
+## 2.2 Segundo workflow n8n: Meta Lead Ads → Pipefy — EM ANDAMENTO (ver HISTORICO.md, seção "18")
+- [x] Montar JSON do workflow (Facebook Lead Ads Trigger → Code → HTTP Request findCards →
+      IF → createComment/createCard) e entregar ao usuário
+- [ ] **BLOQUEADO**: criar app em developers.facebook.com (aguardando código de SMS que o Juliano
+      recebeu e ainda não repassou) pra gerar credencial OAuth2 do trigger
+- [ ] Mapear credencial Pipefy PAT existente nos 3 nodes HTTP Request
+- [ ] Ativar workflow e testar com "Test Lead Ad" do Meta Ads Manager
+- [ ] Confirmar card aparecendo certo no Pipefy antes de considerar migrado
+
+## 2.3 MCP da Pipefy instalado no Claude Code (24/09/2026)
+- [x] Avaliado `github.com/pipefy/ai-toolkit`, escolhido caminho "Claude Code plugin" (MCP hospedado
+      + slash commands + CLI), comandos passados ao usuário (ver HISTORICO.md, seção "19")
+
 ## 2.1 Suporte a múltiplos filhos (Pipefy + Make) — PENDENTE, fazer antes do deploy valer
 O formulário agora envia até 4 alunos por card (1 card por família). É preciso configurar
 manualmente no Make/Pipefy antes que os dados dos filhos 2, 3 e 4 apareçam corretamente:

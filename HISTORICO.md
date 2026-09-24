@@ -676,6 +676,43 @@ page em aba anônima → card criado certo no Pipefy. Merge do branch de trabalh
 produção (`claude/kennedy-landing-page-je9uds`) feito e publicado na Vercel. Falta só o usuário
 desativar o cenário antigo no Make (`hook.us2.make.com/...`, hook `2676377`).
 
+## 18. Segundo workflow n8n: Meta Lead Ads → Pipefy (24/09/2026, EM ANDAMENTO)
+
+Réplica de outra automação que estava no Make (`Meta Lead Ads → Pipefy CK`, mesmo pipe `307287863`):
+lead de formulário do Facebook/Instagram Ads (não da landing page) também vira card no Pipefy,
+com dedupe por telefone (se já existe card com aquele telefone, só comenta; senão cria card novo).
+Isso é 100% configuração externa em `n8n.colegiokennedy.top`, não mexe em nada deste repo.
+
+- JSON do workflow (nodes: Facebook Lead Ads Trigger → Code normaliza telefone → HTTP Request
+  `findCards` no Pipefy → IF → HTTP Request `createComment` ou `createCard`) já montado e entregue
+  ao usuário pra importar no n8n.
+- **BLOQUEADO**: falta criar um app em `developers.facebook.com` (tipo "Business", produtos
+  "Facebook Login" + "Marketing API", OAuth redirect
+  `https://n8n.colegiokennedy.top/rest/oauth2-credential/callback`, permissões `leads_retrieval` +
+  `pages_show_list`) pra gerar Client ID/Secret da credencial OAuth2 do node de trigger no n8n.
+  Processo pede confirmação por SMS enviado ao Juliano (sócio/responsável no Business Manager), que
+  ainda não repassou o código pro usuário. **Continuar assim que o usuário tiver esse código.**
+- Depois de criar a credencial: mapear a credencial Pipefy PAT já existente (mesma do workflow do
+  formulário da LP) nos 3 nodes HTTP Request, ativar o workflow, testar com "Test Lead Ad" do próprio
+  Meta Ads Manager (não gasta budget) antes de considerar migrado.
+
+## 19. MCP da Pipefy instalado no Claude Code (24/09/2026)
+
+Usuário pediu pra avaliar `github.com/pipefy/ai-toolkit` e instalar o mais adequado. Repo oferece
+vários caminhos de instalação; recomendado e escolhido: **Claude Code plugin**, que registra o MCP
+server hospedado da Pipefy (`https://mcp.pipefy.com/mcp`, sem precisar rodar Python local) e ainda
+traz slash commands `/pipefy:*` e skills junto. Comandos passados ao usuário:
+```
+/plugin marketplace add pipefy/ai-toolkit
+/plugin install pipefy
+/pipefy:install
+/pipefy:pipefy-login
+```
+Alternativa mais enxuta oferecida (sem CLI/slash commands): Hosted MCP direto via
+`claude mcp add --transport http --scope user --client-id pipefy-mcp pipefy https://mcp.pipefy.com/mcp`.
+Aviso do próprio projeto: nunca registrar mais de um MCP server da Pipefy ao mesmo tempo (local e
+hosted não podem coexistir). Este repo não tinha nenhum registrado antes.
+
 ## Como retomar
 
 1. Ler o `CHECKLIST.md` pra ver o estado atual item a item
