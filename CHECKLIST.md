@@ -22,10 +22,14 @@
 - [x] Testar o envio com dados reais (lead de teste na Vercel → Make → Pipefy OK)
 - [x] **Migração para n8n**: `WEBHOOK_URL` trocado para
       `https://n8n.colegiokennedy.top/webhook/formulario-ck-pipefy` (ver HISTORICO.md, seção "17")
-- [ ] Configurar o workflow no n8n para aceitar o mesmo payload de `buildPayload()` (main.js) e
-      mapear os mesmos campos no card do Pipefy que o Make mapeava
-- [ ] Testar o envio end-to-end com dados reais (lead de teste na Vercel → n8n → Pipefy OK)
-- [ ] Depois de validado, pausar/desativar o cenário antigo no Make
+- [x] Configurar o workflow no n8n para aceitar o mesmo payload de `buildPayload()` (main.js) e
+      mapear os mesmos campos no card do Pipefy que o Make mapeava (n8n self-hosted na Hetzner,
+      workflow Webhook → HTTP Request GraphQL → Respond to Webhook)
+- [x] Testar o envio end-to-end com dados reais (lead de teste em aba anônima na LP → n8n → Pipefy,
+      confirmado 24/09/2026)
+- [x] Merge pro branch de produção (`claude/kennedy-landing-page-je9uds`) e push feito, Vercel
+      publicando a versão com o webhook do n8n
+- [ ] Depois de validado, pausar/desativar o cenário antigo no Make (usuário vai fazer)
 - [x] Criar campos no Pipefy (texto curto) para: GCLID, UTM Source, UTM Medium, UTM Campaign,
       UTM Term, UTM Content, Série de Interesse, URL da Página, Data/Hora do Lead
 - [x] Mapear no Make (módulo Pipefy) cada campo novo com o correspondente do Webhook

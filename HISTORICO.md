@@ -667,6 +667,15 @@ em `main.js`, que era o único lugar do repo com a URL do Make hardcoded.
 - Depois de validar, considerar desativar/pausar o cenário antigo no Make para não pagar operações
   à toa (fora do escopo deste repo).
 
+**Atualização (24/09/2026) — migração confirmada funcionando**: n8n self-hosted na Hetzner
+(servidor "n8n-ck-producao", `n8n.colegiokennedy.top`, Docker Compose com n8n + Postgres + Nginx
+Proxy Manager, ver detalhes de infra no CHECKLIST.md se necessário). Workflow
+`Webhook → HTTP Request (mutation GraphQL createCard no Pipefy) → Respond to Webhook` criado e
+testado via curl (24/09/2026), depois validado em produção de verdade: lead enviado pela landing
+page em aba anônima → card criado certo no Pipefy. Merge do branch de trabalho pro branch de
+produção (`claude/kennedy-landing-page-je9uds`) feito e publicado na Vercel. Falta só o usuário
+desativar o cenário antigo no Make (`hook.us2.make.com/...`, hook `2676377`).
+
 ## Como retomar
 
 1. Ler o `CHECKLIST.md` pra ver o estado atual item a item
