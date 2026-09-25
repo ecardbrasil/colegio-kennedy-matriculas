@@ -1414,3 +1414,11 @@ address {
   color: inherit;
   text-decoration: underline;
 }
+
+/* ========================
+   CONTEÚDO DA ETAPA (páginas /educacao-infantil, /anos-iniciais,
+   /anos-finais, /ensino-medio)
+   ======================== */
+.etapa-conteudo {
+  background: var(--color-bg);
+}
