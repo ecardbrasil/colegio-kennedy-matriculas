@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agendar visita | Colégio Kennedy</title>
+  <meta name="description" content="Agende sua visita ao Colégio Kennedy em Porto Alegre. Escolha o dia e o horário e conheça a escola com o Diego." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.colegiokennedy.top/agendar-visita" />
+  <link rel="icon" href="assets/images/favicon.webp" type="image/webp" />
+  <link rel="apple-touch-icon" href="assets/images/favicon.webp" />
+
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-PKM2DPSS');</script>
+  <!-- End Google Tag Manager -->
+  <style>html,body{margin:0;padding:0;background:#fff}</style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PKM2DPSS"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<!--
+  Colégio Kennedy | colegiokennedy.com/agendar-visita
+  Bloco único (HTML + CSS + JS). Cole no editor da página, em um bloco "HTML personalizado".
+  Teste sem backend: adicione ?demo=1 (telefone achado) ou ?demo=novo (telefone não achado) na URL.
+  Cenários extras no demo: &cenario=semhorarios | ocupado | rede | expirada | captcha
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=Open+Sans:wght@400;600;700&display=swap">
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+<style>
+#ckv{
+  --azul:#042c4b;--on-azul:#ffffff;--laranja:#d2691e;--laranja-vivo:#f58634;--laranja-texto:#a94f10;
+  --superficie:#ffffff;--creme:#fff7ee;--sup-azul:#eef3f8;--ink-suave:#44586a;--borda:#6c7d8d;--linha:#d5dce4;
+  --sucesso:#1f6f50;--erro:#b3261e;--seg-fund2:#b9cde0;
+  --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:24px;--s6:32px;--s7:48px;--s8:64px;--s9:96px;
+  --r-md:2px;--r-lg:4px;--hover:0 4px 12px rgba(4,44,75,.12);
+  --f-titulo:Archivo,Arial,sans-serif;--f-texto:"Open Sans",Arial,sans-serif;
+  font-family:var(--f-texto);font-size:16px;line-height:26px;color:var(--azul);background:var(--superficie);
+}
+#ckv *,#ckv *::before,#ckv *::after{box-sizing:border-box}
+:where(#ckv) :is(button,input,select){font:inherit;color:inherit}
+#ckv [hidden]{display:none!important}
+:where(#ckv) :is(h1,h2,h3,p,ol,ul,dl,dd,fieldset){margin:0;padding:0}
+:where(#ckv) fieldset{border:0;min-width:0}
+:where(#ckv) a{color:var(--azul)}
+.ckv-in{max-width:1200px;margin:0 auto;padding:0 var(--s4)}
+.ckv-in--estreito{max-width:840px}
+.ckv-in--topo{max-width:1120px}
+.ckv-sec{padding:var(--s8) 0}
+.ckv-topo{display:grid;gap:var(--s6);padding:var(--s6) 0}
+.ckv-topo-txt .ckv-lead{margin-bottom:0}
+.ckv-sec--creme{background:var(--creme)}
+.ckv-sec--claro{background:var(--sup-azul)}
+.ckv-sec--azul{background:var(--azul);color:var(--on-azul)}
+.ckv-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* Tipografia */
+.ckv-eyebrow{display:inline-block;padding-bottom:var(--s2);border-bottom:2px solid var(--laranja);font:700 14px/20px var(--f-titulo);letter-spacing:.12em;text-transform:uppercase}
+.ckv-h1{margin:var(--s4) 0 var(--s4);font:700 34px/38px var(--f-titulo);letter-spacing:-.01em}
+.ckv-h2{font:700 26px/32px var(--f-titulo);margin:0 0 var(--s3)}
+.ckv-dest{text-decoration:underline;text-decoration-color:var(--laranja);text-decoration-thickness:2px;text-underline-offset:6px}
+.ckv-lead{max-width:680px;font-size:18px;line-height:28px;color:var(--ink-suave)}
+.ckv-small{font-size:14px;line-height:22px;color:var(--ink-suave)}
+.ckv-ajuda-txt{margin:0 0 var(--s5);color:var(--ink-suave);max-width:680px}
+
+/* Etapas */
+.ckv-etapas{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s3);margin-bottom:var(--s5)}
+.ckv-etapas li{border-top:1px solid var(--linha);padding-top:var(--s2);display:flex;align-items:baseline;gap:var(--s2)}
+.ckv-etapas .n{font:700 28px/32px var(--f-titulo);color:transparent;-webkit-text-stroke:1px var(--borda)}
+.ckv-etapas .t{display:none;font-size:14px;line-height:20px;color:var(--ink-suave)}
+.ckv-etapas li.is-feito,.ckv-etapas li.is-atual{border-top:2px solid var(--azul)}
+.ckv-etapas li.is-feito .n,.ckv-etapas li.is-atual .n{color:var(--azul);-webkit-text-stroke-color:var(--azul)}
+.ckv-etapas li.is-atual .t{color:var(--azul);font-weight:700}
+.ckv-etapa-txt{margin:calc(var(--s3) * -1) 0 var(--s4);font-size:14px;line-height:22px;color:var(--ink-suave)}
+
+/* Cartão do fluxo */
+.ckv-card{background:var(--superficie);border:1px solid var(--linha);border-radius:var(--r-lg);padding:var(--s5)}
+.ckv-card:focus-within{box-shadow:var(--hover)}
+.ckv-demo{margin-bottom:var(--s4);padding:var(--s2) var(--s3);background:var(--creme);border:1px solid var(--laranja);border-radius:var(--r-md);font-size:14px;line-height:22px}
+.ckv-lead-p{margin:0 0 var(--s5);color:var(--ink-suave)}
+
+/* Botões */
+.ckv-btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--s2);min-height:48px;padding:0 var(--s5);border:1px solid transparent;border-radius:var(--r-md);font:700 16px/20px var(--f-texto);text-decoration:none;cursor:pointer;transition:box-shadow .15s;text-align:center}
+.ckv-btn:hover{box-shadow:var(--hover)}
+.ckv-btn:focus-visible,.ckv-opt:focus-visible,.ckv-dia:focus-visible,.ckv-slot:focus-visible,#ckv input:focus-visible,#ckv select:focus-visible,#ckv [tabindex="-1"]:focus-visible{outline:3px solid var(--azul);outline-offset:2px}
+.ckv-btn--prim{background:var(--azul);color:var(--on-azul)}
+.ckv-btn--dest{background:var(--laranja-vivo);color:var(--azul)}
+.ckv-btn--sec{background:transparent;color:var(--azul);border-color:var(--azul)}
+.ckv-btn[disabled]{opacity:.5;cursor:not-allowed;box-shadow:none}
+.ckv-btn--prim[disabled]{opacity:1;background:var(--linha);color:var(--ink-suave);border-color:var(--linha)}
+.ckv-btn--dest[disabled]{opacity:1;background:var(--linha);color:var(--ink-suave);border-color:var(--linha)}
+.ckv-acoes{display:flex;flex-direction:column-reverse;gap:var(--s3);margin-top:var(--s5)}
+.ckv-acoes .ckv-btn{width:100%}
+#ckv [tabindex="-1"]{outline:none}
+
+/* Campos */
+.ckv-campo{display:flex;flex-direction:column;gap:var(--s2);margin-bottom:var(--s4)}
+.ckv-campo label,.ckv-leg{font-weight:700;font-size:14px;line-height:22px}
+.ckv-campo input[type=text],.ckv-campo input[type=tel],.ckv-campo input[type=email],.ckv-campo select{min-height:48px;padding:0 var(--s4);width:100%;border:1px solid var(--borda);border-radius:var(--r-md);background:var(--superficie);font:400 16px/26px var(--f-texto)}
+.ckv-campo input:hover,.ckv-campo select:hover{border-color:var(--azul)}
+.ckv-campo [aria-invalid=true]{border-color:var(--erro)}
+.ckv-erro{display:flex;align-items:flex-start;gap:var(--s2);font-size:14px;line-height:22px;font-weight:700;color:var(--erro)}
+.ckv-ico{flex:none;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border:1px solid currentColor;border-radius:var(--r-md);font-size:13px;line-height:1;font-weight:700}
+.ckv-ts{margin:var(--s4) 0;min-height:65px}
+.ckv-aluno{border:1px solid var(--linha);border-radius:var(--r-lg);padding:var(--s4);margin-bottom:var(--s4);background:var(--superficie)}
+.ckv-aluno .ckv-leg{display:block;margin-bottom:var(--s3);padding:0}
+.ckv-grid2{display:grid;gap:0 var(--s4)}
+
+/* Chips */
+.ckv-chips{display:flex;flex-wrap:wrap;gap:var(--s2);margin-top:var(--s2)}
+.ckv-chip{position:relative;display:inline-flex}
+.ckv-chip span{display:inline-flex;align-items:center;min-height:44px;padding:0 var(--s4);border:1px solid var(--borda);border-radius:var(--r-md);cursor:pointer;background:var(--superficie)}
+.ckv-chip input:checked+span{background:var(--azul);color:var(--on-azul);border-color:var(--azul);font-weight:700}
+.ckv-chip input:focus-visible+span{outline:3px solid var(--azul);outline-offset:2px}
+.ckv-chip:hover span{border-color:var(--azul)}
+.ckv-perg{margin-bottom:var(--s5);padding-bottom:var(--s5);border-bottom:1px solid var(--linha)}
+.ckv-perg:last-of-type{border-bottom:0;margin-bottom:0;padding-bottom:0}
+
+/* Nomes mascarados */
+.ckv-lista{display:flex;flex-direction:column;gap:var(--s3)}
+.ckv-opt{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:60px;padding:0 var(--s5);border:1px solid var(--borda);border-radius:var(--r-md);background:var(--superficie);cursor:pointer;font:700 20px/28px var(--f-titulo);letter-spacing:.04em;text-align:left;transition:box-shadow .15s}
+.ckv-opt:hover{border-color:var(--azul);box-shadow:var(--hover)}
+.ckv-opt--nenhum{font:700 16px/22px var(--f-texto);letter-spacing:0;border-style:dashed;color:var(--ink-suave)}
+
+/* Dias e horários */
+.ckv-escassez{display:flex;align-items:center;gap:var(--s2);margin-bottom:var(--s3);padding:var(--s2) var(--s3);background:var(--creme);border:1px solid var(--laranja);border-radius:var(--r-md);font-size:14px;line-height:20px;font-weight:700;color:var(--laranja-texto)}
+.ckv-mes{margin-bottom:var(--s4)}
+.ckv-mes+.ckv-mes{margin-top:var(--s5)}
+.ckv-mes-tit{font:700 14px/20px var(--f-titulo);letter-spacing:.08em;text-transform:uppercase;margin-bottom:var(--s3);color:var(--ink-suave)}
+.ckv-mes-cab{display:grid;grid-template-columns:repeat(7,1fr);gap:var(--s1);margin-bottom:var(--s2)}
+.ckv-mes-cab span{text-align:center;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-suave)}
+.ckv-mes-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:var(--s2)}
+.ckv-dia{min-height:52px;border:1px solid var(--linha);border-radius:var(--r-md);background:var(--superficie);cursor:default;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:16px;color:var(--borda)}
+.ckv-dia span.ckv-dia-vagas{font-size:10px;font-weight:700;letter-spacing:.04em}
+.ckv-dia--vazio{border:0;background:transparent}
+.ckv-dia--disp{cursor:pointer;border-color:var(--borda);color:var(--azul);font-weight:700}
+.ckv-dia--disp .ckv-dia-vagas{color:var(--laranja-texto)}
+.ckv-dia--disp:hover{border-color:var(--azul);box-shadow:var(--hover)}
+.ckv-dia--sel{background:var(--azul);color:var(--on-azul);border-color:var(--azul)}
+.ckv-dia--sel .ckv-dia-vagas{color:var(--on-azul)}
+.ckv-slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:var(--s2)}
+.ckv-slot{min-height:52px;border:1px solid var(--borda);border-radius:var(--r-md);background:var(--superficie);cursor:pointer;font:700 18px/24px var(--f-titulo);transition:box-shadow .15s}
+.ckv-slot:hover{border-color:var(--azul);box-shadow:var(--hover)}
+.ckv-slot[aria-pressed=true]{background:var(--azul);color:var(--on-azul);border-color:var(--azul)}
+.ckv-slot--ocupado{background:var(--sup-azul);color:var(--borda);border-style:dashed;cursor:not-allowed;text-decoration:line-through}
+.ckv-slot--ocupado:hover{border-color:var(--borda);box-shadow:none}
+.ckv-escolha{margin-top:var(--s4);min-height:26px;font-weight:700}
+
+/* Resumo */
+.ckv-resumo{border-top:1px solid var(--linha);margin:0 0 var(--s5)}
+.ckv-resumo div{display:grid;grid-template-columns:1fr;gap:0;padding:var(--s3) 0;border-bottom:1px solid var(--linha)}
+.ckv-resumo dt{font-size:14px;line-height:22px;color:var(--ink-suave)}
+.ckv-resumo dd{font-weight:700}
+.ckv-lgpd{display:flex;gap:var(--s3);align-items:flex-start;margin-bottom:var(--s2)}
+.ckv-lgpd input{flex:none;width:24px;height:24px;margin:1px 0 0;accent-color:var(--azul)}
+
+/* Avisos */
+.ckv-msg:empty{display:none}
+.ckv-msg{margin-bottom:var(--s4)}
+.ckv-aviso{display:flex;gap:var(--s3);align-items:flex-start;padding:var(--s3) var(--s4);border:1px solid var(--erro);border-radius:var(--r-md);background:var(--superficie)}
+.ckv-aviso .ckv-ico{color:var(--erro)}
+.ckv-aviso--info{border-color:var(--azul)}
+.ckv-aviso--info .ckv-ico{color:var(--azul)}
+.ckv-aviso--ok{border-color:var(--sucesso)}
+.ckv-aviso--ok .ckv-ico{color:var(--sucesso)}
+.ckv-aviso__corpo{display:flex;flex-direction:column;align-items:flex-start;gap:var(--s2)}
+.ckv-aviso .ckv-btn{min-height:44px}
+
+/* Sucesso */
+.ckv-ok-topo{display:flex;align-items:center;gap:var(--s3);color:var(--sucesso);font-weight:700;margin-bottom:var(--s3)}
+.ckv-ok-topo .ckv-ico{width:28px;height:28px;font-size:16px}
+.ckv-ok-data{font:700 24px/30px var(--f-titulo);margin:var(--s4) 0 var(--s1)}
+.ckv-ok-frase{margin:var(--s5) 0;padding-left:var(--s4);border-left:2px solid var(--laranja)}
+.ckv-ok-btns{display:flex;flex-direction:column;gap:var(--s3);margin-top:var(--s5)}
+.ckv-ok-btns .ckv-btn{width:100%}
+
+/* Fatos */
+.ckv-fatos{display:grid;gap:0}
+.ckv-fato{display:flex;align-items:baseline;gap:var(--s4);padding:var(--s5) 0;border-bottom:1px solid var(--borda)}
+.ckv-fato:last-child{border-bottom:0}
+.ckv-fato b{font:700 56px/56px var(--f-titulo);min-width:84px}
+.ckv-fato span{font-size:16px;line-height:24px}
+
+@media (min-width:640px){
+  .ckv-in{padding:0 var(--s5)}
+  .ckv-h1{font-size:40px;line-height:44px}
+  .ckv-h2{font-size:30px;line-height:36px}
+  .ckv-card{padding:var(--s6)}
+  .ckv-etapas .n{font-size:40px;line-height:44px}
+  .ckv-etapas .t{display:block}
+  .ckv-etapa-txt{display:none}
+  .ckv-acoes{flex-direction:row;justify-content:space-between}
+  .ckv-acoes .ckv-btn{width:auto;min-width:200px}
+  .ckv-grid2{grid-template-columns:1fr 1fr}
+  .ckv-resumo div{grid-template-columns:180px 1fr;gap:var(--s4)}
+  .ckv-ok-btns{flex-direction:row;flex-wrap:wrap}
+  .ckv-ok-btns .ckv-btn{width:auto}
+}
+@media (min-width:960px){
+  .ckv-sec{padding:var(--s9) 0}
+  .ckv-h1{font-size:48px;line-height:52px}
+  .ckv-fatos{grid-template-columns:repeat(3,1fr);gap:var(--s7)}
+  .ckv-fato{border-bottom:0;flex-direction:column;gap:var(--s2);padding:0;border-top:1px solid var(--borda);padding-top:var(--s5)}
+  .ckv-fato b{font-size:64px;line-height:64px}
+  .ckv-topo{grid-template-columns:1.05fr 1fr;align-items:start;gap:var(--s8);padding:var(--s7) 0}
+  .ckv-topo-txt{padding-top:var(--s4)}
+}
+.ckv-busy .ckv-opt,.ckv-busy .ckv-slot,.ckv-busy .ckv-dia--disp{pointer-events:none;opacity:.6}
+@media (prefers-reduced-motion:reduce){#ckv *{transition:none!important;scroll-behavior:auto!important}}
+</style>
+
+<div id="ckv">
+  <noscript><p class="ckv-in" style="padding:24px 16px">Para agendar pelo site, ative o JavaScript do navegador ou fale com a gente no WhatsApp (51) 3364-1142.</p></noscript>
+
+  <section class="ckv-sec ckv-sec--creme" id="ckv-fluxo" aria-label="Agendamento da visita">
+    <div class="ckv-in ckv-in--topo">
+      <div class="ckv-topo">
+        <div class="ckv-topo-txt">
+          <span class="ckv-eyebrow">Agendar visita</span>
+          <h1 class="ckv-h1" id="ckv-titulo">Agende sua <span class="ckv-dest">visita</span> ao Colégio Kennedy</h1>
+          <p class="ckv-lead">Escolhe o dia e o horário que ficam bons para ti. As visitas duram cerca de 30 min.</p>
+        </div>
+        <div>
+      <ol class="ckv-etapas" id="ckv-etapas" aria-label="Etapas do agendamento">
+        <li data-e="1"><span class="n">01.</span><span class="t">Identificação</span></li>
+        <li data-e="2"><span class="n">02.</span><span class="t">Perguntas rápidas</span></li>
+        <li data-e="3"><span class="n">03.</span><span class="t">Horário</span></li>
+        <li data-e="4"><span class="n">04.</span><span class="t">Confirmação</span></li>
+      </ol>
+      <p class="ckv-etapa-txt" id="ckv-etapa-txt"></p>
+
+      <div class="ckv-card">
+        <p class="ckv-demo" id="ckv-demo" hidden>Modo demonstração. Nenhuma informação é enviada ao servidor.</p>
+
+        <!-- 1. Telefone -->
+        <section data-step="tel">
+          <h2 class="ckv-h2" tabindex="-1" data-focus>Qual é o teu celular?</h2>
+          <p class="ckv-lead-p">Usamos o número para encontrar o teu cadastro ou criar um novo.</p>
+          <div class="ckv-msg" data-msg></div>
+          <form id="ckv-f-tel" novalidate>
+            <div class="ckv-campo">
+              <label for="ckv-tel">Celular com DDD</label>
+              <input id="ckv-tel" name="tel" type="tel" inputmode="tel" autocomplete="tel-national" maxlength="16" aria-describedby="ckv-tel-dica ckv-tel-err" placeholder="(51) 99999-9999">
+              <p class="ckv-small" id="ckv-tel-dica">Só números. Celular com DDD, 10 ou 11 dígitos.</p>
+              <p class="ckv-erro" id="ckv-tel-err" hidden><span class="ckv-ico" aria-hidden="true">!</span><span></span></p>
+            </div>
+            <div class="ckv-ts">
+              <div class="cf-turnstile" data-sitekey="0x4AAAAAAFWsOdItiACGGv99" data-callback="ckvTsOk" data-expired-callback="ckvTsExp" data-error-callback="ckvTsErr" data-language="pt-br" data-theme="light"></div>
+            </div>
+            <p class="ckv-small" id="ckv-tel-ajuda" aria-live="polite"></p>
+            <div class="ckv-acoes">
+              <button class="ckv-btn ckv-btn--prim" type="submit" id="ckv-b-tel" disabled>Continuar</button>
+            </div>
+          </form>
+        </section>
+
+        <!-- 2a. Quem é -->
+        <section data-step="quem" hidden>
+          <h2 class="ckv-h2" tabindex="-1" data-focus>Qual destes é o teu nome?</h2>
+          <p class="ckv-lead-p">Encontramos um cadastro com esse celular. Por segurança, mostramos só parte dos nomes.</p>
+          <div class="ckv-msg" data-msg></div>
+          <div class="ckv-lista" id="ckv-quem-lista"></div>
+          <div class="ckv-acoes"><button class="ckv-btn ckv-btn--sec" type="button" data-voltar="tel">Usar outro celular</button></div>
+        </section>
+
+        <!-- 2b. Lead novo -->
+        <section data-step="novo" hidden>
+          <h2 class="ckv-h2" tabindex="-1" data-focus>Conta um pouco sobre ti</h2>
+          <p class="ckv-lead-p">Preencha os dados abaixo para agendar a visita. O celular que tu informou já está salvo.</p>
+          <div class="ckv-msg" data-msg></div>
+          <form id="ckv-f-novo" novalidate>
+            <div class="ckv-campo">
+              <label for="ckv-n-nome">Nome do responsável</label>
+              <input id="ckv-n-nome" type="text" autocomplete="name" maxlength="120" aria-describedby="ckv-n-nome-err">
+              <p class="ckv-erro" id="ckv-n-nome-err" hidden><span class="ckv-ico" aria-hidden="true">!</span><span></span></p>
+            </div>
+            <div class="ckv-campo">
+              <label for="ckv-n-email">E-mail</label>
+              <input id="ckv-n-email" type="email" inputmode="email" autocomplete="email" maxlength="160" aria-describedby="ckv-n-email-err">
+              <p class="ckv-erro" id="ckv-n-email-err" hidden><span class="ckv-ico" aria-hidden="true">!</span><span></span></p>
+            </div>
+            <fieldset class="ckv-campo">
+              <legend class="ckv-leg">Quantos alunos?</legend>
+              <div class="ckv-chips" id="ckv-qtd"></div>
+            </fieldset>
+            <div id="ckv-alunos"></div>
+            <div class="ckv-acoes">
+              <button class="ckv-btn ckv-btn--sec" type="button" data-voltar="tel">Voltar</button>
+              <button class="ckv-btn ckv-btn--prim" type="submit">Continuar</button>
+            </div>
+          </form>
+        </section>
+
+        <!-- 3. Quiz -->
+        <section data-step="quiz" hidden>
+          <h2 class="ckv-h2" tabindex="-1" data-focus>Algumas perguntas rápidas</h2>
+          <p class="ckv-lead-p">Opcional. Ajudam o Diego a preparar a visita para a tua família.</p>
+          <div class="ckv-msg" data-msg></div>
+          <form id="ckv-f-quiz" novalidate>
+            <div id="ckv-quiz"></div>
+            <div class="ckv-acoes">
+              <button class="ckv-btn ckv-btn--prim" type="submit" id="ckv-b-quiz">Ver horários</button>
+            </div>
+          </form>
+        </section>
+
+        <!-- 4. Horário -->
+        <section data-step="hora" hidden>
+          <h2 class="ckv-h2" tabindex="-1" data-focus>Escolhe o dia e o horário</h2>
+          <p class="ckv-lead-p">As visitas duram cerca de 30 min.</p>
+          <div class="ckv-msg" data-msg></div>
+          <div id="ckv-dias" hidden>
+            <p class="ckv-escassez" id="ckv-vagas-semana"></p>
+            <div id="ckv-calendario"></div>
+            <div class="ckv-slots" role="group" id="ckv-slots"></div>
+            <p class="ckv-escolha" id="ckv-escolha" aria-live="polite"></p>
+          </div>
+          <div class="ckv-acoes">
+            <button class="ckv-btn ckv-btn--sec" type="button" data-voltar-quiz>Voltar</button>
+            <button class="ckv-btn ckv-btn--prim" type="button" id="ckv-b-hora" disabled>Continuar</button>
+          </div>
+        </section>
+
+        <!-- 5. Confirmação -->
+        <section data-step="conf" hidden>
+          <h2 class="ckv-h2" tabindex="-1" data-focus>Confira e confirme</h2>
+          <p class="ckv-lead-p">Revise os dados da visita antes de confirmar.</p>
+          <div class="ckv-msg" data-msg></div>
+          <form id="ckv-f-conf" novalidate>
+            <dl class="ckv-resumo" id="ckv-resumo"></dl>
+            <div class="ckv-campo" id="ckv-c-email" hidden>
+              <label for="ckv-e-email">E-mail</label>
+              <input id="ckv-e-email" type="email" inputmode="email" autocomplete="email" maxlength="160" aria-describedby="ckv-e-email-err">
+              <p class="ckv-erro" id="ckv-e-email-err" hidden><span class="ckv-ico" aria-hidden="true">!</span><span></span></p>
+            </div>
+            <div class="ckv-campo">
+              <div class="ckv-lgpd">
+                <input type="checkbox" id="ckv-lgpd" aria-describedby="ckv-lgpd-err">
+                <label for="ckv-lgpd" style="font-weight:400;font-size:16px;line-height:26px">Concordo com o uso dos meus dados para agendar a visita e entrar em contato, conforme a <a href="https://colegiokennedy.com/politica-de-privacidade/" target="_blank" rel="noopener">Política de Privacidade</a>.</label>
+              </div>
+              <p class="ckv-erro" id="ckv-lgpd-err" hidden><span class="ckv-ico" aria-hidden="true">!</span><span></span></p>
+            </div>
+            <div class="ckv-acoes">
+              <button class="ckv-btn ckv-btn--sec" type="button" data-voltar-hora>Trocar horário</button>
+              <button class="ckv-btn ckv-btn--dest" type="submit" id="ckv-b-conf">Confirmar visita</button>
+            </div>
+          </form>
+        </section>
+
+        <!-- 6. Sucesso -->
+        <section data-step="ok" hidden>
+          <p class="ckv-ok-topo"><span class="ckv-ico" aria-hidden="true">&#10003;</span><span>Visita agendada</span></p>
+          <h2 class="ckv-h2" tabindex="-1" data-focus id="ckv-ok-titulo">Tudo certo</h2>
+          <p class="ckv-ok-data" id="ckv-ok-data"></p>
+          <p class="ckv-small" id="ckv-ok-local"></p>
+          <p class="ckv-ok-frase" id="ckv-ok-frase"></p>
+          <p>Vamos receber a tua família com calma. Se precisar remarcar ou tiver alguma dúvida, é só chamar a gente no WhatsApp.</p>
+          <div class="ckv-ok-btns">
+            <a class="ckv-btn ckv-btn--prim" id="ckv-gcal" target="_blank" rel="noopener" href="#">Adicionar ao Google Agenda</a>
+            <a class="ckv-btn ckv-btn--sec" target="_blank" rel="noopener" href="https://wa.me/555133641142">Falar no WhatsApp</a>
+          </div>
+        </section>
+      </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ckv-sec ckv-sec--azul" aria-label="Como funciona a visita">
+    <div class="ckv-in">
+      <div class="ckv-fatos">
+        <p class="ckv-fato"><b>30</b><span>minutos aprox. por visita.</span></p>
+        <p class="ckv-fato"><b>1</b><span>família por vez, para a conversa não ter pressa.</span></p>
+        <p class="ckv-fato"><b>1</b><span>semana de agenda aberta por vez, de segunda a sexta.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="ckv-sec" aria-label="Precisa de ajuda">
+    <div class="ckv-in ckv-in--estreito">
+      <span class="ckv-eyebrow">Prefere falar com a gente?</span>
+      <p class="ckv-ajuda-txt" style="margin-top:16px">Chame no WhatsApp ou ligue, de segunda a sexta. Av. Alcides S. Severiano, 99, Sarandi, Porto Alegre.</p>
+      <a class="ckv-btn ckv-btn--sec" target="_blank" rel="noopener" href="https://wa.me/555133641142">WhatsApp (51) 3364-1142</a>
+    </div>
+  </section>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ===== Configuração ===== */
+  var API = 'https://n8n.colegiokennedy.top/webhook/agendar-visita';
+  var WPP = '555133641142';
+  var ENDERECO = 'Av. Alcides S. Severiano, 99, Sarandi, Porto Alegre/RS, 91130-500';
+  /* TROQUE pelos textos EXATOS do campo "série de interesse" do Pipefy / formulário do colegiokennedy.top. */
+  var SERIES = [
+    { g: 'Berçário', i: ['Berçário'] },
+    { g: 'Educação Infantil', i: ['Infantil 1', 'Infantil 2', 'Infantil 3', 'Infantil 4', 'Infantil 5'] },
+    { g: 'Fundamental anos iniciais', i: ['1º ano', '2º ano', '3º ano', '4º ano', '5º ano'] },
+    { g: 'Fundamental anos finais', i: ['6º ano', '7º ano', '8º ano', '9º ano'] },
+    { g: 'Ensino Médio', i: ['1ª série do Ensino Médio', '2ª série do Ensino Médio', '3ª série do Ensino Médio'] }
+  ];
+  var GRADE_PADRAO = ['08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30'];
+  var JANELA_DIAS = 7;
+  var QUIZ = [
+    { key: 'etapa', q: 'Para qual etapa tu procura vaga?', tipo: 'radio', so: 'existente', opts: ['Berçário', 'Educação Infantil', '1º ao 5º ano', '6º ao 9º ano', 'Ensino Médio'] },
+    { key: 'quando', q: 'Para quando tu precisa da vaga?', tipo: 'radio', opts: ['Ainda em 2026', 'Início de 2027', 'Mais para frente'] },
+    { key: 'turno', q: 'Qual turno faz mais sentido?', tipo: 'radio', opts: ['Integral (janeiro a janeiro)', 'Parcial (manhã ou tarde)', 'Ainda não sei'] },
+    { key: 'prioridades', q: 'O que mais pesa na escolha?', dica: 'Pode marcar mais de uma.', tipo: 'check', opts: ['Turno integral', 'Inglês', 'Projeto pedagógico', 'Preço', 'Localização'] },
+    { key: 'conheceu', q: 'Como conheceu o Colégio Kennedy?', tipo: 'radio', opts: ['Instagram', 'Facebook', 'Google', 'Indicação de família', 'Passei em frente', 'Outro'] }
+  ];
+
+  var MSG = {
+    rede: 'Não conseguimos falar com o servidor. Confira a internet e tente de novo. O que tu digitou foi mantido.',
+    generico: 'Algo não funcionou do nosso lado. Tente de novo em instantes ou fale com a gente no WhatsApp.',
+    captcha: 'Não conseguimos confirmar a verificação de segurança. Aguarde a verificação de novo e clique em Continuar.',
+    expirada: 'O tempo da sessão acabou. Informe o celular de novo para continuar.',
+    sessao_invalida: 'Não encontramos a tua sessão. Informe o celular de novo para continuar.',
+    bloqueada: 'Por segurança, o limite de tentativas foi atingido. Tente de novo mais tarde ou fale com a gente no WhatsApp.',
+    usada: 'Esta sessão já foi usada para um agendamento. Para marcar outra visita ou remarcar, fale com a gente no WhatsApp.',
+    ja_confirmada: 'Esta sessão já foi confirmada. Informe o celular de novo para recomeçar.',
+    nome_nao_confirmado: 'Precisamos confirmar o teu nome antes de agendar. Informe o celular de novo para recomeçar.',
+    ocupado: 'Esse horário acabou de ser ocupado. Escolha outro da lista.',
+    semHorarios: 'Não há horários livres nos próximos dias. Chame a gente no WhatsApp que encontramos um horário para ti.',
+    dadosIncompletos: 'Faltou alguma informação. Confira os dados e tente de novo.',
+    emailInvalido: 'Esse e-mail não parece correto. Confira e tente de novo.',
+    agendarRede: 'Não recebemos a resposta do servidor. Tente de novo. Se a visita já tiver sido registrada, o WhatsApp confirma para ti.',
+    talvezAgendada: 'A tua visita pode já ter sido registrada. Confirme com a gente pelo WhatsApp antes de tentar de novo.'
+  };
+
+  /* ===== Utilidades ===== */
+  var root = document.getElementById('ckv');
+  var qs = new URLSearchParams(location.search);
+  var DEMO = qs.get('demo');
+  var CENARIO = qs.get('cenario') || '';
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function $(id) { return document.getElementById(id); }
+  function h(tag, attrs, text) {
+    var e = document.createElement(tag);
+    if (attrs) for (var k in attrs) { if (k === 'class') e.className = attrs[k]; else e.setAttribute(k, attrs[k]); }
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function panel(step) { return root.querySelector('[data-step="' + step + '"]'); }
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  /* ===== Origem (primeiro toque da sessão) ===== */
+  function aparelho() {
+    var mobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent || '');
+    return mobile ? 'celular' : 'computador';
+  }
+  function capturarOrigem() {
+    var KEY = 'ck_origem', salvo = null;
+    try { var s = sessionStorage.getItem(KEY); if (s) salvo = JSON.parse(s); } catch (e) { salvo = null; }
+    if (salvo && typeof salvo === 'object') return salvo;
+    var o = {};
+    ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'gbraid', 'wbraid', 'fbclid'].forEach(function (k) {
+      o[k] = (qs.get(k) || '').slice(0, 300);
+    });
+    o.referrer = (document.referrer || '').slice(0, 500);
+    o.page_url = location.href.slice(0, 500);
+    o.aparelho = aparelho();
+    try { sessionStorage.setItem(KEY, JSON.stringify(o)); } catch (e) {}
+    return o;
+  }
+  var ORIGEM = capturarOrigem();
+
+  /* ===== Estado (somente em memória) ===== */
+  var S = { step: 'tel', token: '', modo: '', cf: '', tel: '', dados: {}, quiz: {}, dias: [], diaSel: null, slot: null, busy: false, tentouAgendar: false, pendingBuscar: false, res: null, email: '', temEmail: false };
+
+  /* ===== Camada de rede ===== */
+  var demoTentativas = 3, demoOcupadoUsado = false;
+  function mockApi(path, body) {
+    return new Promise(function (resolve) {
+      setTimeout(function () {
+        if (CENARIO === 'rede') return resolve({ network: true });
+        if (path === '/buscar') {
+          if (CENARIO === 'captcha') return resolve({ status: 403, data: { ok: false, erro: 'captcha' } });
+          if (DEMO === 'novo') return resolve({ status: 200, data: { ok: true, encontrado: false, token: 'demo' } });
+          return resolve({ status: 200, data: { ok: true, encontrado: true, token: 'demo', opcoes: [{ id: 'a', label: 'Vi**** C****' }, { id: 'b', label: 'Ma**** S****' }, { id: 'c', label: 'Jo** P*****' }, { id: 'nenhum', label: 'Nenhum destes' }] } });
+        }
+        if (path === '/confirmar') {
+          if (CENARIO === 'expirada') return resolve({ status: 200, data: { ok: false, erro: 'expirada' } });
+          if (body.opcao_id === 'a') return resolve({ status: 200, data: { ok: true, modo: 'existente', email_cadastrado: true } });
+          if (body.opcao_id === 'b') return resolve({ status: 200, data: { ok: true, modo: 'existente', email_cadastrado: false } });
+          if (body.opcao_id === 'nenhum') return resolve({ status: 200, data: { ok: true, modo: 'novo' } });
+          demoTentativas--;
+          if (demoTentativas < 0) return resolve({ status: 200, data: { ok: false, erro: 'bloqueada' } });
+          return resolve({ status: 200, data: { ok: false, erro: 'nome_incorreto', restantes: demoTentativas } });
+        }
+        if (path === '/horarios') {
+          if (CENARIO === 'semhorarios') return resolve({ status: 200, data: { ok: true, dias: [] } });
+          var dias = [], d = new Date();
+          for (var i = 1; i <= 7; i++) {
+            var x = new Date(d.getFullYear(), d.getMonth(), d.getDate() + i);
+            if (x.getDay() === 0 || x.getDay() === 6) continue;
+            var dd = ('0' + x.getDate()).slice(-2), mm = ('0' + (x.getMonth() + 1)).slice(-2), iso = x.getFullYear() + '-' + mm + '-' + dd;
+            dias.push({ data: iso, horarios: GRADE_PADRAO.filter(function (_, k) { return (k + x.getDate()) % 3 !== 0; }).map(function (hh) { return { hora: hh, inicio: iso + 'T' + hh + ':00-03:00' }; }) });
+          }
+          return resolve({ status: 200, data: { ok: true, dias: dias } });
+        }
+        if (path === '/agendar') {
+          if (CENARIO === 'ocupado' && !demoOcupadoUsado) { demoOcupadoUsado = true; return resolve({ status: 200, data: { ok: false, erro: 'horario_ocupado' } }); }
+          var fim = new Date(new Date(body.inicio).getTime() + 1800000).toISOString();
+          return resolve({ status: 200, data: { ok: true, modo: S.modo, inicio: body.inicio, fim: fim, movido: true, aviso: '' } });
+        }
+        resolve({ status: 404, data: null });
+      }, 600);
+    });
+  }
+  async function api(path, body) {
+    if (DEMO) return mockApi(path, body);
+    var ctl = new AbortController();
+    var t = setTimeout(function () { ctl.abort(); }, 20000);
+    try {
+      var r = await fetch(API + path, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: ctl.signal, credentials: 'omit' });
+      var j = null;
+      try { j = await r.json(); } catch (e) { j = null; }
+      return { status: r.status, data: j };
+    } catch (e) {
+      return { network: true };
+    } finally { clearTimeout(t); }
+  }
+
+  /* ===== Interface: etapas, mensagens, busy ===== */
+  var ETAPA_DE = { tel: 1, quem: 1, novo: 1, quiz: 2, hora: 3, conf: 4, ok: 5 };
+  var ETAPA_NOME = ['', 'Identificação', 'Perguntas rápidas', 'Horário', 'Confirmação'];
+  function atualizarEtapas(step) {
+    var n = ETAPA_DE[step];
+    $('ckv-etapas').hidden = (n === 5);
+    $('ckv-etapa-txt').hidden = (n === 5);
+    root.querySelectorAll('#ckv-etapas li').forEach(function (li) {
+      var e = Number(li.getAttribute('data-e'));
+      li.className = e < n ? 'is-feito' : (e === n ? 'is-atual' : '');
+      if (e === n) li.setAttribute('aria-current', 'step'); else li.removeAttribute('aria-current');
+    });
+    $('ckv-etapa-txt').textContent = n <= 4 ? 'Etapa ' + n + ' de 4: ' + ETAPA_NOME[n] : '';
+  }
+  function go(step, semFoco) {
+    root.querySelectorAll('[data-step]').forEach(function (p) { p.hidden = p.getAttribute('data-step') !== step; });
+    S.step = step;
+    atualizarEtapas(step);
+    if (semFoco) return;
+    var hd = panel(step).querySelector('[data-focus]');
+    $('ckv-fluxo').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    if (hd) hd.focus({ preventScroll: true });
+  }
+  function limparMsg(step) { var m = panel(step).querySelector('[data-msg]'); if (m) m.textContent = ''; }
+  function showMsg(step, tipo, texto, opts) {
+    opts = opts || {};
+    var box = panel(step).querySelector('[data-msg]');
+    box.textContent = '';
+    var av = h('div', { class: 'ckv-aviso' + (tipo === 'info' ? ' ckv-aviso--info' : tipo === 'ok' ? ' ckv-aviso--ok' : ''), role: tipo === 'erro' ? 'alert' : 'status' });
+    av.appendChild(h('span', { class: 'ckv-ico', 'aria-hidden': 'true' }, tipo === 'erro' ? '!' : (tipo === 'ok' ? '✓' : 'i')));
+    var corpo = h('div', { class: 'ckv-aviso__corpo' });
+    corpo.appendChild(h('span', null, texto));
+    if (opts.retry) {
+      var b = h('button', { type: 'button', class: 'ckv-btn ckv-btn--sec' }, 'Tentar de novo');
+      b.addEventListener('click', function () { limparMsg(step); opts.retry(); });
+      corpo.appendChild(b);
+    }
+    if (opts.wa) corpo.appendChild(h('a', { href: 'https://wa.me/' + WPP, target: '_blank', rel: 'noopener', class: 'ckv-btn ckv-btn--sec' }, 'Falar no WhatsApp'));
+    av.appendChild(corpo);
+    box.appendChild(av);
+  }
+  function erroCampo(id, texto) {
+    var inp = $(id), err = $(id + '-err');
+    if (!err) return;
+    if (texto) {
+      err.hidden = false; err.lastChild.textContent = texto;
+      if (inp) inp.setAttribute('aria-invalid', 'true');
+    } else {
+      err.hidden = true; err.lastChild.textContent = '';
+      if (inp) inp.removeAttribute('aria-invalid');
+    }
+  }
+  async function run(btn, rotulo, fn) {
+    if (S.busy) return;
+    S.busy = true; root.classList.add('ckv-busy');
+    var antigo = btn ? btn.textContent : '';
+    if (btn) { btn.disabled = true; btn.textContent = rotulo; btn.setAttribute('aria-busy', 'true'); }
+    try { await fn(); }
+    finally {
+      S.busy = false; root.classList.remove('ckv-busy');
+      if (btn) { btn.textContent = antigo; btn.disabled = false; btn.removeAttribute('aria-busy'); }
+      atualizarBotaoTel(); atualizarBotaoHora();
+    }
+  }
+  function reiniciar(codigo, silencioso) {
+    S.token = ''; S.modo = ''; S.dias = []; S.slot = null; S.tentouAgendar = false; S.res = null; S.email = '';
+    resetTs();
+    go('tel');
+    limparMsg('tel');
+    if (!silencioso && codigo) {
+      var texto = MSG[codigo] || MSG.generico;
+      showMsg('tel', 'erro', texto, { wa: codigo === 'bloqueada' || codigo === 'usada' });
+    }
+  }
+
+  /* ===== Turnstile ===== */
+  function resetTs() {
+    S.cf = '';
+    try { if (window.turnstile) window.turnstile.reset(); } catch (e) {}
+    atualizarBotaoTel();
+  }
+  window.ckvTsOk = function (token) {
+    S.cf = token || '';
+    atualizarBotaoTel();
+    if (S.pendingBuscar && S.cf) { S.pendingBuscar = false; run($('ckv-b-tel'), 'Procurando…', buscar); }
+  };
+  window.ckvTsExp = function () { S.cf = ''; atualizarBotaoTel(); };
+  window.ckvTsErr = function () { S.cf = ''; atualizarBotaoTel(); showMsg('tel', 'erro', MSG.captcha); };
+
+  /* ===== Passo 1: telefone ===== */
+  function soDigitos(v) {
+    var d = String(v || '').replace(/\D/g, '');
+    if (d.length > 11 && d.indexOf('55') === 0) d = d.slice(2);
+    if (d.length > 11 && d.charAt(0) === '0') d = d.slice(1);
+    return d.slice(0, 11);
+  }
+  function mascara(d) {
+    if (!d) return '';
+    if (d.length <= 2) return '(' + d;
+    if (d.length <= 6) return '(' + d.slice(0, 2) + ') ' + d.slice(2);
+    if (d.length <= 10) return '(' + d.slice(0, 2) + ') ' + d.slice(2, 6) + '-' + d.slice(6);
+    return '(' + d.slice(0, 2) + ') ' + d.slice(2, 7) + '-' + d.slice(7);
+  }
+  function telValido() { return S.tel.length === 10 || S.tel.length === 11; }
+  function atualizarBotaoTel() {
+    var b = $('ckv-b-tel');
+    if (!b || S.busy) return;
+    var ok = telValido() && (DEMO || S.cf);
+    b.disabled = !ok;
+    var aj = $('ckv-tel-ajuda');
+    if (!telValido()) aj.textContent = '';
+    else if (!DEMO && !S.cf) aj.textContent = 'Aguardando a verificação de segurança.';
+    else aj.textContent = '';
+  }
+  $('ckv-tel').addEventListener('input', function (e) {
+    var d = soDigitos(e.target.value);
+    S.tel = d;
+    e.target.value = mascara(d);
+    erroCampo('ckv-tel', '');
+    atualizarBotaoTel();
+  });
+  async function buscar() {
+    limparMsg('tel');
+    var r = await api('/buscar', { telefone: S.tel, cf_token: S.cf });
+    resetTs();
+    if (r.network) return showMsg('tel', 'erro', MSG.rede, { retry: function () { S.pendingBuscar = true; showMsg('tel', 'info', 'Verificando a segurança e tentando de novo…'); if (DEMO || S.cf) { S.pendingBuscar = false; run($('ckv-b-tel'), 'Procurando…', buscar); } } });
+    var d = r.data;
+    if (r.status === 403 || (d && d.erro === 'captcha')) return showMsg('tel', 'erro', MSG.captcha);
+    if (!d || !d.ok || !d.token) return showMsg('tel', 'erro', MSG.generico, { wa: true });
+    S.token = d.token;
+    if (d.encontrado) { renderQuem(d.opcoes || []); go('quem'); }
+    else { S.modo = 'novo'; go('novo'); }
+  }
+  $('ckv-f-tel').addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (S.busy) return;
+    if (!telValido()) { erroCampo('ckv-tel', 'Digite o DDD e o número, com 10 ou 11 dígitos.'); $('ckv-tel').focus(); return; }
+    if (!DEMO && !S.cf) { showMsg('tel', 'info', 'Confirme a verificação de segurança antes de continuar.'); return; }
+    run($('ckv-b-tel'), 'Procurando…', buscar);
+  });
+
+  /* ===== Passo 2a: quem é ===== */
+  function renderQuem(ops) {
+    var box = $('ckv-quem-lista');
+    box.textContent = '';
+    ops = ops.filter(function (o) { return o && o.id != null; });
+    if (!ops.some(function (o) { return o.id === 'nenhum'; })) ops.push({ id: 'nenhum', label: 'Nenhum destes' });
+    ops.forEach(function (o) {
+      var b = h('button', { type: 'button', class: 'ckv-opt' + (o.id === 'nenhum' ? ' ckv-opt--nenhum' : '') }, String(o.label));
+      b.addEventListener('click', function () { run(b, 'Verificando…', function () { return confirmar(o.id); }); });
+      box.appendChild(b);
+    });
+  }
+  async function confirmar(id) {
+    limparMsg('quem');
+    var r = await api('/confirmar', { token: S.token, opcao_id: String(id) });
+    if (r.network) return showMsg('quem', 'erro', MSG.rede, { retry: function () { run(null, '', function () { return confirmar(id); }); } });
+    var d = r.data;
+    if (!d) return showMsg('quem', 'erro', MSG.generico, { wa: true });
+    if (d.ok) {
+      if (d.modo === 'novo') { S.modo = 'novo'; go('novo'); } else { S.modo = 'existente'; S.temEmail = !!d.email_cadastrado; renderQuiz(); go('quiz'); }
+      return;
+    }
+    if (d.erro === 'nome_incorreto') {
+      var n = Number(d.restantes);
+      var txt = 'Esse não é o nome cadastrado.' + (isFinite(n) ? (n > 0 ? ' Restam ' + n + (n === 1 ? ' tentativa.' : ' tentativas.') : ' Foi a última tentativa.') : '');
+      return showMsg('quem', 'erro', txt);
+    }
+    if (['bloqueada', 'expirada', 'sessao_invalida', 'usada', 'ja_confirmada'].indexOf(d.erro) >= 0) return reiniciar(d.erro);
+    showMsg('quem', 'erro', MSG.generico, { wa: true });
+  }
+
+  /* ===== Passo 2b: lead novo ===== */
+  (function montarNovo() {
+    var qtd = $('ckv-qtd');
+    [1, 2, 3, 4].forEach(function (n) {
+      var l = h('label', { class: 'ckv-chip' });
+      var i = h('input', { type: 'radio', name: 'qtd', value: String(n), class: 'ckv-sr' });
+      if (n === 1) i.checked = true;
+      i.addEventListener('change', mostrarAlunos);
+      l.appendChild(i); l.appendChild(h('span', null, String(n)));
+      qtd.appendChild(l);
+    });
+    var box = $('ckv-alunos');
+    for (var n = 1; n <= 4; n++) {
+      var f = h('fieldset', { class: 'ckv-aluno', 'data-aluno': String(n) });
+      f.appendChild(h('legend', { class: 'ckv-leg' }, 'Aluno ' + n));
+      var g = h('div', { class: 'ckv-grid2' });
+      var c1 = h('div', { class: 'ckv-campo' });
+      c1.appendChild(h('label', { for: 'ckv-al' + n + '-nome' }, 'Nome do aluno'));
+      c1.appendChild(h('input', { id: 'ckv-al' + n + '-nome', type: 'text', maxlength: '120', autocomplete: 'off', 'aria-describedby': 'ckv-al' + n + '-nome-err' }));
+      var e1 = h('p', { class: 'ckv-erro', id: 'ckv-al' + n + '-nome-err', hidden: '' });
+      e1.appendChild(h('span', { class: 'ckv-ico', 'aria-hidden': 'true' }, '!')); e1.appendChild(h('span'));
+      c1.appendChild(e1);
+      var c2 = h('div', { class: 'ckv-campo' });
+      c2.appendChild(h('label', { for: 'ckv-al' + n + '-serie' }, 'Série de interesse'));
+      var sel = h('select', { id: 'ckv-al' + n + '-serie', 'aria-describedby': 'ckv-al' + n + '-serie-err' });
+      sel.appendChild(h('option', { value: '' }, 'Selecione'));
+      SERIES.forEach(function (gr) {
+        var og = h('optgroup', { label: gr.g });
+        gr.i.forEach(function (it) { og.appendChild(h('option', { value: it }, it)); });
+        sel.appendChild(og);
+      });
+      c2.appendChild(sel);
+      var e2 = h('p', { class: 'ckv-erro', id: 'ckv-al' + n + '-serie-err', hidden: '' });
+      e2.appendChild(h('span', { class: 'ckv-ico', 'aria-hidden': 'true' }, '!')); e2.appendChild(h('span'));
+      c2.appendChild(e2);
+      g.appendChild(c1); g.appendChild(c2); f.appendChild(g); box.appendChild(f);
+    }
+    mostrarAlunos();
+  })();
+  function qtdAlunos() { var c = root.querySelector('input[name=qtd]:checked'); return c ? Number(c.value) : 1; }
+  function mostrarAlunos() {
+    var q = qtdAlunos();
+    root.querySelectorAll('[data-aluno]').forEach(function (f) { f.hidden = Number(f.getAttribute('data-aluno')) > q; });
+  }
+  $('ckv-f-novo').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var primeiro = null;
+    function falha(id, txt) { erroCampo(id, txt); if (!primeiro) primeiro = $(id); }
+    var nome = $('ckv-n-nome').value.trim(), email = $('ckv-n-email').value.trim(), q = qtdAlunos();
+    erroCampo('ckv-n-nome', ''); erroCampo('ckv-n-email', '');
+    if (nome.length < 2) falha('ckv-n-nome', 'Informe o nome do responsável.');
+    if (!email) falha('ckv-n-email', 'Informe o e-mail.');
+    else if (!EMAIL_RE.test(email)) falha('ckv-n-email', 'Esse e-mail não parece correto. Exemplo: nome@email.com');
+    var d = { nome: nome, email: email, quantidade_alunos: String(q) }, resumo = [];
+    for (var n = 1; n <= 4; n++) {
+      erroCampo('ckv-al' + n + '-nome', ''); erroCampo('ckv-al' + n + '-serie', '');
+      if (n > q) continue;
+      var an = $('ckv-al' + n + '-nome').value.trim(), as = $('ckv-al' + n + '-serie').value;
+      if (an.length < 2) falha('ckv-al' + n + '-nome', 'Informe o nome do aluno.');
+      if (!as) falha('ckv-al' + n + '-serie', 'Escolha a série de interesse.');
+      d['nome_aluno_' + n] = an; d['serie_' + n] = as;
+      resumo.push(an + ' (' + as + ')');
+    }
+    if (primeiro) { primeiro.focus(); return; }
+    d.resumo_alunos = resumo.join('; ');
+    S.dados = d;
+    renderQuiz();
+    go('quiz');
+  });
+
+  /* ===== Passo 3: quiz ===== */
+  function renderQuiz() {
+    var box = $('ckv-quiz');
+    box.textContent = '';
+    QUIZ.forEach(function (p) {
+      if (p.so && p.so !== S.modo) return;
+      var fs = h('fieldset', { class: 'ckv-perg' });
+      fs.appendChild(h('legend', { class: 'ckv-leg' }, p.q));
+      if (p.dica) fs.appendChild(h('p', { class: 'ckv-small' }, p.dica));
+      var ch = h('div', { class: 'ckv-chips' });
+      p.opts.forEach(function (o) {
+        var l = h('label', { class: 'ckv-chip' });
+        var i = h('input', { type: p.tipo === 'check' ? 'checkbox' : 'radio', name: 'q_' + p.key, value: o, class: 'ckv-sr' });
+        if (S.quiz[p.key] && S.quiz[p.key].split(', ').indexOf(o) >= 0) i.checked = true;
+        l.appendChild(i); l.appendChild(h('span', null, o)); ch.appendChild(l);
+      });
+      fs.appendChild(ch); box.appendChild(fs);
+    });
+  }
+  function lerQuiz() {
+    var q = {};
+    QUIZ.forEach(function (p) {
+      if (p.so && p.so !== S.modo) return;
+      var marcados = [].slice.call(root.querySelectorAll('input[name=q_' + p.key + ']:checked')).map(function (i) { return i.value; });
+      if (marcados.length) q[p.key] = marcados.join(', ');
+    });
+    return q;
+  }
+  $('ckv-f-quiz').addEventListener('submit', function (e) {
+    e.preventDefault();
+    S.quiz = lerQuiz();
+    run($('ckv-b-quiz'), 'Carregando horários…', function () { return carregarHorarios('quiz', ''); });
+  });
+
+  /* ===== Passo 4: horários ===== */
+  var MESES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+  var SEMANA = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
+  function dataLonga(iso) {
+    var y = Number(iso.slice(0, 4)), m = Number(iso.slice(5, 7)), d = Number(iso.slice(8, 10));
+    var dow = new Date(Date.UTC(y, m - 1, d, 12)).getUTCDay();
+    return SEMANA[dow] + ', ' + d + ' de ' + MESES[m - 1];
+  }
+  async function carregarHorarios(origem, aviso) {
+    limparMsg(origem);
+    var r = await api('/horarios', { token: S.token });
+    if (r.network) return showMsg(origem, 'erro', MSG.rede, { retry: function () { run(null, '', function () { return carregarHorarios(origem, aviso); }); } });
+    var d = r.data;
+    if (!d) return showMsg(origem, 'erro', MSG.generico, { wa: true });
+    if (!d.ok) {
+      if (['sessao_invalida', 'expirada', 'usada', 'nome_nao_confirmado'].indexOf(d.erro) >= 0) return reiniciar(d.erro);
+      return showMsg(origem, 'erro', MSG.generico, { wa: true });
+    }
+    var hoje = new Date(); hoje.setHours(0, 0, 0, 0);
+    var limite = new Date(hoje.getTime() + JANELA_DIAS * 86400000);
+    S.dias = (d.dias || []).filter(function (x) {
+      if (!x || !x.horarios || !x.horarios.length) return false;
+      var dt = new Date(x.data + 'T00:00:00');
+      return dt >= hoje && dt <= limite;
+    }).sort(function (a, b) { return a.data < b.data ? -1 : 1; });
+    S.diaSel = null; S.slot = null;
+    renderDias();
+    go('hora');
+    limparMsg('hora');
+    if (!S.dias.length) showMsg('hora', 'info', MSG.semHorarios, { wa: true });
+    else if (aviso) showMsg('hora', 'erro', aviso);
+  }
+  function diaPorIso(iso) { return S.dias.filter(function (x) { return x.data === iso; })[0] || null; }
+  function totalVagas() { return S.dias.reduce(function (acc, x) { return acc + x.horarios.length; }, 0); }
+  function renderDias() {
+    var tem = S.dias.length > 0;
+    $('ckv-dias').hidden = !tem;
+    atualizarBotaoHora();
+    if (!tem) return;
+    if (!S.diaSel) S.diaSel = S.dias[0].data;
+    var n = totalVagas();
+    $('ckv-vagas-semana').textContent = 'Restam ' + n + (n === 1 ? ' horário livre' : ' horários livres') + ' nesta semana. A agenda abre só 1 semana por vez.';
+    renderCalendario();
+    renderSlots();
+  }
+  function renderCalendario() {
+    var box = $('ckv-calendario');
+    box.textContent = '';
+    var cabNomes = ['SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SÁB', 'DOM'];
+    var datas = S.dias.map(function (x) { return x.data; });
+    var meses = [];
+    datas.forEach(function (iso) { var ym = iso.slice(0, 7); if (meses.indexOf(ym) < 0) meses.push(ym); });
+    meses.sort();
+    meses.forEach(function (ym) {
+      var ano = Number(ym.slice(0, 4)), mes = Number(ym.slice(5, 7)) - 1;
+      var primeiroDia = new Date(ano, mes, 1);
+      var dowSeg = (primeiroDia.getDay() + 6) % 7;
+      var totalDias = new Date(ano, mes + 1, 0).getDate();
+      var wrap = h('div', { class: 'ckv-mes' });
+      wrap.appendChild(h('p', { class: 'ckv-mes-tit' }, MESES[mes] + ' de ' + ano));
+      var cab = h('div', { class: 'ckv-mes-cab' });
+      cabNomes.forEach(function (c) { cab.appendChild(h('span', null, c)); });
+      wrap.appendChild(cab);
+      var grid = h('div', { class: 'ckv-mes-grid' });
+      for (var k = 0; k < dowSeg; k++) grid.appendChild(h('div', { class: 'ckv-dia ckv-dia--vazio' }));
+      for (var dnum = 1; dnum <= totalDias; dnum++) {
+        var dd = ('0' + dnum).slice(-2), mm = ('0' + (mes + 1)).slice(-2), iso = ano + '-' + mm + '-' + dd;
+        var dia = diaPorIso(iso);
+        var cls = 'ckv-dia';
+        if (dia) cls += ' ckv-dia--disp'; if (iso === S.diaSel) cls += ' ckv-dia--sel';
+        var cel = h('button', { type: 'button', class: cls }, null);
+        cel.appendChild(h('span', null, String(dnum)));
+        if (dia) { cel.appendChild(h('span', { class: 'ckv-dia-vagas' }, dia.horarios.length + (dia.horarios.length === 1 ? ' vaga' : ' vagas'))); cel.addEventListener('click', function (iso2) { return function () { escolherDia(iso2); }; }(iso)); }
+        else { cel.disabled = true; cel.setAttribute('aria-disabled', 'true'); }
+        grid.appendChild(cel);
+      }
+      wrap.appendChild(grid);
+      box.appendChild(wrap);
+    });
+  }
+  function escolherDia(iso) {
+    if (S.diaSel === iso) return;
+    S.diaSel = iso; S.slot = null;
+    renderCalendario(); renderSlots(); atualizarBotaoHora();
+  }
+  function renderSlots() {
+    var dia = diaPorIso(S.diaSel), box = $('ckv-slots');
+    box.textContent = '';
+    if (!dia) return;
+    box.setAttribute('aria-label', 'Horários de ' + dataLonga(dia.data));
+    var livres = {};
+    dia.horarios.forEach(function (hr) { livres[hr.hora] = hr; });
+    GRADE_PADRAO.forEach(function (hora) {
+      var hr = livres[hora];
+      if (!hr) {
+        var bo = h('button', { type: 'button', class: 'ckv-slot ckv-slot--ocupado', disabled: '', 'aria-disabled': 'true' }, hora);
+        box.appendChild(bo);
+        return;
+      }
+      var sel = S.slot && S.slot.inicio === hr.inicio;
+      var b = h('button', { type: 'button', class: 'ckv-slot', 'aria-pressed': sel ? 'true' : 'false' }, hr.hora);
+      b.addEventListener('click', function () {
+        S.slot = { inicio: hr.inicio, hora: hr.hora, data: dia.data };
+        renderSlots(); atualizarBotaoHora();
+      });
+      box.appendChild(b);
+    });
+    $('ckv-escolha').textContent = S.slot ? 'Selecionado: ' + dataLonga(S.slot.data) + ', às ' + S.slot.hora + '.' : 'Restam ' + dia.horarios.length + (dia.horarios.length === 1 ? ' horário livre' : ' horários livres') + ' neste dia.';
+  }
+  function atualizarBotaoHora() { var b = $('ckv-b-hora'); if (b && !S.busy) b.disabled = !S.slot; }
+  $('ckv-b-hora').addEventListener('click', function () { if (!S.slot) return; renderResumo(); go('conf'); });
+
+  /* ===== Passo 5: confirmação ===== */
+  function renderResumo() {
+    var dl = $('ckv-resumo');
+    dl.textContent = '';
+    var linhas = [
+      ['Dia', dataLonga(S.slot.data)],
+      ['Horário', S.slot.hora + ' (duração de 30 minutos)'],
+      ['Com quem', 'Diego | Setor de Relacionamento do CK'],
+      ['Endereço', ENDERECO],
+      ['Celular', mascara(S.tel)]
+    ];
+    if (S.modo === 'novo' && S.dados.nome) linhas.push(['Responsável', S.dados.nome]);
+    linhas.forEach(function (l) { var d = h('div'); d.appendChild(h('dt', null, l[0])); d.appendChild(h('dd', null, l[1])); dl.appendChild(d); });
+    $('ckv-c-email').hidden = S.modo === 'novo' || S.temEmail;
+    limparMsg('conf'); erroCampo('ckv-lgpd', ''); erroCampo('ckv-e-email', '');
+  }
+  root.querySelectorAll('[data-voltar]').forEach(function (b) { b.addEventListener('click', function () { reiniciar('', true); }); });
+  root.querySelector('[data-voltar-quiz]').addEventListener('click', function () { go('quiz'); });
+  root.querySelector('[data-voltar-hora]').addEventListener('click', function () { go('hora'); });
+  $('ckv-lgpd').addEventListener('change', function () { erroCampo('ckv-lgpd', ''); });
+
+  async function agendar() {
+    limparMsg('conf');
+    var dados = {};
+    if (S.modo === 'novo') dados = S.dados; else if (S.email) dados = { email: S.email };
+    S.tentouAgendar = true;
+    var r = await api('/agendar', { token: S.token, inicio: S.slot.inicio, origem: ORIGEM, quiz: S.quiz, dados: dados });
+    if (r.network) return showMsg('conf', 'erro', MSG.agendarRede, { retry: function () { run($('ckv-b-conf'), 'Confirmando…', agendar); }, wa: true });
+    var d = r.data;
+    if (!d) return showMsg('conf', 'erro', MSG.generico, { wa: true });
+    if (d.ok) { S.res = d; renderOk(d); go('ok'); return; }
+    switch (d.erro) {
+      case 'horario_ocupado':
+      case 'horario_invalido':
+        return carregarHorarios('conf', MSG.ocupado);
+      case 'dados_incompletos':
+        if (S.modo === 'novo') { go('novo'); return showMsg('novo', 'erro', MSG.dadosIncompletos); }
+        return showMsg('conf', 'erro', MSG.dadosIncompletos);
+      case 'email_invalido':
+        if (S.modo === 'novo') { go('novo'); erroCampo('ckv-n-email', 'Esse e-mail não parece correto.'); return showMsg('novo', 'erro', MSG.emailInvalido); }
+        return showMsg('conf', 'erro', MSG.emailInvalido);
+      case 'usada':
+        if (S.tentouAgendar) { reiniciar(''); return showMsg('tel', 'info', MSG.talvezAgendada, { wa: true }); }
+        return reiniciar('usada');
+      case 'expirada': case 'sessao_invalida': case 'nome_nao_confirmado':
+        return reiniciar(d.erro);
+      default:
+        return showMsg('conf', 'erro', MSG.generico, { wa: true });
+    }
+  }
+  $('ckv-f-conf').addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (S.busy) return;
+    erroCampo('ckv-lgpd', ''); erroCampo('ckv-e-email', '');
+    if (S.modo !== 'novo' && !S.temEmail) {
+      var em = $('ckv-e-email').value.trim();
+      if (!em) { erroCampo('ckv-e-email', 'Informe o e-mail.'); $('ckv-e-email').focus(); return; }
+      if (!EMAIL_RE.test(em)) { erroCampo('ckv-e-email', 'Esse e-mail não parece correto. Exemplo: nome@email.com'); $('ckv-e-email').focus(); return; }
+      S.email = em;
+    }
+    if (!$('ckv-lgpd').checked) { erroCampo('ckv-lgpd', 'Marque a caixa para confirmar a visita.'); $('ckv-lgpd').focus(); return; }
+    run($('ckv-b-conf'), 'Confirmando…', agendar);
+  });
+
+  /* ===== Passo 6: sucesso ===== */
+  function lista(a) { return a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' e ' + a[a.length - 1]; }
+  function fraseQuiz() {
+    var q = S.quiz, it = [];
+    if (/Integral/.test(q.turno || '') || /Turno integral/.test(q.prioridades || '')) it.push('como funciona o turno integral, de janeiro a janeiro');
+    if (/Inglês/.test(q.prioridades || '')) it.push('o inglês e o Kennedy Idiomas');
+    if (/pedagógico/.test(q.prioridades || '')) it.push('o projeto pedagógico');
+    if (/Preço/.test(q.prioridades || '')) it.push('valores e condições de matrícula');
+    if (!it.length) return 'Na visita, tu conhece a estrutura e tira todas as dúvidas com o Diego.';
+    return 'Pelo que tu contou, na visita vamos falar sobre ' + lista(it) + '.';
+  }
+  function fmtUtc(d) { return d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, ''); }
+  function renderOk(res) {
+    var ini = String(res.inicio || S.slot.inicio);
+    var primeiro = S.modo === 'novo' && S.dados.nome ? S.dados.nome.split(' ')[0] : '';
+    $('ckv-ok-titulo').textContent = primeiro ? 'Tudo certo, ' + primeiro : 'Tudo certo';
+    $('ckv-ok-data').textContent = dataLonga(ini.slice(0, 10)) + ', às ' + ini.slice(11, 16);
+    $('ckv-ok-local').textContent = 'Colégio Kennedy, ' + ENDERECO + '. Duração de 30 minutos, na sala de matrículas.';
+    $('ckv-ok-frase').textContent = fraseQuiz();
+    var s = new Date(ini), e = res.fim ? new Date(res.fim) : new Date(s.getTime() + 1800000);
+    if (isNaN(e.getTime())) e = new Date(s.getTime() + 1800000);
+    S.cal = { s: s, e: e };
+    var detalhes = 'Visita ao Colégio Kennedy com o Diego, do setor de relacionamento. Dúvidas ou remarcação: WhatsApp (51) 3364-1142.';
+    $('ckv-gcal').href = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent('Visita ao Colégio Kennedy') + '&dates=' + fmtUtc(s) + '/' + fmtUtc(e) + '&details=' + encodeURIComponent(detalhes) + '&location=' + encodeURIComponent('Colégio Kennedy, ' + ENDERECO) + '&ctz=America%2FSao_Paulo';
+  }
+  /* ===== Início ===== */
+  if (DEMO) $('ckv-demo').hidden = false;
+  go('tel', true);
+  atualizarBotaoTel();
+})();
+</script>
+
+</body>
+</html>
