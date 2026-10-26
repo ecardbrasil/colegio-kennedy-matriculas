@@ -227,7 +227,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="ckv-topo-txt">
           <span class="ckv-eyebrow">Agendar visita</span>
           <h1 class="ckv-h1" id="ckv-titulo">Agende sua <span class="ckv-dest">visita</span> ao Colégio Kennedy</h1>
-          <p class="ckv-lead">Escolhe o dia e o horário que ficam bons para ti. As visitas duram cerca de 30 min.</p>
+          <p class="ckv-lead">Escolhe o dia e o horário que ficam bons para ti. É um bate-papo com o Diego, de cerca de 45 min, para conhecer os espaços da escola.</p>
         </div>
         <div>
       <ol class="ckv-etapas" id="ckv-etapas" aria-label="Etapas do agendamento">
@@ -316,7 +316,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <!-- 4. Horário -->
         <section data-step="hora" hidden>
           <h2 class="ckv-h2" tabindex="-1" data-focus>Escolhe o dia e o horário</h2>
-          <p class="ckv-lead-p">As visitas duram cerca de 30 min.</p>
+          <p class="ckv-lead-p">É um bate-papo com o Diego, de cerca de 45 min, para conhecer os espaços da escola.</p>
           <div class="ckv-msg" data-msg></div>
           <div id="ckv-dias" hidden>
             <p class="ckv-escassez" id="ckv-vagas-semana"></p>
@@ -410,7 +410,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     { g: 'Fundamental anos finais', i: ['6º ano', '7º ano', '8º ano', '9º ano'] },
     { g: 'Ensino Médio', i: ['1ª série do Ensino Médio', '2ª série do Ensino Médio', '3ª série do Ensino Médio'] }
   ];
-  var GRADE_PADRAO = ['08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '13:30', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30'];
+  var GRADE_PADRAO = ['08:30', '09:15', '10:00', '10:45', '13:15', '14:00', '14:45', '15:30', '16:15'];
   var JANELA_DIAS = 7;
   var QUIZ = [
     { key: 'etapa', q: 'Para qual etapa tu procura vaga?', tipo: 'radio', so: 'existente', opts: ['Berçário', 'Educação Infantil', '1º ao 5º ano', '6º ao 9º ano', 'Ensino Médio'] },
@@ -511,7 +511,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         }
         if (path === '/agendar') {
           if (CENARIO === 'ocupado' && !demoOcupadoUsado) { demoOcupadoUsado = true; return resolve({ status: 200, data: { ok: false, erro: 'horario_ocupado' } }); }
-          var fim = new Date(new Date(body.inicio).getTime() + 1800000).toISOString();
+          var fim = new Date(new Date(body.inicio).getTime() + 2700000).toISOString();
           return resolve({ status: 200, data: { ok: true, modo: S.modo, inicio: body.inicio, fim: fim, movido: true, aviso: '' } });
         }
         resolve({ status: 404, data: null });
@@ -926,7 +926,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     dl.textContent = '';
     var linhas = [
       ['Dia', dataLonga(S.slot.data)],
-      ['Horário', S.slot.hora + ' (duração de 30 minutos)'],
+      ['Horário', S.slot.hora + ' (duração de 45 minutos)'],
       ['Com quem', 'Diego | Setor de Relacionamento do CK'],
       ['Endereço', ENDERECO],
       ['Celular', mascara(S.tel)]
@@ -1001,10 +1001,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     var primeiro = S.modo === 'novo' && S.dados.nome ? S.dados.nome.split(' ')[0] : '';
     $('ckv-ok-titulo').textContent = primeiro ? 'Tudo certo, ' + primeiro : 'Tudo certo';
     $('ckv-ok-data').textContent = dataLonga(ini.slice(0, 10)) + ', às ' + ini.slice(11, 16);
-    $('ckv-ok-local').textContent = 'Colégio Kennedy, ' + ENDERECO + '. Duração de 30 minutos, na sala de matrículas.';
+    $('ckv-ok-local').textContent = 'Colégio Kennedy, ' + ENDERECO + '. Duração de 45 minutos, num bate-papo com o Diego, conhecendo os espaços da escola.';
     $('ckv-ok-frase').textContent = fraseQuiz();
-    var s = new Date(ini), e = res.fim ? new Date(res.fim) : new Date(s.getTime() + 1800000);
-    if (isNaN(e.getTime())) e = new Date(s.getTime() + 1800000);
+    var s = new Date(ini), e = res.fim ? new Date(res.fim) : new Date(s.getTime() + 2700000);
+    if (isNaN(e.getTime())) e = new Date(s.getTime() + 2700000);
     S.cal = { s: s, e: e };
     var detalhes = 'Visita ao Colégio Kennedy com o Diego, do setor de relacionamento. Dúvidas ou remarcação: WhatsApp (51) 3364-1142.';
     $('ckv-gcal').href = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent('Visita ao Colégio Kennedy') + '&dates=' + fmtUtc(s) + '/' + fmtUtc(e) + '&details=' + encodeURIComponent(detalhes) + '&location=' + encodeURIComponent('Colégio Kennedy, ' + ENDERECO) + '&ctz=America%2FSao_Paulo';
