@@ -46,9 +46,76 @@
     return dia + '/' + mes + '/' + ano + ', ' + horas + ':' + minutos;
   }
 
+  // Slider para iniciar a visita: a pessoa precisa arrastar até o fim,
+  // assim um toque sem querer não começa o cronômetro.
+  function criarSlider(visita) {
+    var trilho = document.createElement('div');
+    trilho.className = 'slider-iniciar';
+    trilho.innerHTML =
+      '<span class="slider-texto">Deslize para iniciar visita</span>' +
+      '<div class="slider-botao" role="button" tabindex="0" aria-label="Deslize para iniciar visita">&rsaquo;</div>';
+    var botao = trilho.querySelector('.slider-botao');
+    var arrastando = false;
+    var inicioX = 0;
+    var deslocamento = 0;
+    var maximo = 0;
+
+    function medir() {
+      maximo = trilho.clientWidth - botao.offsetWidth - 8;
+    }
+
+    function mover(x) {
+      deslocamento = Math.max(0, Math.min(x, maximo));
+      botao.style.transform = 'translateX(' + deslocamento + 'px)';
+    }
+
+    function iniciarVisita() {
+      medir();
+      mover(maximo);
+      var ok = window.cronometro.iniciar(visita.id, visita.nomeResponsavel);
+      if (!ok) mover(0);
+    }
+
+    botao.addEventListener('pointerdown', function (e) {
+      medir();
+      arrastando = true;
+      inicioX = e.clientX - deslocamento;
+      trilho.classList.add('arrastando');
+      botao.setPointerCapture(e.pointerId);
+    });
+
+    botao.addEventListener('pointermove', function (e) {
+      if (arrastando) mover(e.clientX - inicioX);
+    });
+
+    function soltar() {
+      if (!arrastando) return;
+      arrastando = false;
+      trilho.classList.remove('arrastando');
+      if (deslocamento >= maximo * 0.9) iniciarVisita();
+      else mover(0);
+    }
+
+    botao.addEventListener('pointerup', soltar);
+    botao.addEventListener('pointercancel', soltar);
+
+    botao.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        iniciarVisita();
+      }
+    });
+
+    return trilho;
+  }
+
+  // Cada card fica em duas colunas: dados da visita à esquerda, ações à direita.
   function criarItemAgenda(visita, ehEncerrada) {
     var container = document.createElement('li');
     container.className = 'item-agenda-container';
+
+    var linha = document.createElement('div');
+    linha.className = 'item-agenda-linha';
 
     var item = document.createElement('a');
     item.href = '/visitas/card.html?id=' + encodeURIComponent(visita.id);
@@ -65,39 +132,35 @@
       '<div class="nome-responsavel">' + escapeHtml(visita.nomeResponsavel || 'Responsável não informado') + '</div>' +
       '<div class="nome-aluno">Aluno: ' + escapeHtml(visita.nomeAluno || 'Não informado') + '</div>';
 
-    container.appendChild(item);
+    linha.appendChild(item);
+
+    var acoes = document.createElement('div');
+    acoes.className = 'item-agenda-acoes';
 
     if (ehEncerrada) {
-      var botoes = document.createElement('div');
-      botoes.className = 'item-agenda-acoes';
-      botoes.innerHTML =
+      acoes.innerHTML =
         '<button type="button" class="btn-acao btn-nao-veio" data-card-id="' + escapeHtml(visita.id) + '" data-phase="343928419">Não veio</button>' +
         '<button type="button" class="btn-acao btn-fez-visita" data-card-id="' + escapeHtml(visita.id) + '" data-phase="343928427">Fez visita</button>';
-      container.appendChild(botoes);
 
-      Array.from(botoes.querySelectorAll('.btn-acao')).forEach(function(btn) {
+      Array.from(acoes.querySelectorAll('.btn-acao')).forEach(function(btn) {
         btn.addEventListener('click', function(e) {
           e.preventDefault();
           e.stopPropagation();
           moverCardParaFase(btn.dataset.cardId, btn.dataset.phase);
         });
       });
+    } else {
+      // Uma visita por vez: a que está no cronômetro mostra "Em andamento" no lugar do slider.
+      var emAndamento = window.cronometro && window.cronometro.atual();
+      if (emAndamento && emAndamento.id === String(visita.id)) {
+        acoes.innerHTML = '<div class="em-andamento">Em andamento</div>';
+      } else {
+        acoes.appendChild(criarSlider(visita));
+      }
     }
 
-    if (!ehEncerrada) {
-      // Uma visita por vez: o botão mostra "Em andamento" na visita que está no cronômetro.
-      var emAndamento = window.cronometro && window.cronometro.atual();
-      var ativa = !!(emAndamento && emAndamento.id === String(visita.id));
-      var acaoIniciar = document.createElement('div');
-      acaoIniciar.className = 'item-agenda-acoes';
-      acaoIniciar.innerHTML = '<button type="button" class="btn-acao btn-iniciar"' + (ativa ? ' disabled' : '') + '>' + (ativa ? 'Em andamento' : 'Iniciar visita') + '</button>';
-      acaoIniciar.querySelector('button').addEventListener('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        window.cronometro.iniciar(visita.id, visita.nomeResponsavel);
-      });
-      container.appendChild(acaoIniciar);
-    }
+    linha.appendChild(acoes);
+    container.appendChild(linha);
 
     return container;
   }

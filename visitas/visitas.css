@@ -304,10 +304,34 @@ a {
   cursor: pointer;
 }
 
-.item-agenda-acoes {
+.conteudo-agenda {
+  max-width: 960px;
+}
+
+.item-agenda-linha {
   display: flex;
+  align-items: stretch;
+  gap: 0.75rem;
+}
+
+.item-agenda-linha > .item-agenda {
+  flex: 1 1 55%;
+  min-width: 0;
+}
+
+.item-agenda-acoes {
+  flex: 1 1 45%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   gap: 0.6rem;
-  padding: 0 0.5rem;
+}
+
+@media (max-width: 640px) {
+  .item-agenda-linha {
+    flex-direction: column;
+  }
 }
 
 .btn-acao {
@@ -784,14 +808,71 @@ a {
   background: rgba(255, 255, 255, 0.15);
 }
 
-.btn-iniciar {
-  background: var(--color-accent);
-  border: 0;
-  color: var(--color-white);
-  font-weight: 700;
+
+/* ========================
+   SLIDER: INICIAR VISITA
+   ======================== */
+.slider-iniciar {
+  position: relative;
+  height: 64px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: #e9e4d8;
+  overflow: hidden;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
-.btn-iniciar:disabled {
+.slider-texto {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 56px;
+  font-weight: 700;
+  color: var(--color-primary);
+  pointer-events: none;
+}
+
+.slider-botao {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 56px;
+  height: calc(100% - 8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  background: var(--color-accent);
+  color: var(--color-white);
+  font-size: 2rem;
+  line-height: 1;
+  touch-action: none;
+  cursor: grab;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.2s;
+}
+
+.slider-iniciar.arrastando .slider-botao {
+  cursor: grabbing;
+  transition: none;
+}
+
+.slider-botao:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.em-andamento {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 64px;
+  border-radius: var(--radius-md);
   background: var(--color-success);
-  opacity: 1;
+  color: var(--color-white);
+  font-weight: 700;
 }
