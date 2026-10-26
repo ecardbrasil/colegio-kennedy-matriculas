@@ -48,7 +48,7 @@ const CAMPOS = {
   url_pagina: 'url_da_p_gina',
   data_hora_lead: 'data_hora_do_lead',
   // Agenda (so existe em cards na fase 7, AGENDOU VISITA)
-  visita_horario: 'visita',
+  visita_horario: 'dia_e_hor_rio_da_visita',
 };
 
 // Campos que a tela da visita agrupa por aluno (1 a 4): o nome e a serie de

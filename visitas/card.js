@@ -108,6 +108,7 @@
   var camposOutros = document.getElementById('camposOutros');
   var btnSalvar = document.getElementById('btnSalvar');
   var btnRealizada = document.getElementById('btnRealizada');
+  var btnNaoVeio = document.getElementById('btnNaoVeio');
   var btnFlutuante = document.getElementById('btnFlutuante');
   var notificacaoSistema = document.getElementById('notificacaoSistema');
   var mensagemErroSalvar = document.getElementById('mensagemErroSalvar');
@@ -541,6 +542,7 @@
     });
     btnAdicionarAluno.disabled = bloqueado || visitaFinalizada;
     btnRealizada.disabled = bloqueado || visitaFinalizada;
+    btnNaoVeio.disabled = bloqueado || visitaFinalizada;
     btnRealizada.textContent = bloqueado ? 'Salvando...' : 'Marcar visita como realizada';
     if (bloqueado) {
       btnSalvar.disabled = true;
@@ -676,6 +678,58 @@
         linkVoltarAgenda.style.display = 'block';
       })
       .catch(function () {});
+  });
+
+  // "Familia nao compareceu": dois toques. O primeiro arma o botao (o texto
+  // muda e volta sozinho em 5 s); o segundo envia e move o card para a fase
+  // "8. N VEIO VISITA, REMARCAR".
+  var timerNaoVeio = null;
+  var TEXTO_NAO_VEIO = 'Família não compareceu';
+  btnNaoVeio.addEventListener('click', function () {
+    if (!btnNaoVeio.classList.contains('confirmar')) {
+      btnNaoVeio.classList.add('confirmar');
+      btnNaoVeio.textContent = 'Toque de novo para confirmar que não veio';
+      timerNaoVeio = setTimeout(function () {
+        btnNaoVeio.classList.remove('confirmar');
+        btnNaoVeio.textContent = TEXTO_NAO_VEIO;
+      }, 5000);
+      return;
+    }
+    clearTimeout(timerNaoVeio);
+    btnNaoVeio.classList.remove('confirmar');
+    btnNaoVeio.textContent = TEXTO_NAO_VEIO;
+    mensagemErroSalvar.textContent = '';
+    mensagemSucesso.hidden = true;
+    bloquearBotoes(true);
+
+    fetchAutenticado('/api/visitas/nao-compareceu', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: idVisita }),
+    })
+      .then(function (res) {
+        return res.json().catch(function () { return {}; }).then(function (corpo) {
+          if (!res.ok) throw new Error(corpo.error || 'Não foi possível marcar a falta. Tente novamente.');
+          return corpo;
+        });
+      })
+      .then(function () {
+        visitaFinalizada = true;
+        mensagemSucesso.textContent = 'Falta registrada. O card foi para "Ñ veio visita, remarcar".';
+        mensagemSucesso.hidden = false;
+        btnRealizada.hidden = true;
+        btnNaoVeio.hidden = true;
+        btnSalvar.hidden = true;
+        btnAdicionarAluno.hidden = true;
+        linkVoltarAgenda.style.display = 'block';
+      })
+      .catch(function (erro) {
+        if (erro && erro.message === 'nao_autenticado') return;
+        mensagemErroSalvar.textContent = (erro && erro.message) || 'Não foi possível marcar a falta. Tente novamente.';
+      })
+      .finally(function () {
+        bloquearBotoes(false);
+      });
   });
 
   btnFlutuante.addEventListener('click', function () {

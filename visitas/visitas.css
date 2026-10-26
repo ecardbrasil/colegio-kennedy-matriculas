@@ -695,3 +695,25 @@ a {
   opacity: 1;
   pointer-events: auto;
 }
+
+/* Botao "Familia nao compareceu": discreto, pede segundo toque para confirmar. */
+.btn-nao-veio {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #b3261e;
+  background: #fff;
+  border: 2px solid #b3261e;
+  border-radius: var(--radius-sm);
+}
+
+.btn-nao-veio.confirmar {
+  color: #fff;
+  background: #b3261e;
+}
+
+.btn-nao-veio:disabled {
+  opacity: 0.6;
+}
