@@ -106,6 +106,7 @@
   var camposOrigem = document.getElementById('camposOrigem');
   var blocoOutros = document.getElementById('blocoOutros');
   var camposOutros = document.getElementById('camposOutros');
+  var sliderIniciar = document.getElementById('sliderIniciar');
   var btnSalvar = document.getElementById('btnSalvar');
   var btnRealizada = document.getElementById('btnRealizada');
   var btnNaoVeio = document.getElementById('btnNaoVeio');
@@ -456,6 +457,21 @@
     });
   }
 
+  // Slider para iniciar o cronometro. Some depois que a visita foi marcada como realizada ou não veio.
+  function montarSliderIniciar(card) {
+    sliderIniciar.textContent = '';
+    if (!window.cronometro || visitaFinalizada) {
+      sliderIniciar.hidden = true;
+      return;
+    }
+    sliderIniciar.hidden = false;
+    sliderIniciar.appendChild(window.cronometro.criarBotaoIniciar(idVisita, valorAtual('responsavel_1_nome', card) || ''));
+  }
+
+  window.addEventListener('cronometro:mudou', function () {
+    if (cardAtual) montarSliderIniciar(cardAtual);
+  });
+
   function renderizarCard(card, faltantes, campos) {
     cardAtual = card;
     faltantesAtual = faltantes || [];
@@ -513,6 +529,7 @@
 
     limparAvisos();
     atualizarEstadoSalvar();
+    montarSliderIniciar(card);
     conteudoCard.hidden = false;
     mensagemCarregando.hidden = true;
   }

@@ -124,7 +124,79 @@
     avisarMudanca();
   });
 
-  window.cronometro = { iniciar: iniciar, encerrar: encerrar, atual: ler };
+  // Slider para iniciar a visita: a pessoa precisa arrastar até o fim,
+  // assim um toque sem querer não começa o cronômetro.
+  // Se a visita já está rodando, mostra "Em andamento" no lugar.
+  function criarBotaoIniciar(id, nome) {
+    var atual = ler();
+    if (atual && atual.id === String(id)) {
+      var andamento = document.createElement('div');
+      andamento.className = 'em-andamento';
+      andamento.textContent = 'Em andamento';
+      return andamento;
+    }
+
+    var trilho = document.createElement('div');
+    trilho.className = 'slider-iniciar';
+    trilho.innerHTML =
+      '<span class="slider-texto">Deslize para iniciar visita</span>' +
+      '<div class="slider-botao" role="button" tabindex="0" aria-label="Deslize para iniciar visita">&rsaquo;</div>';
+    var botao = trilho.querySelector('.slider-botao');
+    var arrastando = false;
+    var inicioX = 0;
+    var deslocamento = 0;
+    var maximo = 0;
+
+    function medir() {
+      maximo = trilho.clientWidth - botao.offsetWidth - 8;
+    }
+
+    function mover(x) {
+      deslocamento = Math.max(0, Math.min(x, maximo));
+      botao.style.transform = 'translateX(' + deslocamento + 'px)';
+    }
+
+    function disparar() {
+      medir();
+      mover(maximo);
+      if (!iniciar(id, nome)) mover(0);
+    }
+
+    botao.addEventListener('pointerdown', function (e) {
+      medir();
+      arrastando = true;
+      inicioX = e.clientX - deslocamento;
+      trilho.classList.add('arrastando');
+      botao.setPointerCapture(e.pointerId);
+    });
+
+    botao.addEventListener('pointermove', function (e) {
+      if (arrastando) mover(e.clientX - inicioX);
+    });
+
+    function soltar() {
+      if (!arrastando) return;
+      arrastando = false;
+      trilho.classList.remove('arrastando');
+      medir();
+      if (deslocamento >= maximo * 0.9) disparar();
+      else mover(0);
+    }
+
+    botao.addEventListener('pointerup', soltar);
+    botao.addEventListener('pointercancel', soltar);
+
+    botao.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        disparar();
+      }
+    });
+
+    return trilho;
+  }
+
+  window.cronometro = { iniciar: iniciar, encerrar: encerrar, atual: ler, criarBotaoIniciar: criarBotaoIniciar };
 
   atualizar();
   if (ler()) ligarTimer();

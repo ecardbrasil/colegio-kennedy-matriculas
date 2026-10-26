@@ -304,34 +304,10 @@ a {
   cursor: pointer;
 }
 
-.conteudo-agenda {
-  max-width: 960px;
-}
-
-.item-agenda-linha {
-  display: flex;
-  align-items: stretch;
-  gap: 0.75rem;
-}
-
-.item-agenda-linha > .item-agenda {
-  flex: 1 1 55%;
-  min-width: 0;
-}
-
 .item-agenda-acoes {
-  flex: 1 1 45%;
-  min-width: 0;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   gap: 0.6rem;
-}
-
-@media (max-width: 640px) {
-  .item-agenda-linha {
-    flex-direction: column;
-  }
+  padding: 0 0.5rem;
 }
 
 .btn-acao {
@@ -875,4 +851,177 @@ a {
   background: var(--color-success);
   color: var(--color-white);
   font-weight: 700;
+}
+
+/* ========================
+   CARD: DADOS À ESQUERDA, AÇÕES À DIREITA
+   ======================== */
+.conteudo-visita {
+  max-width: 1080px;
+}
+
+.visita-colunas {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.visita-acoes {
+  position: sticky;
+  top: 8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.visita-acoes .barra-acoes {
+  position: static;
+  background: none;
+  padding: 0;
+}
+
+@media (max-width: 760px) {
+  .visita-colunas {
+    grid-template-columns: 1fr;
+  }
+
+  .visita-acoes {
+    position: static;
+  }
+}
+
+/* ========================
+   AGENDA: ALTERNAR LISTA / CALENDÁRIO
+   (visual baseado no agendar-visita)
+   ======================== */
+.visao-alternar {
+  display: flex;
+  margin-bottom: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--color-white);
+}
+
+.visao-btn {
+  flex: 1;
+  padding: 0.7rem 1rem;
+  border: 0;
+  background: transparent;
+  color: var(--color-muted);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.visao-btn.ativa {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.calendario-agenda {
+  background: var(--color-white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.cal-cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.cal-cabecalho h2 {
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-primary);
+}
+
+.cal-nav {
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-white);
+  color: var(--color-primary);
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.cal-semana,
+.cal-grade {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+
+.cal-semana span {
+  text-align: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--color-muted);
+  padding-bottom: 0.25rem;
+}
+
+.cal-dia {
+  min-height: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-white);
+  color: #9aa3ae;
+  font-size: 1rem;
+}
+
+.cal-dia--vazio {
+  border: 0;
+  background: transparent;
+}
+
+.cal-dia--hoje {
+  box-shadow: inset 0 0 0 2px var(--color-accent);
+}
+
+.cal-dia--com-visita {
+  color: var(--color-primary);
+  font-weight: 700;
+  border-color: var(--color-primary);
+  cursor: pointer;
+}
+
+.cal-dia--com-visita:active {
+  background: #f7f4ec;
+}
+
+.cal-qtd {
+  font-size: 0.72rem;
+  color: var(--color-accent);
+  font-weight: 700;
+}
+
+.cal-dia--sel,
+.cal-dia--sel.cal-dia--com-visita {
+  background: var(--color-primary);
+  color: var(--color-white);
+  border-color: var(--color-primary);
+}
+
+.cal-dia--sel .cal-qtd {
+  color: var(--color-white);
+}
+
+.cal-dia-titulo {
+  margin: 1rem 0 0;
+  font-weight: 700;
+  color: var(--color-primary);
 }

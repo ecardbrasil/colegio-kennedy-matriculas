@@ -6,7 +6,7 @@
   <meta name="robots" content="noindex, nofollow" />
   <title>Visita, Colégio Kennedy</title>
   <link rel="icon" href="/assets/images/favicon.webp" type="image/webp" />
-  <link rel="stylesheet" href="/visitas/visitas.css?v=7" />
+  <link rel="stylesheet" href="/visitas/visitas.css?v=9" />
 </head>
 <body>
   <header class="topo">
@@ -15,7 +15,7 @@
     <span style="width: 3rem"></span>
   </header>
 
-  <main class="conteudo">
+  <main class="conteudo conteudo-visita">
     <div class="notificacao-sistema" id="notificacaoSistema">Sistema atualizado</div>
     <p class="mensagem-carregando" id="mensagemCarregando">Carregando visita...</p>
     <div class="mensagem-erro-tela" id="mensagemErroTela" hidden>
@@ -24,6 +24,8 @@
     </div>
 
     <div id="conteudoCard" hidden>
+      <div class="visita-colunas">
+      <div class="visita-dados">
       <div class="cabecalho-visita">
         <div class="horario-visita" id="horarioVisita"></div>
         <div id="campoVisita"></div>
@@ -72,12 +74,17 @@
 
       <p class="mensagem-erro" id="mensagemErroSalvar"></p>
       <p class="mensagem-sucesso" id="mensagemSucesso" hidden>Dados salvos.</p>
+      </div>
 
+      <aside class="visita-acoes">
+        <div id="sliderIniciar" hidden></div>
       <div class="barra-acoes" id="barraAcoes">
         <button type="button" class="btn-secundario" id="btnSalvar" disabled>Nenhuma alteração para salvar</button>
         <button type="button" class="btn-realizada" id="btnRealizada">Marcar visita como realizada</button>
         <button type="button" class="btn-nao-veio" id="btnNaoVeio">Família não compareceu</button>
         <a class="voltar" href="/visitas/index.html" id="linkVoltarAgenda" style="text-align:center; display:none;">Voltar para a agenda</a>
+      </div>
+      </aside>
       </div>
 
       <button type="button" class="btn-flutuante" id="btnFlutuante"></button>
@@ -85,8 +92,8 @@
   </main>
 
   <script src="/visitas/auth.js?v=3"></script>
-  <script src="/visitas/cronometro.js?v=1"></script>
+  <script src="/visitas/cronometro.js?v=2"></script>
   <script src="/visitas/roteiro.js?v=4"></script>
-  <script src="/visitas/card.js?v=6" defer></script>
+  <script src="/visitas/card.js?v=7" defer></script>
 </body>
 </html>

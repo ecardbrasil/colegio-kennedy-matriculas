@@ -1,5 +1,5 @@
 // agenda.js
-// Carrega e renderiza a lista de visitas agendadas (index.html).
+// Carrega e renderiza a agenda de visitas (index.html), em lista ou calendário.
 // Alem do carregamento inicial, a lista e recarregada pelo botao "Atualizar"
 // e quando a aba volta a ficar visivel: no tablet o Diego alterna entre este
 // tool e o Pipefy, e antes disso a agenda ficava congelada no estado de quando
@@ -8,6 +8,7 @@
 
 (function () {
   var listaAgenda = document.getElementById('listaAgenda');
+  var calendarioAgenda = document.getElementById('calendarioAgenda');
   var mensagemCarregando = document.getElementById('mensagemCarregando');
   var mensagemVazia = document.getElementById('mensagemVazia');
   var mensagemErroTela = document.getElementById('mensagemErroTela');
@@ -17,11 +18,19 @@
   var btnSair = document.getElementById('btnSair');
   var abaProximas = document.getElementById('abaProximas');
   var abaEncerradas = document.getElementById('abaEncerradas');
+  var visaoLista = document.getElementById('visaoLista');
+  var visaoCalendario = document.getElementById('visaoCalendario');
 
   var MENSAGEM_ERRO_PADRAO = 'Não foi possível carregar a agenda. Verifique a internet.';
+  var CHAVE_VISAO = 'visitas_visao';
+  var MESES = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+  var CABECALHO_SEMANA = ['SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SÁB', 'DOM'];
   var carregando = false;
   var abaAtiva = 'proximas';
+  var visao = 'lista';
   var dadosAgenda = { proximas: [], encerradas: [] };
+  var mesExibido = null;
+  var diaSelecionado = null;
 
   // O campo "visita" do Pipefy chega como "DD/MM/AAAA HH:MM", que o `new Date`
   // do navegador nao entende (nao e ISO): trata esse padrao primeiro e so
@@ -46,76 +55,26 @@
     return dia + '/' + mes + '/' + ano + ', ' + horas + ':' + minutos;
   }
 
-  // Slider para iniciar a visita: a pessoa precisa arrastar até o fim,
-  // assim um toque sem querer não começa o cronômetro.
-  function criarSlider(visita) {
-    var trilho = document.createElement('div');
-    trilho.className = 'slider-iniciar';
-    trilho.innerHTML =
-      '<span class="slider-texto">Deslize para iniciar visita</span>' +
-      '<div class="slider-botao" role="button" tabindex="0" aria-label="Deslize para iniciar visita">&rsaquo;</div>';
-    var botao = trilho.querySelector('.slider-botao');
-    var arrastando = false;
-    var inicioX = 0;
-    var deslocamento = 0;
-    var maximo = 0;
+  // Dia da visita no formato AAAA-MM-DD, para o calendário. Null se não der para ler.
+  function diaDaVisita(valorBruto) {
+    if (valorBruto === null || valorBruto === undefined || valorBruto === '') return null;
+    var texto = String(valorBruto).trim();
 
-    function medir() {
-      maximo = trilho.clientWidth - botao.offsetWidth - 8;
-    }
+    var partes = texto.match(/^(\d{2})\/(\d{2})\/(\d{4})/);
+    if (partes) return partes[3] + '-' + partes[2] + '-' + partes[1];
 
-    function mover(x) {
-      deslocamento = Math.max(0, Math.min(x, maximo));
-      botao.style.transform = 'translateX(' + deslocamento + 'px)';
-    }
-
-    function iniciarVisita() {
-      medir();
-      mover(maximo);
-      var ok = window.cronometro.iniciar(visita.id, visita.nomeResponsavel);
-      if (!ok) mover(0);
-    }
-
-    botao.addEventListener('pointerdown', function (e) {
-      medir();
-      arrastando = true;
-      inicioX = e.clientX - deslocamento;
-      trilho.classList.add('arrastando');
-      botao.setPointerCapture(e.pointerId);
-    });
-
-    botao.addEventListener('pointermove', function (e) {
-      if (arrastando) mover(e.clientX - inicioX);
-    });
-
-    function soltar() {
-      if (!arrastando) return;
-      arrastando = false;
-      trilho.classList.remove('arrastando');
-      if (deslocamento >= maximo * 0.9) iniciarVisita();
-      else mover(0);
-    }
-
-    botao.addEventListener('pointerup', soltar);
-    botao.addEventListener('pointercancel', soltar);
-
-    botao.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        iniciarVisita();
-      }
-    });
-
-    return trilho;
+    var data = new Date(texto);
+    if (isNaN(data.getTime())) return null;
+    return isoDoDia(data);
   }
 
-  // Cada card fica em duas colunas: dados da visita à esquerda, ações à direita.
+  function isoDoDia(data) {
+    return data.getFullYear() + '-' + String(data.getMonth() + 1).padStart(2, '0') + '-' + String(data.getDate()).padStart(2, '0');
+  }
+
   function criarItemAgenda(visita, ehEncerrada) {
     var container = document.createElement('li');
     container.className = 'item-agenda-container';
-
-    var linha = document.createElement('div');
-    linha.className = 'item-agenda-linha';
 
     var item = document.createElement('a');
     item.href = '/visitas/card.html?id=' + encodeURIComponent(visita.id);
@@ -132,35 +91,24 @@
       '<div class="nome-responsavel">' + escapeHtml(visita.nomeResponsavel || 'Responsável não informado') + '</div>' +
       '<div class="nome-aluno">Aluno: ' + escapeHtml(visita.nomeAluno || 'Não informado') + '</div>';
 
-    linha.appendChild(item);
-
-    var acoes = document.createElement('div');
-    acoes.className = 'item-agenda-acoes';
+    container.appendChild(item);
 
     if (ehEncerrada) {
-      acoes.innerHTML =
+      var botoes = document.createElement('div');
+      botoes.className = 'item-agenda-acoes';
+      botoes.innerHTML =
         '<button type="button" class="btn-acao btn-nao-veio" data-card-id="' + escapeHtml(visita.id) + '" data-phase="343928419">Não veio</button>' +
         '<button type="button" class="btn-acao btn-fez-visita" data-card-id="' + escapeHtml(visita.id) + '" data-phase="343928427">Fez visita</button>';
+      container.appendChild(botoes);
 
-      Array.from(acoes.querySelectorAll('.btn-acao')).forEach(function(btn) {
+      Array.from(botoes.querySelectorAll('.btn-acao')).forEach(function(btn) {
         btn.addEventListener('click', function(e) {
           e.preventDefault();
           e.stopPropagation();
           moverCardParaFase(btn.dataset.cardId, btn.dataset.phase);
         });
       });
-    } else {
-      // Uma visita por vez: a que está no cronômetro mostra "Em andamento" no lugar do slider.
-      var emAndamento = window.cronometro && window.cronometro.atual();
-      if (emAndamento && emAndamento.id === String(visita.id)) {
-        acoes.innerHTML = '<div class="em-andamento">Em andamento</div>';
-      } else {
-        acoes.appendChild(criarSlider(visita));
-      }
     }
-
-    linha.appendChild(acoes);
-    container.appendChild(linha);
 
     return container;
   }
@@ -207,15 +155,16 @@
       });
   }
 
-  function renderizarLista() {
-    mensagemCarregando.hidden = true;
-    mensagemErroTela.hidden = true;
+  function visitasDaAba() {
+    return abaAtiva === 'proximas' ? dadosAgenda.proximas : dadosAgenda.encerradas;
+  }
+
+  // ===== Visão de lista =====
+  function renderizarLista(visitas, ehEncerrada, mensagemSemVisitas) {
     listaAgenda.innerHTML = '';
 
-    var visitas = abaAtiva === 'proximas' ? dadosAgenda.proximas : dadosAgenda.encerradas;
-    var ehEncerrada = abaAtiva === 'encerradas';
-
     if (!visitas || visitas.length === 0) {
+      mensagemVazia.textContent = mensagemSemVisitas;
       mensagemVazia.hidden = false;
       return;
     }
@@ -224,6 +173,101 @@
     visitas.forEach(function (visita) {
       listaAgenda.appendChild(criarItemAgenda(visita, ehEncerrada));
     });
+  }
+
+  // ===== Visão de calendário (mesmo visual do agendar-visita) =====
+  function garantirSelecao(visitas) {
+    if (!mesExibido) {
+      var agora = new Date();
+      mesExibido = new Date(agora.getFullYear(), agora.getMonth(), 1);
+    }
+    if (diaSelecionado) return;
+
+    var hoje = isoDoDia(new Date());
+    var dias = visitas.map(function (v) { return diaDaVisita(v.horario); }).filter(Boolean).sort();
+    if (dias.indexOf(hoje) >= 0) diaSelecionado = hoje;
+    else if (dias.length) diaSelecionado = dias[0];
+    else diaSelecionado = hoje;
+
+    var partes = diaSelecionado.split('-');
+    mesExibido = new Date(Number(partes[0]), Number(partes[1]) - 1, 1);
+  }
+
+  // Desenha o mês e devolve as visitas do dia selecionado.
+  function renderizarCalendario(visitas) {
+    garantirSelecao(visitas);
+
+    var ano = mesExibido.getFullYear();
+    var mes = mesExibido.getMonth();
+    var hoje = isoDoDia(new Date());
+
+    var contagem = {};
+    visitas.forEach(function (v) {
+      var dia = diaDaVisita(v.horario);
+      if (dia) contagem[dia] = (contagem[dia] || 0) + 1;
+    });
+
+    var offset = (new Date(ano, mes, 1).getDay() + 6) % 7;
+    var totalDias = new Date(ano, mes + 1, 0).getDate();
+
+    var html =
+      '<div class="cal-cabecalho">' +
+        '<button type="button" class="cal-nav" data-mes="-1" aria-label="Mês anterior">&lsaquo;</button>' +
+        '<h2>' + MESES[mes] + ' de ' + ano + '</h2>' +
+        '<button type="button" class="cal-nav" data-mes="1" aria-label="Próximo mês">&rsaquo;</button>' +
+      '</div>';
+
+    html += '<div class="cal-semana">' + CABECALHO_SEMANA.map(function (s) { return '<span>' + s + '</span>'; }).join('') + '</div>';
+    html += '<div class="cal-grade">';
+    for (var k = 0; k < offset; k++) html += '<div class="cal-dia cal-dia--vazio"></div>';
+
+    for (var n = 1; n <= totalDias; n++) {
+      var iso = ano + '-' + String(mes + 1).padStart(2, '0') + '-' + String(n).padStart(2, '0');
+      var qtd = contagem[iso] || 0;
+      var classes = 'cal-dia' + (iso === hoje ? ' cal-dia--hoje' : '') + (iso === diaSelecionado ? ' cal-dia--sel' : '');
+      if (qtd) {
+        html += '<button type="button" class="' + classes + ' cal-dia--com-visita" data-dia="' + iso + '">' +
+          '<span>' + n + '</span>' +
+          '<span class="cal-qtd">' + qtd + (qtd === 1 ? ' visita' : ' visitas') + '</span>' +
+        '</button>';
+      } else {
+        html += '<div class="' + classes + '"><span>' + n + '</span></div>';
+      }
+    }
+    html += '</div>';
+
+    var partes = diaSelecionado.split('-');
+    html += '<p class="cal-dia-titulo">Visitas de ' + partes[2] + '/' + partes[1] + '/' + partes[0] + '</p>';
+    calendarioAgenda.innerHTML = html;
+
+    return visitas.filter(function (v) { return diaDaVisita(v.horario) === diaSelecionado; });
+  }
+
+  function renderizarVisao() {
+    mensagemCarregando.hidden = true;
+    mensagemErroTela.hidden = true;
+
+    var visitas = visitasDaAba();
+    var ehEncerrada = abaAtiva === 'encerradas';
+
+    if (visao === 'calendario') {
+      calendarioAgenda.hidden = false;
+      var doDia = renderizarCalendario(visitas);
+      renderizarLista(doDia, ehEncerrada, 'Nenhuma visita neste dia.');
+    } else {
+      calendarioAgenda.hidden = true;
+      renderizarLista(visitas, ehEncerrada, 'Nenhuma visita nesta categoria.');
+    }
+  }
+
+  function definirVisao(nova) {
+    visao = nova;
+    visaoLista.classList.toggle('ativa', nova === 'lista');
+    visaoCalendario.classList.toggle('ativa', nova === 'calendario');
+    visaoLista.setAttribute('aria-pressed', String(nova === 'lista'));
+    visaoCalendario.setAttribute('aria-pressed', String(nova === 'calendario'));
+    try { localStorage.setItem(CHAVE_VISAO, nova); } catch (e) {}
+    renderizarVisao();
   }
 
   // `silencioso` evita o flash de "Carregando agenda..." e o sumico da lista
@@ -239,6 +283,7 @@
       mensagemVazia.hidden = true;
       mensagemErroTela.hidden = true;
       listaAgenda.innerHTML = '';
+      calendarioAgenda.innerHTML = '';
     }
 
     return fetchAutenticado('/api/visitas/agenda-completa')
@@ -252,7 +297,7 @@
       })
       .then(function (dados) {
         dadosAgenda = dados;
-        renderizarLista();
+        renderizarVisao();
       })
       .catch(function (erro) {
         if (erro && erro.message === 'nao_autenticado') return;
@@ -263,6 +308,26 @@
         carregando = false;
       });
   }
+
+  calendarioAgenda.addEventListener('click', function (e) {
+    var nav = e.target.closest('[data-mes]');
+    if (nav) {
+      var passo = Number(nav.getAttribute('data-mes'));
+      mesExibido = new Date(mesExibido.getFullYear(), mesExibido.getMonth() + passo, 1);
+      renderizarVisao();
+      return;
+    }
+    var dia = e.target.closest('[data-dia]');
+    if (dia) {
+      diaSelecionado = dia.getAttribute('data-dia');
+      var partes = diaSelecionado.split('-');
+      mesExibido = new Date(Number(partes[0]), Number(partes[1]) - 1, 1);
+      renderizarVisao();
+    }
+  });
+
+  visaoLista.addEventListener('click', function () { definirVisao('lista'); });
+  visaoCalendario.addEventListener('click', function () { definirVisao('calendario'); });
 
   btnTentarNovamente.addEventListener('click', function () {
     carregarAgenda();
@@ -292,19 +357,21 @@
     abaAtiva = 'proximas';
     abaProximas.classList.add('ativa');
     abaEncerradas.classList.remove('ativa');
-    renderizarLista();
+    diaSelecionado = null;
+    renderizarVisao();
   });
 
   abaEncerradas.addEventListener('click', function () {
     abaAtiva = 'encerradas';
     abaEncerradas.classList.add('ativa');
     abaProximas.classList.remove('ativa');
-    renderizarLista();
+    diaSelecionado = null;
+    renderizarVisao();
   });
 
-  window.addEventListener('cronometro:mudou', function () {
-    renderizarLista();
-  });
+  var visaoSalva = null;
+  try { visaoSalva = localStorage.getItem(CHAVE_VISAO); } catch (e) {}
+  definirVisao(visaoSalva === 'calendario' ? 'calendario' : 'lista');
 
   carregarAgenda();
 })();
