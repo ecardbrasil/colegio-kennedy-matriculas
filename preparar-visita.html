@@ -28,7 +28,7 @@
     fieldset{border:0;min-width:0}
     button,input,select,textarea{font:inherit;color:inherit}
     a{color:var(--azul)}
-    .topo{background:var(--superficie);border-bottom:1px solid var(--linha)}
+    .topo{background:var(--azul)}
     .topo .in{display:flex;align-items:center;min-height:72px}
     .topo img{height:44px;width:auto;display:block}
     .in{max-width:760px;margin:0 auto;padding:0 var(--s4)}
@@ -239,6 +239,7 @@
 
   /* máscaras */
   function soDigitos(s) { return String(s || '').replace(/\D/g, ''); }
+  function sem55(v) { var d = soDigitos(v); return d.length > 11 && d.slice(0, 2) === '55' ? d.slice(2) : d; }
   function maskCpf(v) { var d = soDigitos(v).slice(0, 11); return d.replace(/^(\d{3})(\d)/, '$1.$2').replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3').replace(/\.(\d{3})(\d)/, '.$1-$2'); }
   function maskData(v) { var d = soDigitos(v).slice(0, 8); return d.replace(/^(\d{2})(\d)/, '$1/$2').replace(/^(\d{2})\/(\d{2})(\d)/, '$1/$2/$3'); }
   function maskTel(v) { var d = soDigitos(v).slice(0, 11); if (d.length > 6) return '(' + d.slice(0, 2) + ') ' + d.slice(2, d.length - 4) + '-' + d.slice(-4); if (d.length > 2) return '(' + d.slice(0, 2) + ') ' + d.slice(2); return d; }
@@ -322,7 +323,7 @@
       if (/^r2_/.test(k)) abrirR2();
       var el = $(k);
       if (!el) return;
-      el.value = c[k].v;
+      el.value = k === 'r2_tel' ? maskTel(sem55(c[k].v)) : c[k].v;
       if (c[k].lock) { el.readOnly = true; el.setAttribute('aria-readonly', 'true'); if (k === 'r1_cpf') $('r1_cpf_d').hidden = false; }
     });
     var p = d.primeiroNome;
@@ -358,7 +359,7 @@
       if (el.readOnly || !el.value.trim()) return;
       if (!cpfOk(el.value)) erros.push(erroCampo(id, 'CPF inválido'));
     });
-    var tel2 = soDigitos($('r2_tel').value);
+    var tel2 = sem55($('r2_tel').value);
     if (tel2 && (tel2.length < 10 || tel2.length > 11)) erros.push(erroCampo('r2_tel', 'Celular do segundo responsável incompleto'));
     var nasc = $('aluno1_nascimento').value.trim();
     if (nasc) {
