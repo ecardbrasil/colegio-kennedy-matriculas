@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Preparar a visita | Colégio Kennedy</title>
+  <meta name="description" content="Complete algumas informações para o Diego organizar a visita da sua família ao Colégio Kennedy." />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="referrer" content="no-referrer" />
+  <link rel="icon" href="assets/images/favicon.webp" type="image/webp" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=Open+Sans:wght@400;600;700&display=swap">
+  <style>
+    :root{
+      --azul:#042c4b;--on-azul:#fff;--laranja:#d2691e;--laranja-vivo:#f58634;--laranja-texto:#a94f10;
+      --superficie:#fff;--creme:#fff7ee;--sup-azul:#eef3f8;--ink-suave:#44586a;--borda:#6c7d8d;--linha:#d5dce4;
+      --sucesso:#1f6f50;--erro:#b3261e;
+      --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:24px;--s6:32px;--s7:48px;--s8:64px;
+      --r-md:2px;--r-lg:4px;--hover:0 4px 12px rgba(4,44,75,.12);
+      --f-titulo:Archivo,Arial,sans-serif;--f-texto:"Open Sans",Arial,sans-serif;
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{font-family:var(--f-texto);font-size:16px;line-height:26px;color:var(--azul);background:var(--creme);min-height:100vh}
+    [hidden]{display:none!important}
+    h1,h2,h3,p,fieldset,ul{margin:0;padding:0}
+    fieldset{border:0;min-width:0}
+    button,input,select,textarea{font:inherit;color:inherit}
+    a{color:var(--azul)}
+    .topo{background:var(--superficie);border-bottom:1px solid var(--linha)}
+    .topo .in{display:flex;align-items:center;min-height:72px}
+    .topo img{height:44px;width:auto;display:block}
+    .in{max-width:760px;margin:0 auto;padding:0 var(--s4)}
+    main{padding:var(--s6) 0 var(--s8)}
+    .eyebrow{display:inline-block;padding-bottom:var(--s2);border-bottom:2px solid var(--laranja);font:700 14px/20px var(--f-titulo);letter-spacing:.12em;text-transform:uppercase}
+    h1{margin:var(--s4) 0;font:700 32px/36px var(--f-titulo);letter-spacing:-.01em}
+    h2{font:700 22px/28px var(--f-titulo);margin-bottom:var(--s3)}
+    .lead{font-size:18px;line-height:28px;color:var(--ink-suave);max-width:640px}
+    .small{font-size:14px;line-height:22px;color:var(--ink-suave)}
+    .card{background:var(--superficie);border:1px solid var(--linha);border-radius:var(--r-lg);padding:var(--s5);margin-top:var(--s5)}
+    .card:focus-within{box-shadow:var(--hover)}
+    .campo{display:flex;flex-direction:column;gap:var(--s2);margin-bottom:var(--s4)}
+    .campo label,.leg{font-weight:700;font-size:14px;line-height:22px;padding:0}
+    .campo input,.campo select,.campo textarea{min-height:48px;padding:0 var(--s4);width:100%;border:1px solid var(--borda);border-radius:var(--r-md);background:var(--superficie);font:400 16px/26px var(--f-texto)}
+    .campo textarea{padding:var(--s3) var(--s4);min-height:112px;resize:vertical}
+    .campo input:hover,.campo select:hover,.campo textarea:hover{border-color:var(--azul)}
+    .campo input[readonly]{background:var(--sup-azul);color:var(--ink-suave);cursor:not-allowed}
+    .campo [aria-invalid=true]{border-color:var(--erro)}
+    .erro{display:flex;gap:var(--s2);font-size:14px;line-height:22px;font-weight:700;color:var(--erro)}
+    .erro::before{content:"!";flex:none;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border:1px solid currentColor;border-radius:var(--r-md);font-size:13px}
+    :focus-visible{outline:3px solid var(--azul);outline-offset:2px}
+    .grid2{display:grid;gap:0 var(--s4)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--s2);min-height:48px;padding:0 var(--s5);border:1px solid transparent;border-radius:var(--r-md);font:700 16px/20px var(--f-texto);cursor:pointer;text-align:center;transition:box-shadow .15s;text-decoration:none}
+    .btn:hover{box-shadow:var(--hover)}
+    .btn--dest{background:var(--laranja-vivo);color:var(--azul)}
+    .btn--sec{background:transparent;color:var(--azul);border-color:var(--azul)}
+    .btn[disabled]{background:var(--linha);color:var(--ink-suave);box-shadow:none;cursor:not-allowed}
+    .btn--grande{width:100%}
+    .mais{margin:0 0 var(--s2)}
+    .sub{border:1px solid var(--linha);border-radius:var(--r-lg);padding:var(--s4);margin-bottom:var(--s4);background:var(--superficie)}
+    .sub .leg{display:block;margin-bottom:var(--s3)}
+    .opcoes{display:flex;flex-wrap:wrap;gap:var(--s2)}
+    .op{position:relative;display:inline-flex}
+    .op input{position:absolute;opacity:0;inset:0;width:100%;height:100%;margin:0;cursor:pointer}
+    .op span{display:inline-flex;align-items:center;min-height:48px;padding:0 var(--s5);border:1px solid var(--borda);border-radius:var(--r-md);background:var(--superficie);font-weight:600}
+    .op input:checked+span{background:var(--azul);color:var(--on-azul);border-color:var(--azul)}
+    .op input:focus-visible+span{outline:3px solid var(--azul);outline-offset:2px}
+    .chips{display:flex;flex-wrap:wrap;gap:var(--s2);margin:var(--s2) 0 var(--s3)}
+    .chip{min-height:44px;padding:0 var(--s4);border:1px solid var(--borda);border-radius:var(--r-md);background:var(--superficie);cursor:pointer;font-size:14px}
+    .chip[aria-pressed=true]{background:var(--azul);color:var(--on-azul);border-color:var(--azul)}
+    .obrig{color:var(--laranja-texto);font-size:14px;font-weight:700}
+    .aviso{display:flex;gap:var(--s3);padding:var(--s3) var(--s4);border:1px solid var(--erro);border-radius:var(--r-md);background:var(--superficie);margin-top:var(--s4)}
+    .aviso--ok{border-color:var(--sucesso)}
+    .ok-topo{color:var(--sucesso);font-weight:700}
+    .resumo{border-top:1px solid var(--linha);margin:var(--s5) 0 0}
+    .resumo div{display:grid;gap:0;padding:var(--s3) 0;border-bottom:1px solid var(--linha)}
+    .resumo dt{font-size:14px;color:var(--ink-suave)}
+    .resumo dd{margin:0;font-weight:700}
+    .carregando{padding:var(--s7) 0;text-align:center;color:var(--ink-suave)}
+    .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+    @media (min-width:640px){
+      .in{padding:0 var(--s5)}
+      h1{font-size:40px;line-height:44px}
+      .card{padding:var(--s6)}
+      .grid2{grid-template-columns:1fr 1fr}
+      .btn--grande{width:auto;min-width:260px}
+    }
+    @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+  </style>
+</head>
+<body>
+<header class="topo"><div class="in"><img src="assets/images/logo.png" alt="Colégio Kennedy" /></div></header>
+<main class="in">
+  <noscript><p class="lead">Para preencher, ative o JavaScript do navegador ou fale com o Diego no WhatsApp (51) 3364-1142.</p></noscript>
+
+  <section id="s-carregando" class="carregando" aria-live="polite">Abrindo as informações da visita…</section>
+
+  <section id="s-erro" hidden>
+    <span class="eyebrow">Preparar a visita</span>
+    <h1 id="erro-titulo" tabindex="-1">Não consegui abrir este link</h1>
+    <p class="lead" id="erro-txt">Fale com o Diego pelo WhatsApp (51) 3364-1142. Ele resolve na hora e a visita continua reservada.</p>
+  </section>
+
+  <section id="s-form" hidden>
+    <span class="eyebrow">Preparar a visita</span>
+    <h1 id="titulo" tabindex="-1">Café com ou sem açúcar?</h1>
+    <p class="lead" id="lead"></p>
+    <p class="small" style="margin-top:var(--s3)">Leva cerca de 2 minutos. Só a última pergunta é obrigatória. Se preferir, deixe para conversarmos na visita: nada muda no horário reservado.</p>
+
+    <form id="f" novalidate>
+      <div class="aviso" id="resumo-erros" role="alert" hidden><div><strong>Falta ajustar:</strong><ul id="lista-erros"></ul></div></div>
+
+      <div class="card">
+        <h2>Aluno ou aluna</h2>
+        <div class="campo"><label for="aluno1_nome">Nome completo</label><input id="aluno1_nome" name="aluno1_nome" autocomplete="off" maxlength="120"></div>
+        <div class="grid2">
+          <div class="campo"><label for="aluno1_nascimento">Data de nascimento</label><input id="aluno1_nascimento" name="aluno1_nascimento" inputmode="numeric" placeholder="dd/mm/aaaa" maxlength="10" autocomplete="off"></div>
+          <div class="campo"><label for="aluno1_serie">Série de interesse em 2027</label><input id="aluno1_serie" name="aluno1_serie" placeholder="Ex.: 5º ano" maxlength="60" autocomplete="off"></div>
+        </div>
+        <div class="campo"><label for="aluno1_escola">Escola atual</label><input id="aluno1_escola" name="aluno1_escola" maxlength="120" autocomplete="off"></div>
+
+        <div id="extras-alunos"></div>
+        <button type="button" class="btn btn--sec mais" id="add-aluno">Adicionar outro aluno ou aluna</button>
+      </div>
+
+      <div class="card">
+        <h2>Responsável</h2>
+        <div class="campo"><label for="r1_nome">Nome completo</label><input id="r1_nome" name="r1_nome" autocomplete="name" maxlength="120"></div>
+        <div class="grid2">
+          <div class="campo"><label for="r1_tel">Celular</label><input id="r1_tel" name="r1_tel" readonly aria-describedby="r1_tel_d"><span class="small" id="r1_tel_d">Para alterar, fale com o Diego.</span></div>
+          <div class="campo"><label for="r1_parentesco">Parentesco com o aluno</label><select id="r1_parentesco" name="r1_parentesco"><option value="">Selecione</option></select></div>
+        </div>
+        <div class="grid2">
+          <div class="campo"><label for="r1_email">E-mail</label><input id="r1_email" name="r1_email" type="email" autocomplete="email" maxlength="120"></div>
+          <div class="campo"><label for="r1_cpf">CPF</label><input id="r1_cpf" name="r1_cpf" inputmode="numeric" placeholder="000.000.000-00" maxlength="14" autocomplete="off"><span class="small" id="r1_cpf_d" hidden>Parte do número fica oculta para proteger seus dados.</span></div>
+        </div>
+
+        <button type="button" class="btn btn--sec mais" id="add-r2">Adicionar segundo responsável</button>
+        <div class="sub" id="bloco-r2" hidden>
+          <span class="leg">Segundo responsável</span>
+          <div class="campo"><label for="r2_nome">Nome completo</label><input id="r2_nome" name="r2_nome" maxlength="120" autocomplete="off"></div>
+          <div class="grid2">
+            <div class="campo"><label for="r2_tel">Celular</label><input id="r2_tel" name="r2_tel" type="tel" inputmode="tel" placeholder="(51) 99999-9999" maxlength="18" autocomplete="off"></div>
+            <div class="campo"><label for="r2_parentesco">Parentesco com o aluno</label><select id="r2_parentesco" name="r2_parentesco"><option value="">Selecione</option></select></div>
+          </div>
+          <div class="grid2">
+            <div class="campo"><label for="r2_email">E-mail</label><input id="r2_email" name="r2_email" type="email" maxlength="120" autocomplete="off"></div>
+            <div class="campo"><label for="r2_cpf">CPF</label><input id="r2_cpf" name="r2_cpf" inputmode="numeric" placeholder="000.000.000-00" maxlength="14" autocomplete="off"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <fieldset id="fs-nee" aria-describedby="nee-ajuda">
+          <legend><h2 style="display:inline">Para o tour ser confortável <span class="obrig">(obrigatório)</span></h2></legend>
+          <p id="nee-ajuda" style="margin-bottom:var(--s4)">Existe alguma especificidade (motora, sensorial ou de comunicação) que nossa equipe precise saber para garantir que o tour pela instituição seja confortável para vocês?</p>
+          <div class="opcoes" role="radiogroup" aria-label="Existe alguma especificidade?">
+            <label class="op"><input type="radio" name="nee" value="nao"><span>Não</span></label>
+            <label class="op"><input type="radio" name="nee" value="sim"><span>Sim</span></label>
+          </div>
+          <p class="erro" id="e-nee" hidden>Escolha Sim ou Não.</p>
+
+          <div id="nee-sim" hidden style="margin-top:var(--s5)">
+            <fieldset class="sub" id="fs-quem">
+              <legend class="leg">Quem precisa de atenção? Pode marcar os dois.</legend>
+              <div class="opcoes">
+                <label class="op"><input type="checkbox" name="quem" value="responsavel"><span>Responsável</span></label>
+                <label class="op"><input type="checkbox" name="quem" value="aluno"><span>Aluno ou aluna</span></label>
+              </div>
+              <p class="erro" id="e-quem" hidden>Marque pelo menos uma opção.</p>
+            </fieldset>
+            <div class="campo">
+              <label for="nee_desc">Conte um pouco para a gente se preparar</label>
+              <div class="chips" id="chips" role="group" aria-label="Exemplos para preencher mais rápido"></div>
+              <textarea id="nee_desc" maxlength="600" placeholder="Toque em um exemplo acima ou escreva do seu jeito"></textarea>
+              <p class="erro" id="e-desc" hidden>Conte em poucas palavras o que ajuda.</p>
+            </div>
+            <p class="small">Usamos esta informação só para preparar a visita. Ela fica com a equipe do Colégio Kennedy.</p>
+          </div>
+        </fieldset>
+      </div>
+
+      <p class="erro" id="e-envio" hidden style="margin-top:var(--s4)"></p>
+      <div style="margin-top:var(--s5)"><button type="submit" class="btn btn--dest btn--grande" id="enviar">Enviar informações</button></div>
+    </form>
+  </section>
+
+  <section id="s-ok" hidden>
+    <p class="ok-topo">Informações recebidas</p>
+    <h1 id="ok-titulo" tabindex="-1">Obrigado. A visita de vocês vai ser impecável.</h1>
+    <p class="lead">O Diego vai olhar tudo antes de vocês chegarem. Se precisar remarcar ou ajustar alguma coisa, é só chamar pelo WhatsApp (51) 3364-1142.</p>
+    <dl class="resumo">
+      <div><dt>Visita</dt><dd id="ok-visita"></dd></div>
+      <div><dt>Endereço</dt><dd>Av. Alcides S. Severiano, 99, Sarandi, Porto Alegre/RS</dd></div>
+    </dl>
+  </section>
+</main>
+
+<script>
+(function () {
+  var API = 'https://n8n.colegiokennedy.top/webhook/preparar-visita';
+  var $ = function (id) { return document.getElementById(id); };
+  var estado = { token: '', dados: null, extrasAbertos: 0 };
+  var EXEMPLOS = [
+    'Cadeira de rodas ou dificuldade com escadas',
+    'Prefere ambiente com pouco barulho',
+    'Precisa ir com calma, sem pressa',
+    'Dificuldade de fala ou usa comunicação alternativa',
+    'Baixa visão ou baixa audição'
+  ];
+
+  function mostrar(qual) {
+    ['s-carregando', 's-erro', 's-form', 's-ok'].forEach(function (id) { $(id).hidden = id !== qual; });
+    var h = { 's-erro': 'erro-titulo', 's-form': 'titulo', 's-ok': 'ok-titulo' }[qual];
+    if (h) { $(h).focus({ preventScroll: false }); window.scrollTo(0, 0); }
+  }
+
+  function lerToken() {
+    var t = '';
+    try { t = new URLSearchParams(location.search).get('t') || ''; } catch (e) { t = ''; }
+    try {
+      if (t) { sessionStorage.setItem('pv_t', t); history.replaceState(null, '', location.pathname); }
+      else { t = sessionStorage.getItem('pv_t') || ''; }
+    } catch (e) { /* sem sessionStorage: segue com o token da URL */ }
+    return t;
+  }
+
+  function post(rota, corpo) {
+    return fetch(API + '/' + rota, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(corpo) })
+      .then(function (r) { return r.json().catch(function () { return { ok: false, erro: 'rede' }; }); });
+  }
+
+  function erroLink(tipo) {
+    $('erro-titulo').textContent = tipo === 'link_expirado' ? 'Este link já expirou' : 'Não consegui abrir este link';
+    $('erro-txt').textContent = 'Fale com o Diego pelo WhatsApp (51) 3364-1142. Ele resolve na hora e a visita continua reservada.';
+    mostrar('s-erro');
+  }
+
+  /* máscaras */
+  function soDigitos(s) { return String(s || '').replace(/\D/g, ''); }
+  function maskCpf(v) { var d = soDigitos(v).slice(0, 11); return d.replace(/^(\d{3})(\d)/, '$1.$2').replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3').replace(/\.(\d{3})(\d)/, '.$1-$2'); }
+  function maskData(v) { var d = soDigitos(v).slice(0, 8); return d.replace(/^(\d{2})(\d)/, '$1/$2').replace(/^(\d{2})\/(\d{2})(\d)/, '$1/$2/$3'); }
+  function maskTel(v) { var d = soDigitos(v).slice(0, 11); if (d.length > 6) return '(' + d.slice(0, 2) + ') ' + d.slice(2, d.length - 4) + '-' + d.slice(-4); if (d.length > 2) return '(' + d.slice(0, 2) + ') ' + d.slice(2); return d; }
+  function ligarMascara(id, fn) { var el = $(id); el.addEventListener('input', function () { if (!el.readOnly) el.value = fn(el.value); }); }
+
+  function cpfOk(v) {
+    var d = soDigitos(v);
+    if (d.length !== 11 || /^(\d)\1+$/.test(d)) return false;
+    for (var t = 9; t < 11; t++) {
+      var soma = 0;
+      for (var i = 0; i < t; i++) soma += Number(d.charAt(i)) * (t + 1 - i);
+      if (((soma * 10) % 11) % 10 !== Number(d.charAt(t))) return false;
+    }
+    return true;
+  }
+
+  /* alunos extras */
+  function blocoAluno(n) {
+    var div = document.createElement('div');
+    div.className = 'sub';
+    div.id = 'bloco-aluno' + n;
+    div.innerHTML = '<span class="leg">Aluno ou aluna ' + n + '</span>' +
+      '<div class="grid2"><div class="campo"><label for="aluno' + n + '_nome">Nome completo</label><input id="aluno' + n + '_nome" name="aluno' + n + '_nome" maxlength="120" autocomplete="off"></div>' +
+      '<div class="campo"><label for="aluno' + n + '_serie">Série de interesse em 2027</label><input id="aluno' + n + '_serie" name="aluno' + n + '_serie" maxlength="60" placeholder="Ex.: 2º ano" autocomplete="off"></div></div>';
+    return div;
+  }
+  function abrirAluno() {
+    if (estado.extrasAbertos >= 3) return;
+    estado.extrasAbertos += 1;
+    var n = estado.extrasAbertos + 1;
+    $('extras-alunos').appendChild(blocoAluno(n));
+    if (estado.extrasAbertos >= 3) $('add-aluno').hidden = true;
+    return n;
+  }
+  function abrirR2() { $('bloco-r2').hidden = false; $('add-r2').hidden = true; }
+
+  /* chips da especificidade */
+  function montarChips() {
+    var box = $('chips');
+    EXEMPLOS.forEach(function (txt) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'chip'; b.textContent = txt; b.setAttribute('aria-pressed', 'false');
+      b.addEventListener('click', function () {
+        var ta = $('nee_desc'), v = ta.value;
+        if (v.indexOf(txt) >= 0) { ta.value = v.replace(txt, '').replace(/^[;\s]+|[;\s]+$/g, '').replace(/;\s*;/g, ';'); }
+        else { ta.value = (v.trim() ? v.trim().replace(/[;.]$/, '') + '; ' : '') + txt; }
+        atualizarChips();
+      });
+      box.appendChild(b);
+    });
+    var outro = document.createElement('button');
+    outro.type = 'button'; outro.className = 'chip'; outro.textContent = 'Outro';
+    outro.addEventListener('click', function () { $('nee_desc').focus(); });
+    box.appendChild(outro);
+    $('nee_desc').addEventListener('input', atualizarChips);
+  }
+  function atualizarChips() {
+    var v = $('nee_desc').value;
+    Array.prototype.forEach.call($('chips').querySelectorAll('.chip'), function (c) {
+      if (c.textContent === 'Outro') return;
+      c.setAttribute('aria-pressed', v.indexOf(c.textContent) >= 0 ? 'true' : 'false');
+    });
+  }
+
+  function marcarNee() {
+    var sim = document.querySelector('input[name=nee][value=sim]').checked;
+    $('nee-sim').hidden = !sim;
+    $('e-nee').hidden = true;
+  }
+
+  function preencher(d) {
+    var c = d.campos || {};
+    (d.parentescoOpcoes || []).forEach(function (o) {
+      ['r1_parentesco', 'r2_parentesco'].forEach(function (id) {
+        var op = document.createElement('option'); op.value = o; op.textContent = o; $(id).appendChild(op);
+      });
+    });
+    Object.keys(c).forEach(function (k) {
+      var n = /^aluno([2-4])_/.exec(k);
+      if (n && !$('bloco-aluno' + n[1])) { while (estado.extrasAbertos < Number(n[1]) - 1) abrirAluno(); }
+      if (/^r2_/.test(k)) abrirR2();
+      var el = $(k);
+      if (!el) return;
+      el.value = c[k].v;
+      if (c[k].lock) { el.readOnly = true; el.setAttribute('aria-readonly', 'true'); if (k === 'r1_cpf') $('r1_cpf_d').hidden = false; }
+    });
+    var p = d.primeiroNome;
+    $('titulo').textContent = p ? p + ', café com ou sem açúcar?' : 'Café com ou sem açúcar?';
+    $('lead').textContent = d.visita
+      ? 'Estou organizando a visita de vocês, ' + d.visita + '. Faltam só algumas informações para ela ser impecável. A primeira pergunta, do café, fica para a hora da visita.'
+      : 'Estou organizando a visita de vocês. Faltam só algumas informações para ela ser impecável.';
+    $('ok-visita').textContent = d.visita || 'Reservada';
+  }
+
+  function erroCampo(id, msg) {
+    var el = $(id);
+    if (el) { el.setAttribute('aria-invalid', 'true'); }
+    return { id: id, msg: msg };
+  }
+
+  function validar() {
+    var erros = [];
+    Array.prototype.forEach.call(document.querySelectorAll('[aria-invalid]'), function (e) { e.removeAttribute('aria-invalid'); });
+    ['e-nee', 'e-quem', 'e-desc'].forEach(function (id) { $(id).hidden = true; });
+    var nee = document.querySelector('input[name=nee]:checked');
+    if (!nee) { $('e-nee').hidden = false; erros.push({ id: 'fs-nee', msg: 'Responda a pergunta sobre o tour' }); }
+    if (nee && nee.value === 'sim') {
+      if (!document.querySelector('input[name=quem]:checked')) { $('e-quem').hidden = false; erros.push({ id: 'fs-quem', msg: 'Diga quem precisa de atenção' }); }
+      if (!$('nee_desc').value.trim()) { $('e-desc').hidden = false; erros.push(erroCampo('nee_desc', 'Conte o que ajuda')); }
+    }
+    ['r1_email', 'r2_email'].forEach(function (id) {
+      var v = $(id).value.trim();
+      if (v && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) erros.push(erroCampo(id, 'E-mail inválido'));
+    });
+    ['r1_cpf', 'r2_cpf'].forEach(function (id) {
+      var el = $(id);
+      if (el.readOnly || !el.value.trim()) return;
+      if (!cpfOk(el.value)) erros.push(erroCampo(id, 'CPF inválido'));
+    });
+    var tel2 = soDigitos($('r2_tel').value);
+    if (tel2 && (tel2.length < 10 || tel2.length > 11)) erros.push(erroCampo('r2_tel', 'Celular do segundo responsável incompleto'));
+    var nasc = $('aluno1_nascimento').value.trim();
+    if (nasc) {
+      var m = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(nasc);
+      if (!m || +m[2] < 1 || +m[2] > 12 || +m[1] < 1 || +m[1] > 31 || +m[3] < 1990) erros.push(erroCampo('aluno1_nascimento', 'Data de nascimento inválida'));
+    }
+    return erros;
+  }
+
+  function mostrarErros(erros) {
+    var ul = $('lista-erros'); ul.innerHTML = '';
+    erros.forEach(function (e) {
+      var li = document.createElement('li'); var a = document.createElement('a');
+      a.href = '#' + e.id; a.textContent = e.msg;
+      a.addEventListener('click', function (ev) { ev.preventDefault(); var el = $(e.id); if (el) { el.scrollIntoView({ block: 'center' }); var f = el.matches('input,select,textarea') ? el : el.querySelector('input,textarea'); if (f) f.focus(); } });
+      li.appendChild(a); ul.appendChild(li);
+    });
+    $('resumo-erros').hidden = erros.length === 0;
+    if (erros.length) { $('resumo-erros').scrollIntoView({ block: 'center' }); }
+  }
+
+  var ROTULOS = { r1_email: 'E-mail do responsável', r2_email: 'E-mail do segundo responsável', r1_cpf: 'CPF do responsável', r2_cpf: 'CPF do segundo responsável', r2_tel: 'Celular do segundo responsável', aluno1_nascimento: 'Data de nascimento', nee_resposta: 'Pergunta sobre o tour', nee_quem: 'Quem precisa de atenção', nee_descricao: 'Detalhes da especificidade' };
+
+  function enviar(ev) {
+    ev.preventDefault();
+    $('e-envio').hidden = true;
+    var erros = validar();
+    mostrarErros(erros);
+    if (erros.length) return;
+    var campos = {};
+    Array.prototype.forEach.call($('f').querySelectorAll('input[name],select[name]'), function (el) {
+      if (el.name === 'nee' || el.name === 'quem' || el.readOnly) return;
+      if (el.value.trim()) campos[el.name] = el.value.trim();
+    });
+    var nee = document.querySelector('input[name=nee]:checked').value;
+    var quem = Array.prototype.map.call(document.querySelectorAll('input[name=quem]:checked'), function (e) { return e.value; });
+    var btn = $('enviar'); btn.disabled = true; btn.textContent = 'Enviando…';
+    post('salvar', { t: estado.token, campos: campos, nee: { resposta: nee, quem: nee === 'sim' ? quem : [], descricao: nee === 'sim' ? $('nee_desc').value.trim() : '' } })
+      .then(function (r) {
+        btn.disabled = false; btn.textContent = 'Enviar informações';
+        if (r && r.ok) { try { sessionStorage.removeItem('pv_t'); } catch (e) {} mostrar('s-ok'); return; }
+        if (r && (r.erro === 'link_invalido' || r.erro === 'link_expirado')) { erroLink(r.erro); return; }
+        if (r && r.erro === 'validacao') {
+          mostrarErros((r.campos || []).map(function (k) { return { id: k, msg: ROTULOS[k] || 'Confira este campo' }; }));
+          return;
+        }
+        $('e-envio').textContent = 'Não consegui salvar agora. Tente de novo em instantes ou fale com o Diego pelo WhatsApp (51) 3364-1142.';
+        $('e-envio').hidden = false;
+      });
+  }
+
+  function iniciar() {
+    estado.token = lerToken();
+    if (!estado.token) { erroLink('link_invalido'); return; }
+    ligarMascara('r1_cpf', maskCpf); ligarMascara('r2_cpf', maskCpf);
+    ligarMascara('aluno1_nascimento', maskData); ligarMascara('r2_tel', maskTel);
+    montarChips();
+    $('add-aluno').addEventListener('click', function () { var n = abrirAluno(); if (n) $('aluno' + n + '_nome').focus(); });
+    $('add-r2').addEventListener('click', function () { abrirR2(); $('r2_nome').focus(); });
+    Array.prototype.forEach.call(document.querySelectorAll('input[name=nee]'), function (r) { r.addEventListener('change', marcarNee); });
+    $('f').addEventListener('submit', enviar);
+    post('dados', { t: estado.token }).then(function (r) {
+      if (r && r.ok) { estado.dados = r; preencher(r); mostrar('s-form'); }
+      else if (r && (r.erro === 'link_invalido' || r.erro === 'link_expirado')) erroLink(r.erro);
+      else erroLink('rede');
+    });
+  }
+  iniciar();
+})();
+</script>
+</body>
+</html>
