@@ -84,6 +84,21 @@
       });
     }
 
+    if (!ehEncerrada) {
+      // Uma visita por vez: o botão mostra "Em andamento" na visita que está no cronômetro.
+      var emAndamento = window.cronometro && window.cronometro.atual();
+      var ativa = !!(emAndamento && emAndamento.id === String(visita.id));
+      var acaoIniciar = document.createElement('div');
+      acaoIniciar.className = 'item-agenda-acoes';
+      acaoIniciar.innerHTML = '<button type="button" class="btn-acao btn-iniciar"' + (ativa ? ' disabled' : '') + '>' + (ativa ? 'Em andamento' : 'Iniciar visita') + '</button>';
+      acaoIniciar.querySelector('button').addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        window.cronometro.iniciar(visita.id, visita.nomeResponsavel);
+      });
+      container.appendChild(acaoIniciar);
+    }
+
     return container;
   }
 
@@ -221,6 +236,10 @@
     abaAtiva = 'encerradas';
     abaEncerradas.classList.add('ativa');
     abaProximas.classList.remove('ativa');
+    renderizarLista();
+  });
+
+  window.addEventListener('cronometro:mudou', function () {
     renderizarLista();
   });
 

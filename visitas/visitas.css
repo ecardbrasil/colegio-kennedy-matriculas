@@ -717,3 +717,81 @@ a {
 .btn-nao-veio:disabled {
   opacity: 0.6;
 }
+
+/* ========================
+   CRONOMETRO DA VISITA
+   ======================== */
+.cronometro-barra {
+  position: sticky;
+  top: 0; /* o cronometro.js ajusta para ficar logo abaixo do topo */
+  z-index: 9;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  background: var(--color-accent);
+  color: var(--color-white);
+  padding: 0.6rem 1.25rem;
+  box-shadow: var(--shadow-card);
+}
+
+.cronometro-barra.passou-meta {
+  background: var(--color-error);
+}
+
+.cronometro-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 8rem;
+  min-width: 0;
+}
+
+.cronometro-rotulo {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.9;
+}
+
+.cronometro-nome {
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cronometro-tempo {
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.cronometro-meta {
+  font-size: 0.85rem;
+}
+
+.cronometro-encerrar {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  color: var(--color-white);
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+}
+
+.cronometro-encerrar:active {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.btn-iniciar {
+  background: var(--color-accent);
+  border: 0;
+  color: var(--color-white);
+  font-weight: 700;
+}
+
+.btn-iniciar:disabled {
+  background: var(--color-success);
+  opacity: 1;
+}
