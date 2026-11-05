@@ -1025,3 +1025,38 @@ a {
   font-weight: 700;
   color: var(--color-primary);
 }
+
+/* ===== Agenda em toque unico (estilo balcao) ===== */
+.item-agenda-acoes { gap: 0.7rem; padding: 0; }
+.item-agenda-acoes .acao {
+  flex: 1;
+  min-height: 64px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: var(--radius-md);
+  color: #fff;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+.item-agenda-acoes .acao:active { transform: scale(0.97); opacity: 0.85; }
+.acao-iniciar { background: #2563eb; }
+.acao-iniciar.acao-andamento { background: #64748b; cursor: default; }
+.acao-nao-veio { background: #f97316; }
+.acao-fez { background: var(--color-success); }
+.item-agenda { padding: 1.2rem 1.4rem; }
+.item-agenda .horario { font-size: 1.4rem; }
+.toast-agenda {
+  position: fixed; left: 50%; bottom: 1.2rem; transform: translate(-50%, 140%);
+  display: flex; align-items: center; gap: 1rem;
+  background: #1f2937; color: #fff; padding: 0.9rem 1.2rem;
+  border-radius: var(--radius-md); box-shadow: 0 6px 24px rgba(0,0,0,.3);
+  font-size: 1.05rem; z-index: 50; max-width: 92vw;
+  transition: transform .2s ease;
+}
+.toast-agenda.visivel { transform: translate(-50%, 0); }
+.toast-agenda button {
+  min-height: 48px; padding: 0 1.2rem; border: 0; border-radius: var(--radius-sm);
+  background: #fff; color: #1f2937; font-weight: 700; font-size: 1.05rem; cursor: pointer;
+}

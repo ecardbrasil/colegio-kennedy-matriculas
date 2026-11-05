@@ -3,73 +3,8 @@
 // Exige sessao valida. Retorna payload com arrays { proximas, encerradas }.
 
 const { verifySession } = require('./_lib/session');
-const { pipefyRequest, mensagemErroPipefy } = require('./_lib/pipefy');
-const { normalizarCampos } = require('./_lib/campos');
-
-const QUERY = `
-  query VisitasAgendadas($faseAgendouId: ID!) {
-    phase(id: $faseAgendouId) {
-      id
-      name
-      cards(first: 50) {
-        edges {
-          node {
-            id
-            title
-            fields { name value field { id } }
-          }
-        }
-      }
-    }
-  }
-`;
-
-const JANELA_CHEGANDO_MS = 30 * 60 * 1000;
-
-function parseHorarioVisita(valorBruto) {
-  if (!valorBruto || typeof valorBruto !== 'string') return null;
-  const texto = valorBruto.trim();
-  if (!texto) return null;
-
-  const match = texto.match(/^(\d{2})\/(\d{2})\/(\d{4})(?:,?\s+(\d{2}):(\d{2}))?/);
-  if (match) {
-    const [, dia, mes, ano, hora, minuto] = match;
-    const data = new Date(
-      Number(ano),
-      Number(mes) - 1,
-      Number(dia),
-      hora ? Number(hora) : 0,
-      minuto ? Number(minuto) : 0
-    );
-    return Number.isNaN(data.getTime()) ? null : data;
-  }
-
-  const dataIso = new Date(texto);
-  return Number.isNaN(dataIso.getTime()) ? null : dataIso;
-}
-
-function processarCards(edges, agora) {
-  return (edges || [])
-    .map(({ node }) => {
-      const normalizado = normalizarCampos(node.fields || []);
-      const horarioDate = parseHorarioVisita(normalizado.visita_horario);
-      return {
-        id: node.id,
-        nomeResponsavel: normalizado.responsavel_1_nome || node.title || '',
-        nomeAluno: normalizado.nome_aluno_1 || '',
-        horario: normalizado.visita_horario || null,
-        chegando: horarioDate ? Math.abs(horarioDate.getTime() - agora) <= JANELA_CHEGANDO_MS : false,
-        _horarioTs: horarioDate ? horarioDate.getTime() : null,
-      };
-    })
-    .sort((a, b) => {
-      if (a._horarioTs === null && b._horarioTs === null) return 0;
-      if (a._horarioTs === null) return 1;
-      if (b._horarioTs === null) return -1;
-      return a._horarioTs - b._horarioTs;
-    })
-    .map(({ _horarioTs, ...card }) => card);
-}
+const { mensagemErroPipefy } = require('./_lib/pipefy');
+const { buscarCardsDaFase, processarCards } = require('./_lib/agenda');
 
 module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
@@ -95,14 +30,14 @@ module.exports = async (req, res) => {
 
   let data;
   try {
-    data = await pipefyRequest(QUERY, { faseAgendouId });
+    data = await buscarCardsDaFase(faseAgendouId);
   } catch (err) {
     console.error('[visitas/agenda-completa] erro ao consultar Pipefy', err && err.code, err && err.message);
     res.status(502).json({ error: mensagemErroPipefy(err) });
     return;
   }
 
-  const faseAgendou = data && data.phase;
+  const faseAgendou = data && data.fase;
 
   if (!faseAgendou) {
     console.error('[visitas/agenda-completa] fase nao encontrada', faseAgendouId);
@@ -111,16 +46,14 @@ module.exports = async (req, res) => {
   }
 
   const agora = Date.now();
-  const allEdges = (faseAgendou.cards && faseAgendou.cards.edges) || [];
-  const allCards = processarCards(allEdges, agora);
+  const allCards = processarCards(data.edges, agora);
 
   // Separar em proximas (data/hora futura) e encerradas (data/hora passada)
   const proximas = [];
   const encerradas = [];
 
-  allCards.forEach(card => {
-    const horarioDate = parseHorarioVisita(card.horario);
-    if (horarioDate && horarioDate.getTime() < agora) {
+  allCards.forEach(({ _horarioTs, ...card }) => {
+    if (_horarioTs !== null && _horarioTs < agora) {
       encerradas.push(card);
     } else {
       proximas.push(card);

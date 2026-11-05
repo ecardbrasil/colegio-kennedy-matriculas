@@ -93,25 +93,97 @@
 
     container.appendChild(item);
 
-    if (ehEncerrada) {
-      var botoes = document.createElement('div');
-      botoes.className = 'item-agenda-acoes';
-      botoes.innerHTML =
-        '<button type="button" class="btn-acao btn-nao-veio" data-card-id="' + escapeHtml(visita.id) + '" data-phase="343928419">Não veio</button>' +
-        '<button type="button" class="btn-acao btn-fez-visita" data-card-id="' + escapeHtml(visita.id) + '" data-phase="343928427">Fez visita</button>';
-      container.appendChild(botoes);
+    // Toque unico, sem confirmacao: o card some na hora e aparece um aviso
+    // com "Desfazer" (balcao de atendimento: rapido e com rede de seguranca).
+    var botoes = document.createElement('div');
+    botoes.className = 'item-agenda-acoes';
+    var emAndamento = window.cronometro && window.cronometro.atual() && window.cronometro.atual().id === String(visita.id);
+    var htmlIniciar = ehEncerrada ? '' :
+      '<button type="button" class="acao acao-iniciar' + (emAndamento ? ' acao-andamento' : '') + '" data-acao="iniciar">' +
+        (emAndamento ? 'Em andamento' : 'Iniciar') + '</button>';
+    botoes.innerHTML = htmlIniciar +
+      '<button type="button" class="acao acao-nao-veio" data-acao="nao-veio">Não veio</button>' +
+      '<button type="button" class="acao acao-fez" data-acao="fez">Fez visita</button>';
+    container.appendChild(botoes);
 
-      Array.from(botoes.querySelectorAll('.btn-acao')).forEach(function(btn) {
-        btn.addEventListener('click', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          moverCardParaFase(btn.dataset.cardId, btn.dataset.phase);
-        });
-      });
-    }
+    botoes.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-acao]');
+      if (!btn) return;
+      var acao = btn.getAttribute('data-acao');
+      if (acao === 'iniciar') {
+        if (window.cronometro && !emAndamento && window.cronometro.iniciar(visita.id, visita.nomeResponsavel)) {
+          renderizarVisao();
+        }
+        return;
+      }
+      moverRapido(visita, container, acao === 'fez' ? FASE_FEZ : FASE_NAO_VEIO, acao === 'fez' ? 'Fez visita' : 'Não veio');
+    });
 
     return container;
   }
+
+  // ===== Acoes de toque unico =====
+  var FASE_AGENDOU = '343928415';
+  var FASE_NAO_VEIO = '343928419';
+  var FASE_FEZ = '343928427';
+  var toastTimer = null;
+
+  function removerDasListas(id) {
+    dadosAgenda.proximas = dadosAgenda.proximas.filter(function (v) { return v.id !== id; });
+    dadosAgenda.encerradas = dadosAgenda.encerradas.filter(function (v) { return v.id !== id; });
+  }
+
+  function mostrarToast(texto, aoDesfazer) {
+    var toast = document.getElementById('toastAgenda');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'toastAgenda';
+      toast.className = 'toast-agenda';
+      document.body.appendChild(toast);
+    }
+    toast.innerHTML = '<span></span>' + (aoDesfazer ? '<button type="button">Desfazer</button>' : '');
+    toast.firstChild.textContent = texto;
+    toast.classList.add('visivel');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove('visivel'); }, 7000);
+    var b = toast.querySelector('button');
+    if (b) b.addEventListener('click', function () {
+      toast.classList.remove('visivel');
+      aoDesfazer();
+    });
+  }
+
+  function chamarMover(cardId, fase) {
+    return fetchAutenticado('/api/visitas/mover-fase', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ cardId: cardId, destinyPhaseId: fase }),
+    }).then(function (res) {
+      if (res.ok) return res.json();
+      return window.mensagemErroResposta(res, 'Erro ao mover visita').then(function (m) { throw new Error(m); });
+    });
+  }
+
+  function moverRapido(visita, container, fase, rotulo) {
+    var backupP = dadosAgenda.proximas.slice();
+    var backupE = dadosAgenda.encerradas.slice();
+    removerDasListas(visita.id);
+    renderizarVisao();
+    if (window.cronometro) window.cronometro.pararDe(visita.id);
+
+    chamarMover(visita.id, fase).then(function () {
+      mostrarToast((visita.nomeResponsavel || 'Visita') + ': ' + rotulo, function () {
+        chamarMover(visita.id, FASE_AGENDOU)
+          .then(function () { carregarAgenda({ silencioso: true }); })
+          .catch(function () { mostrarToast('Não consegui desfazer. Mover no Pipefy.'); });
+      });
+    }).catch(function (erro) {
+      dadosAgenda = { proximas: backupP, encerradas: backupE };
+      renderizarVisao();
+      mostrarToast('Falhou: ' + (erro && erro.message ? erro.message : 'sem conexão') + ' Tente de novo.');
+    });
+  }
+
 
   function escapeHtml(texto) {
     var div = document.createElement('div');
@@ -374,4 +446,8 @@
   definirVisao(visaoSalva === 'calendario' ? 'calendario' : 'lista');
 
   carregarAgenda();
+  setInterval(function () {
+    if (document.visibilityState === 'visible') carregarAgenda({ silencioso: true });
+  }, 30000);
+  window.addEventListener('cronometro:mudou', renderizarVisao);
 })();

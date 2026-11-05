@@ -196,7 +196,15 @@
     return trilho;
   }
 
-  window.cronometro = { iniciar: iniciar, encerrar: encerrar, atual: ler, criarBotaoIniciar: criarBotaoIniciar };
+  function pararDe(id) {
+    var atual = ler();
+    if (!atual || atual.id !== String(id)) return;
+    gravar(null);
+    atualizar();
+    avisarMudanca();
+  }
+
+  window.cronometro = { pararDe: pararDe, iniciar: iniciar, encerrar: encerrar, atual: ler, criarBotaoIniciar: criarBotaoIniciar };
 
   atualizar();
   if (ler()) ligarTimer();
