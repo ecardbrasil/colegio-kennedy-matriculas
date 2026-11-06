@@ -735,7 +735,7 @@ a {
   box-shadow: var(--shadow-card);
 }
 
-.cronometro-barra.passou-meta {
+.cronometro-barra.tempo-encerrado {
   background: var(--color-error);
 }
 
@@ -765,10 +765,6 @@ a {
   font-weight: 700;
   line-height: 1;
   font-variant-numeric: tabular-nums;
-}
-
-.cronometro-meta {
-  font-size: 0.85rem;
 }
 
 .cronometro-encerrar {
