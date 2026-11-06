@@ -1,5 +1,5 @@
 // GET -> cards da fase "7. AGENDOU VISITA", separados em proximas e encerradas.
-// Proximas: data/hora ainda não passou. Encerradas: data/hora já passou.
+// Proximas: todos os cards da fase (inclusive com horario ja passado). Encerradas: vazio.
 // Exige sessao valida. Retorna payload com arrays { proximas, encerradas }.
 
 const { verifySession } = require('./_lib/session');
@@ -48,19 +48,12 @@ module.exports = async (req, res) => {
   const agora = Date.now();
   const allCards = processarCards(data.edges, agora);
 
-  // Separar em proximas (data/hora futura) e encerradas (data/hora passada)
-  const proximas = [];
-  const encerradas = [];
+  // Todo card da fase 7 continua em proximas, mesmo com o horario ja passado
+  // (cliente atrasado ainda pode ser iniciado). Sai da lista so quando o Diego
+  // marca "Fez visita" ou "Não veio", que movem o card de fase.
+  const proximas = allCards.map(({ _horarioTs, ...card }) => card);
 
-  allCards.forEach(({ _horarioTs, ...card }) => {
-    if (_horarioTs !== null && _horarioTs < agora) {
-      encerradas.push(card);
-    } else {
-      proximas.push(card);
-    }
-  });
+  console.log('[visitas/agenda-completa] proximas:', proximas.length);
 
-  console.log('[visitas/agenda-completa] proximas:', proximas.length, 'encerradas:', encerradas.length);
-
-  res.status(200).json({ proximas, encerradas });
+  res.status(200).json({ proximas, encerradas: [] });
 };
