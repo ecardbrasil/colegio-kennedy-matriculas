@@ -683,3 +683,10 @@ desativar o cenário antigo no Make (`hook.us2.make.com/...`, hook `2676377`).
 3. Continuar a partir de "O que ainda falta" acima — sugestão de ordem: teste mobile/PageSpeed
    (rápido, fecha o item 9) → identidade visual (item 3) → conteúdo real (item 4, é o que mais
    depende de informação vinda do colégio) → SEO restante (item 5)
+
+
+## Página do telão: /vizinho (09/11/2026)
+
+- `vizinho.html` (URL `https://www.colegiokennedy.top/vizinho`, `cleanUrls`): página do QR do vídeo na rua, em formato de conversa, com botões de WhatsApp e Instagram. Arquivo único, sem biblioteca, `noindex`.
+- Cada acesso e clique é registrado por `GET https://n8n.colegiokennedy.top/webhook/telao-acesso` (sem nome, telefone nem IP) e aparece na seção "Telão" do dashboard. `?c=teste` não entra na conta.
+- Código-fonte de referência e regras: Central CK, `marketing/video-tela-de-rua.md`.

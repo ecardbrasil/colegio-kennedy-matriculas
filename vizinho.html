@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#042c4b">
+<title>Colégio Kennedy</title>
+<meta name="description" content="Colégio Kennedy, Sarandi, Porto Alegre. Matrículas 2027.">
+<style>
+:root{
+  --azul:#042c4b; --azul-2:#0a3d66; --bolha:#12395c; --laranja:#f58634; --texto:#ffffff; --suave:#b9c9d8; --verde:#3ddc84; --on-verde:#042c4b;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--azul);color:var(--texto);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;font-size:17px;line-height:1.35;-webkit-text-size-adjust:100%;display:flex;flex-direction:column;min-height:100dvh}
+.topo{display:flex;align-items:center;gap:12px;padding:calc(12px + env(safe-area-inset-top)) 16px 12px;background:var(--azul-2);border-bottom:1px solid rgba(255,255,255,.08)}
+.avatar{width:42px;height:42px;border-radius:50%;background:var(--laranja);color:var(--azul);display:grid;place-items:center;font-weight:800;font-size:16px;flex:none}
+.topo b{display:block;font-size:17px}
+.topo small{color:var(--suave);font-size:13px}
+#chat{flex:1;display:flex;flex-direction:column;gap:8px;padding:18px 14px 8px;overflow-y:auto}
+.bolha{max-width:84%;background:var(--bolha);padding:10px 13px 6px;border-radius:4px 16px 16px 16px;box-shadow:0 1px 0 rgba(0,0,0,.25);animation:entra .22s ease-out both}
+.bolha p{font-size:18px}
+.bolha time{display:block;text-align:right;font-size:11px;color:var(--suave);margin-top:2px}
+.oculto{display:none}
+.digitando{display:inline-flex;gap:5px;align-items:center;background:var(--bolha);padding:13px 15px;border-radius:4px 16px 16px 16px;align-self:flex-start}
+.digitando i{width:7px;height:7px;border-radius:50%;background:var(--suave);animation:pula .7s infinite}
+.digitando i:nth-child(2){animation-delay:.12s}
+.digitando i:nth-child(3){animation-delay:.24s}
+@keyframes pula{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-4px);opacity:1}}
+@keyframes entra{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.acoes{display:flex;flex-direction:column;gap:10px;padding:8px 14px 14px}
+.acoes.entra{animation:entra .3s ease-out both}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;min-height:54px;border-radius:14px;text-decoration:none;font-weight:700;font-size:18px;-webkit-tap-highlight-color:transparent}
+.btn svg{width:22px;height:22px;flex:none}
+.btn.wpp{background:var(--verde);color:var(--on-verde)}
+.btn.insta{border:2px solid rgba(255,255,255,.55);color:var(--texto)}
+.btn:active{transform:scale(.98)}
+.btn:focus-visible{outline:3px solid var(--laranja);outline-offset:2px}
+.rodape{padding:12px 16px calc(12px + env(safe-area-inset-bottom));text-align:center;background:var(--laranja);color:var(--azul);font-weight:800;letter-spacing:.06em;font-size:15px}
+.rodape small{display:block;font-weight:600;letter-spacing:0;font-size:12px;opacity:.85;margin-top:2px}
+@media (prefers-reduced-motion:reduce){.bolha,.acoes.entra{animation:none}.digitando i{animation:none}}
+</style>
+</head>
+<body>
+<header class="topo">
+  <div class="avatar" aria-hidden="true">CK</div>
+  <div><b>Colégio Kennedy</b><small>Sarandi · Porto Alegre · desde 1968</small></div>
+</header>
+
+<main id="chat" aria-live="polite">
+  <div class="bolha" data-msg><p data-saudacao>Olá, vizinho!</p><time></time></div>
+  <div class="bolha" data-msg><p>Eu sou o Colégio Kennedy. Moro aqui pertinho há 58 anos.</p><time></time></div>
+  <div class="bolha" data-msg><p>Como eu te ajudo hoje?</p><time></time></div>
+</main>
+
+<nav class="acoes" id="acoes" aria-label="Escolha como falar com a gente">
+  <a class="btn wpp" id="b-wpp" data-botao="whatsapp" href="https://wa.me/555133641142?text=Ol%C3%A1!%20Vi%20o%20v%C3%ADdeo%20no%20tel%C3%A3o%20e%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es.">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8.500 8.500 0 0 1-12.300 7.600L3 21l1.500-5.500A8.500 8.500 0 1 1 21 12Z"/><path d="M9 10h6M9 14h4"/></svg>
+    Continuar conversa no WhatsApp
+  </a>
+  <a class="btn insta" id="b-insta" data-botao="instagram" href="https://www.instagram.com/colegiokennedypoa/">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.500" cy="6.500" r=".6" fill="currentColor"/></svg>
+    Ver o Instagram da escola
+  </a>
+</nav>
+
+<footer class="rodape">ÚLTIMAS VAGAS para 2027<small>Av. Alcides S. Severiano, 99 · Sarandi</small></footer>
+
+<script>
+(function () {
+  var ENDPOINT = 'https://n8n.colegiokennedy.top/webhook/telao-acesso';
+  var t0 = Date.now();
+
+  // ---------- saudação e horário (relógio do aparelho) ----------
+  var agora = new Date(), h = agora.getHours();
+  var saudacao = h >= 5 && h < 12 ? 'Bom dia' : (h >= 12 && h < 18 ? 'Boa tarde' : 'Boa noite');
+  var hhmm = ('0' + h).slice(-2) + ':' + ('0' + agora.getMinutes()).slice(-2);
+  var chat = document.getElementById('chat'), acoes = document.getElementById('acoes');
+  var bolhas = Array.prototype.slice.call(chat.querySelectorAll('[data-msg]'));
+  bolhas[0].querySelector('[data-saudacao]').textContent = saudacao + ', vizinho!';
+  bolhas.forEach(function (b) { b.querySelector('time').textContent = hhmm; });
+
+  // ---------- registro de acesso e clique (sem nome, telefone nem IP) ----------
+  function aleatorio() {
+    var s = '', i, c = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    for (i = 0; i < 16; i++) s += c.charAt(Math.floor(Math.random() * c.length));
+    return s;
+  }
+  var visitante = { id: aleatorio(), novo: true };
+  try {
+    var guardado = localStorage.getItem('ckv');
+    if (guardado && /^[a-z0-9]{8,32}$/i.test(guardado)) { visitante = { id: guardado, novo: false }; }
+    else { localStorage.setItem('ckv', visitante.id); }
+  } catch (e) {}
+
+  var ua = navigator.userAgent || '';
+  var aparelho = /iPad|Tablet/i.test(ua) ? 'tablet' : (/Mobi|Android|iPhone|iPod/i.test(ua) ? 'celular' : 'computador');
+  var so = /Android/i.test(ua) ? 'Android' : (/iPhone|iPad|iPod/i.test(ua) ? 'iOS' : (/Windows/i.test(ua) ? 'Windows' : (/Mac/i.test(ua) ? 'Mac' : (/Linux/i.test(ua) ? 'Linux' : 'outro'))));
+  var cx = navigator.connection || {};
+  var ref = '';
+  try { ref = document.referrer ? new URL(document.referrer).hostname : ''; } catch (e) {}
+  var codigo = '';
+  try { codigo = (new URLSearchParams(location.search).get('c') || '').toLowerCase().replace(/[^a-z0-9_-]/g, '').slice(0, 40); } catch (e) {}
+
+  function enviar(tipo, botao) {
+    var p = {
+      tipo: tipo, vid: visitante.id, novo: visitante.novo ? '1' : '0', c: codigo, ap: aparelho, so: so,
+      net: cx.effectiveType || '', tela: (screen.width || 0) + 'x' + (screen.height || 0),
+      lang: navigator.language || '', ref: ref
+    };
+    if (botao) { p.botao = botao; p.seg = Math.round((Date.now() - t0) / 1000); }
+    var q = [], k;
+    for (k in p) { if (p.hasOwnProperty(k)) q.push(k + '=' + encodeURIComponent(p[k])); }
+    var url = ENDPOINT + '?' + q.join('&');
+    try {
+      if (window.fetch) { fetch(url, { mode: 'no-cors', keepalive: true }); return; }
+    } catch (e) {}
+    try { new Image().src = url; } catch (e) {}
+  }
+  enviar('acesso');
+  Array.prototype.forEach.call(document.querySelectorAll('[data-botao]'), function (a) {
+    a.addEventListener('click', function () { enviar('clique', a.getAttribute('data-botao')); });
+  });
+
+  // ---------- conversa que aparece rápido ----------
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  bolhas.forEach(function (b) { b.classList.add('oculto'); });
+  acoes.classList.add('oculto');
+  var ponto = document.createElement('div');
+  ponto.className = 'digitando'; ponto.setAttribute('aria-hidden', 'true');
+  ponto.innerHTML = '<i></i><i></i><i></i>';
+
+  var i = 0;
+  function proxima() {
+    if (i >= bolhas.length) {
+      acoes.classList.remove('oculto'); acoes.classList.add('entra');
+      return;
+    }
+    chat.insertBefore(ponto, bolhas[i]);
+    var espera = i === 0 ? 450 : 600;
+    setTimeout(function () {
+      if (ponto.parentNode) ponto.parentNode.removeChild(ponto);
+      bolhas[i].classList.remove('oculto');
+      i++;
+      setTimeout(proxima, 120);
+    }, espera);
+  }
+  proxima();
+})();
+</script>
+<noscript><style>.oculto{display:block!important}</style></noscript>
+</body>
+</html>
