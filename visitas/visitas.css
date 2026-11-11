@@ -1058,7 +1058,6 @@ a {
 }
 
 /* Aviso de vencimento diferente do horario + painel Remarcar (11/11/2026) */
-.aviso-divergente { margin-top: 0.5rem; padding: 0.5rem 0.7rem; border-radius: 8px; background: #fff3cd; color: #7a4b00; font-size: 0.9rem; }
 .acao-remarcar { background: #6b7280; }
 .painel-remarcar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; margin-top: 0.6rem; padding: 0.7rem; border-radius: 12px; background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,.12); }
 .painel-remarcar label { width: 100%; font-weight: 600; }

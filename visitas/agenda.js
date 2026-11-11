@@ -89,11 +89,7 @@
       badge +
       '<div class="horario">' + formatarDataHora(visita.horario) + '</div>' +
       '<div class="nome-responsavel">' + escapeHtml(visita.nomeResponsavel || 'Responsável não informado') + '</div>' +
-      '<div class="nome-aluno">Aluno: ' + escapeHtml(visita.nomeAluno || 'Não informado') + '</div>' +
-      (visita.divergente
-        ? '<div class="aviso-divergente">Atenção: o vencimento no Pipefy é ' + escapeHtml(formatarDataHora(visita.vencimento).split(',')[0]) +
-          ', diferente do horário acima. Se a visita foi remarcada, toque em Remarcar.</div>'
-        : '');
+      '<div class="nome-aluno">Aluno: ' + escapeHtml(visita.nomeAluno || 'Não informado') + '</div>';
 
     container.appendChild(item);
 
@@ -152,9 +148,9 @@
       '<label>Novo dia e horário</label>' +
       '<input type="datetime-local" step="900">' +
       '<button type="button" class="acao acao-fez">Salvar</button>' +
-      '<small>Só muda no Pipefy. O evento no Google Calendar continua sendo movido à mão.</small>';
+      '<small>Muda o "Dia e Horário da Visita" no Pipefy (o mesmo campo do vencimento no card). O evento no Google Calendar continua sendo movido à mão.</small>';
     var campo = painel.querySelector('input');
-    campo.value = paraDatetimeLocal(visita.divergente ? visita.vencimento : visita.horario) || paraDatetimeLocal(visita.horario);
+    campo.value = paraDatetimeLocal(visita.horario);
     var salvar = painel.querySelector('button');
     salvar.addEventListener('click', function () {
       if (!campo.value) return;
