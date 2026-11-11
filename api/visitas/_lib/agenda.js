@@ -74,13 +74,32 @@ async function buscarCardsDaFase(phaseId) {
   return { fase, edges };
 }
 
+// "Data de vencimento" e o campo nativo do Pipefy (o id varia por fase:
+// data_de_vencimento_1, _2...). O Diego as vezes remarca nele em vez de em
+// "Dia e Horario da Visita" (11/11/2026, caso Maria Clara). A tela le so o
+// horario da visita; quando os dois divergem, avisa em vez de mostrar data velha.
+function lerVencimento(fields) {
+  const f = (fields || []).find((x) => x && x.field && /^data_de_vencimento/.test(x.field.id) && x.value);
+  return f ? String(f.value) : null;
+}
+
+function diaBrasilia(valor) {
+  const d = parseHorarioVisita(valor);
+  return d ? d.toLocaleDateString('en-CA', { timeZone: 'America/Sao_Paulo' }) : null;
+}
+
 function processarCards(edges, agora) {
   return (edges || [])
     .map(({ node }) => {
       const normalizado = normalizarCampos(node.fields || []);
       const horarioDate = parseHorarioVisita(normalizado.visita_horario);
+      const vencimento = lerVencimento(node.fields);
+      const diaVenc = diaBrasilia(vencimento);
+      const diaHorario = horarioDate ? diaBrasilia(normalizado.visita_horario) : null;
       return {
         id: node.id,
+        vencimento: vencimento,
+        divergente: !!diaVenc && diaVenc !== diaHorario,
         nomeResponsavel: normalizado.responsavel_1_nome || node.title || '',
         nomeAluno: normalizado.nome_aluno_1 || '',
         horario: normalizado.visita_horario || null,

@@ -89,7 +89,11 @@
       badge +
       '<div class="horario">' + formatarDataHora(visita.horario) + '</div>' +
       '<div class="nome-responsavel">' + escapeHtml(visita.nomeResponsavel || 'Responsável não informado') + '</div>' +
-      '<div class="nome-aluno">Aluno: ' + escapeHtml(visita.nomeAluno || 'Não informado') + '</div>';
+      '<div class="nome-aluno">Aluno: ' + escapeHtml(visita.nomeAluno || 'Não informado') + '</div>' +
+      (visita.divergente
+        ? '<div class="aviso-divergente">Atenção: o vencimento no Pipefy é ' + escapeHtml(formatarDataHora(visita.vencimento).split(',')[0]) +
+          ', diferente do horário acima. Se a visita foi remarcada, toque em Remarcar.</div>'
+        : '');
 
     container.appendChild(item);
 
@@ -102,6 +106,7 @@
       '<button type="button" class="acao acao-iniciar' + (emAndamento ? ' acao-andamento' : '') + '" data-acao="iniciar">' +
         (emAndamento ? 'Em andamento' : 'Iniciar') + '</button>';
     botoes.innerHTML = htmlIniciar +
+      '<button type="button" class="acao acao-remarcar" data-acao="remarcar">Remarcar</button>' +
       '<button type="button" class="acao acao-nao-veio" data-acao="nao-veio">Não veio</button>' +
       '<button type="button" class="acao acao-fez" data-acao="fez">Fez visita</button>';
     container.appendChild(botoes);
@@ -110,6 +115,10 @@
       var btn = e.target.closest('[data-acao]');
       if (!btn) return;
       var acao = btn.getAttribute('data-acao');
+      if (acao === 'remarcar') {
+        abrirRemarcar(visita, container);
+        return;
+      }
       if (acao === 'iniciar') {
         if (window.cronometro && !emAndamento && window.cronometro.iniciar(visita.id, visita.nomeResponsavel)) {
           renderizarVisao();
@@ -120,6 +129,54 @@
     });
 
     return container;
+  }
+
+  // "17/09/2026 13:50" -> "2026-09-17T13:50" (formato do input datetime-local).
+  function paraDatetimeLocal(valorBruto) {
+    if (!valorBruto) return '';
+    var t = String(valorBruto).trim();
+    var br = t.match(/^(\d{2})\/(\d{2})\/(\d{4})(?:,?\s+(\d{2}):(\d{2}))?/);
+    if (br) return br[3] + '-' + br[2] + '-' + br[1] + 'T' + (br[4] || '09') + ':' + (br[5] || '00');
+    var iso = t.match(/^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2})/);
+    return iso ? iso[1] + '-' + iso[2] + '-' + iso[3] + 'T' + iso[4] + ':' + iso[5] : '';
+  }
+
+  // ===== Remarcar: grava "Dia e Horario da Visita" (o campo que a tela le) =====
+  function abrirRemarcar(visita, container) {
+    var existente = container.querySelector('.painel-remarcar');
+    if (existente) { existente.remove(); return; }
+
+    var painel = document.createElement('div');
+    painel.className = 'painel-remarcar';
+    painel.innerHTML =
+      '<label>Novo dia e horário</label>' +
+      '<input type="datetime-local" step="900">' +
+      '<button type="button" class="acao acao-fez">Salvar</button>' +
+      '<small>Só muda no Pipefy. O evento no Google Calendar continua sendo movido à mão.</small>';
+    var campo = painel.querySelector('input');
+    campo.value = paraDatetimeLocal(visita.divergente ? visita.vencimento : visita.horario) || paraDatetimeLocal(visita.horario);
+    var salvar = painel.querySelector('button');
+    salvar.addEventListener('click', function () {
+      if (!campo.value) return;
+      salvar.disabled = true;
+      salvar.textContent = 'Salvando...';
+      fetchAutenticado('/api/visitas/atualizar', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: visita.id, fields: { visita_horario: campo.value } }),
+      }).then(function (res) {
+        if (res.ok) return res.json();
+        return window.mensagemErroResposta(res, 'Não foi possível remarcar.').then(function (m) { throw new Error(m); });
+      }).then(function () {
+        mostrarToast((visita.nomeResponsavel || 'Visita') + ': remarcada');
+        carregarAgenda({ silencioso: true });
+      }).catch(function (erro) {
+        salvar.disabled = false;
+        salvar.textContent = 'Salvar';
+        mostrarToast('Falhou: ' + (erro && erro.message ? erro.message : 'sem conexão') + ' Tente de novo.');
+      });
+    });
+    container.appendChild(painel);
   }
 
   // ===== Acoes de toque unico =====
