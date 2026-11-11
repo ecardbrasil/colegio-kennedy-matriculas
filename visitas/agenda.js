@@ -180,6 +180,7 @@
   var FASE_NAO_VEIO = '343928419';
   var FASE_FEZ = '343928427';
   var toastTimer = null;
+  var ultimaAtualizacao = null;
 
   function removerDasListas(id) {
     dadosAgenda.proximas = dadosAgenda.proximas.filter(function (v) { return v.id !== id; });
@@ -422,12 +423,25 @@
       })
       .then(function (dados) {
         dadosAgenda = dados;
+        ultimaAtualizacao = new Date();
         renderizarVisao();
       })
       .catch(function (erro) {
         if (erro && erro.message === 'nao_autenticado') return;
         console.error('[visitas/agenda] falha ao carregar', erro && erro.message);
-        mostrarErro(erro && erro.message);
+        // "Failed to fetch" e o texto cru do navegador quando o tablet nao
+        // alcanca o servidor (Wi-Fi, rede da escola). Dizer isso em portugues,
+        // avisar que a lista na tela pode estar velha e tentar de novo logo,
+        // em vez de esperar os 30 s da recarga automatica (11/11/2026).
+        var semRede = !erro || !erro.message || /failed to fetch|networkerror|load failed/i.test(erro.message);
+        var temLista = dadosAgenda && dadosAgenda.proximas && dadosAgenda.proximas.length > 0;
+        if (semRede) {
+          var hh = ultimaAtualizacao ? ultimaAtualizacao.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : null;
+          mostrarErro('Sem conexão com o servidor.' + (temLista && hh ? ' A lista abaixo é das ' + hh + ' e pode estar desatualizada.' : ''));
+          setTimeout(function () { carregarAgenda({ silencioso: true }); }, 8000);
+        } else {
+          mostrarErro(erro.message);
+        }
       })
       .finally(function () {
         carregando = false;
